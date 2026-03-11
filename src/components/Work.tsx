@@ -95,6 +95,7 @@ export default function Work() {
   const scrollLeft = useRef(0);
   const dragDelta = useRef(0);
 
+  // Mouse drag handlers (desktop)
   const onMouseDown = useCallback((e: React.MouseEvent) => {
     isDragging.current = true;
     startX.current = e.pageX - (trackRef.current?.offsetLeft ?? 0);
@@ -122,9 +123,28 @@ export default function Work() {
     if (trackRef.current) trackRef.current.style.cursor = 'grab';
   }, []);
 
+  // Touch drag handlers (mobile)
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    startX.current = e.touches[0].pageX;
+    scrollLeft.current = trackRef.current?.scrollLeft ?? 0;
+    dragDelta.current = 0;
+  }, []);
+
+  const onTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!trackRef.current) return;
+    const x = e.touches[0].pageX;
+    const walk = (x - startX.current) * 1;
+    dragDelta.current = Math.abs(walk);
+    trackRef.current.scrollLeft = scrollLeft.current - walk;
+  }, []);
+
+  const onTouchEnd = useCallback(() => {
+    // dragDelta persists for handleCardClick
+  }, []);
+
   const handleCardClick = useCallback(
     (slug: string) => {
-      if (dragDelta.current < 5) {
+      if (dragDelta.current < 8) {
         router.push(`/work/${slug}`);
       }
     },
@@ -165,7 +185,7 @@ export default function Work() {
             margin: '0 0 16px 0',
           }}
         >
-          DRAG TO EXPLORE
+          EXPLORE WORK
         </h2>
         <p
           style={{
@@ -175,17 +195,20 @@ export default function Work() {
             letterSpacing: '0.1em',
           }}
         >
-          ← grab and pull →
+          ← swipe or drag →
         </p>
       </div>
 
-      {/* Drag track */}
+      {/* Drag / swipe track */}
       <div
         ref={trackRef}
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseLeave}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
         style={{
           display: 'flex',
           gap: 20,
@@ -197,6 +220,7 @@ export default function Work() {
           userSelect: 'none',
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
+          WebkitOverflowScrolling: 'touch' as React.CSSProperties['WebkitOverflowScrolling'],
         }}
         className="work-track"
       >
@@ -211,6 +235,12 @@ export default function Work() {
 
       <style>{`
         .work-track::-webkit-scrollbar { display: none; }
+        .work-track { touch-action: pan-x; scroll-snap-type: x proximity; }
+        .work-card { scroll-snap-align: start; }
+
+        @media (max-width: 767px) {
+          .work-card { width: clamp(260px, 75vw, 340px) !important; }
+        }
       `}</style>
     </section>
   );
@@ -227,6 +257,7 @@ function ProjectCard({
 
   return (
     <article
+      className="work-card"
       onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}

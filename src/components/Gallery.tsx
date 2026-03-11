@@ -75,8 +75,9 @@ export default function Gallery() {
         position: 'relative',
       }}
     >
-      {/* Hover preview image */}
+      {/* Hover preview image — desktop only */}
       <div
+        className="gallery-preview"
         style={{
           position: 'fixed',
           right: '5vw',
@@ -144,6 +145,14 @@ export default function Gallery() {
           />
         ))}
       </div>
+
+      <style>{`
+        @media (max-width: 767px) {
+          .gallery-preview { display: none !important; }
+          .gallery-meta { display: none !important; }
+          .gallery-arrow { display: block !important; opacity: 1 !important; transform: none !important; }
+        }
+      `}</style>
     </section>
   );
 }
@@ -206,7 +215,7 @@ function GalleryRow({
         style={{
           fontFamily: 'var(--font-syne)',
           fontWeight: 800,
-          fontSize: 'clamp(26px, 3.5vw, 54px)',
+          fontSize: 'clamp(22px, 3.5vw, 54px)',
           color: 'var(--parch)',
           flex: 1,
           transform: hovered ? 'translateX(10px)' : 'translateX(0)',
@@ -217,7 +226,7 @@ function GalleryRow({
         {project.name}
       </span>
 
-      {/* Category / Year */}
+      {/* Category / Year — hidden on mobile */}
       <span
         className="gallery-meta"
         style={{
@@ -235,6 +244,7 @@ function GalleryRow({
 
       {/* Arrow */}
       <span
+        className="gallery-arrow"
         style={{
           color: 'var(--ember)',
           fontSize: 18,

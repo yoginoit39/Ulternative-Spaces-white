@@ -93,10 +93,18 @@ export default function Services() {
 function ServiceCard({ service }: { service: (typeof SERVICES)[number] }) {
   const [flipped, setFlipped] = useState(false);
 
+  const handleClick = () => {
+    // Toggle on tap (touch devices) — hover handles desktop
+    if (typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches) {
+      setFlipped((f) => !f);
+    }
+  };
+
   return (
     <div
       onMouseEnter={() => setFlipped(true)}
       onMouseLeave={() => setFlipped(false)}
+      onClick={handleClick}
       style={{
         height: 480,
         perspective: 1000,
@@ -178,7 +186,7 @@ function ServiceCard({ service }: { service: (typeof SERVICES)[number] }) {
                 marginTop: 8,
               }}
             >
-              hover to explore →
+              tap or hover to explore →
             </p>
           </div>
         </div>
@@ -245,6 +253,7 @@ function ServiceCard({ service }: { service: (typeof SERVICES)[number] }) {
 
           <a
             href="/#contact"
+            onClick={(e) => e.stopPropagation()}
             style={{
               fontFamily: 'var(--font-mono)',
               fontSize: 9,
