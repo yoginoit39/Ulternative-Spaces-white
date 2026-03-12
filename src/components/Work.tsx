@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { PROJECTS } from '@/lib/projects';
 
@@ -17,63 +16,16 @@ export default function Work() {
       style={{
         position: 'relative',
         minHeight: '100vh',
-        overflow: 'hidden',
-        backgroundColor: 'var(--ink)',
+        backgroundColor: 'transparent',
+        padding: '160px 5vw 60px',
       }}
     >
-      {/* Background images — stacked */}
-      {WORK_PROJECTS.map((project, i) => (
-        <div
-          key={project.slug}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            zIndex: 1,
-            opacity: activeIdx === i ? 1 : 0,
-            transition: 'opacity 0.7s ease',
-            transform: activeIdx === i ? 'scale(1)' : 'scale(1.05)',
-          }}
-        >
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '120%',
-              top: '-10%',
-            }}
-          >
-            <Image
-              src={project.cover}
-              alt={project.name}
-              fill
-              unoptimized
-              style={{ objectFit: 'cover' }}
-            />
-          </div>
-        </div>
-      ))}
-
-      {/* Dark overlay */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          zIndex: 2,
-          background:
-            'linear-gradient(to top, rgba(7,5,4,0.98) 0%, rgba(7,5,4,0.5) 40%, rgba(7,5,4,0.2) 60%, transparent 100%)',
-        }}
-      />
-
       {/* Content */}
       <div
         style={{
-          position: 'relative',
-          zIndex: 3,
           display: 'flex',
           flexDirection: 'column',
-          minHeight: '100vh',
-          padding: '80px 5vw 60px',
+          minHeight: '80vh',
         }}
       >
         {/* Header */}
@@ -105,27 +57,35 @@ export default function Work() {
           </h2>
         </div>
 
-        {/* Project list */}
-        <div style={{ marginTop: 'auto' }}>
-          {WORK_PROJECTS.map((project, i) => (
-            <ProjectRow
-              key={project.slug}
-              project={project}
-              isActive={activeIdx === i}
-              onMouseEnter={() => setActiveIdx(i)}
-              onMouseLeave={() => setActiveIdx(0)}
-              onClick={() => router.push(`/work/${project.slug}`)}
-            />
-          ))}
+        {/* Glass panel wrapping the project list */}
+        <div
+          style={{
+            marginTop: 'auto',
+            paddingTop: 60,
+            maxWidth: 720,
+          }}
+        >
+          <div
+            style={{
+              background: 'rgba(7,5,4,0.6)',
+              backdropFilter: 'blur(4px)',
+              WebkitBackdropFilter: 'blur(4px)',
+              padding: '32px 40px',
+            }}
+          >
+            {WORK_PROJECTS.map((project, i) => (
+              <ProjectRow
+                key={project.slug}
+                project={project}
+                isActive={activeIdx === i}
+                onMouseEnter={() => setActiveIdx(i)}
+                onMouseLeave={() => setActiveIdx(0)}
+                onClick={() => router.push(`/work/${project.slug}`)}
+              />
+            ))}
+          </div>
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 767px) {
-          .work-fullbleed-bg { display: none !important; }
-          .work-overlay { display: none !important; }
-        }
-      `}</style>
     </section>
   );
 }

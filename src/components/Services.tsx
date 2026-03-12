@@ -34,7 +34,6 @@ export default function Services() {
     let x = 0;
     let raf: number;
     const speed = 0.4;
-
     const animate = () => {
       const w = ticker.scrollWidth / 2;
       x -= speed;
@@ -52,71 +51,86 @@ export default function Services() {
     <section
       id="services"
       style={{
-        backgroundColor: 'var(--mid)',
+        backgroundColor: 'transparent',
         padding: '120px 0 100px',
         overflow: 'hidden',
+        position: 'relative',
       }}
     >
-      {/* Header */}
-      <div style={{ padding: '0 5vw', marginBottom: 60 }}>
-        <p
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: 10,
-            color: 'var(--ember)',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            marginBottom: 16,
-          }}
-        >
-          03 / Services
-        </p>
-        <h2
-          style={{
-            fontFamily: 'var(--font-syne)',
-            fontWeight: 800,
-            fontSize: 'clamp(48px, 7vw, 110px)',
-            color: 'var(--parch)',
-            letterSpacing: '-0.03em',
-            lineHeight: 0.9,
-            margin: 0,
-          }}
-        >
-          WHAT WE BUILD
-        </h2>
-      </div>
-
-      {/* Service rows */}
-      {SERVICES.map((service) => (
-        <ServiceRow key={service.num} service={service} />
-      ))}
-
-      {/* Bottom marquee */}
+      {/* Full-section dark overlay for readability */}
       <div
         style={{
-          overflow: 'hidden',
-          borderTop: '1px solid rgba(242,232,211,0.06)',
-          padding: '16px 0',
-          marginTop: 40,
-          whiteSpace: 'nowrap',
+          position: 'absolute',
+          inset: 0,
+          background: 'rgba(7,5,4,0.55)',
+          zIndex: 0,
+          pointerEvents: 'none',
         }}
-      >
-        <div ref={tickerRef} style={{ display: 'inline-flex', willChange: 'transform' }}>
-          {[tickerText, tickerText].map((t, i) => (
-            <span
-              key={i}
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: 9,
-                color: 'var(--steel)',
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                paddingRight: '2em',
-              }}
-            >
-              {t}
-            </span>
-          ))}
+      />
+
+      {/* Content at zIndex 1 */}
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        {/* Header */}
+        <div style={{ padding: '0 5vw', marginBottom: 60 }}>
+          <p
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: 10,
+              color: 'var(--ember)',
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              marginBottom: 16,
+            }}
+          >
+            03 / Services
+          </p>
+          <h2
+            style={{
+              fontFamily: 'var(--font-syne)',
+              fontWeight: 800,
+              fontSize: 'clamp(36px, 5vw, 72px)',
+              color: 'var(--parch)',
+              letterSpacing: '-0.03em',
+              lineHeight: 0.9,
+              margin: 0,
+            }}
+          >
+            WHAT WE BUILD
+          </h2>
+        </div>
+
+        {/* Service rows */}
+        {SERVICES.map((service) => (
+          <ServiceRow key={service.num} service={service} />
+        ))}
+
+        {/* Bottom marquee */}
+        <div
+          style={{
+            overflow: 'hidden',
+            borderTop: '1px solid rgba(242,232,211,0.06)',
+            padding: '16px 0',
+            marginTop: 40,
+            whiteSpace: 'nowrap',
+          }}
+        >
+          <div ref={tickerRef} style={{ display: 'inline-flex', willChange: 'transform' }}>
+            {[tickerText, tickerText].map((t, i) => (
+              <span
+                key={i}
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: 9,
+                  color: 'var(--steel)',
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  paddingRight: '2em',
+                }}
+              >
+                {t}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -160,7 +174,7 @@ function ServiceRow({ service }: { service: (typeof SERVICES)[number] }) {
         style={{
           fontFamily: 'var(--font-syne)',
           fontWeight: 800,
-          fontSize: 'clamp(40px, 5.5vw, 80px)',
+          fontSize: 'clamp(28px, 3.8vw, 56px)',
           letterSpacing: '-0.04em',
           lineHeight: 1,
           color: hovered ? 'var(--parch)' : 'rgba(242,232,211,0.15)',
@@ -171,7 +185,7 @@ function ServiceRow({ service }: { service: (typeof SERVICES)[number] }) {
         {service.word}
       </div>
 
-      {/* Tags — below word on hover */}
+      {/* Tags */}
       <div
         style={{
           display: 'flex',
@@ -201,7 +215,7 @@ function ServiceRow({ service }: { service: (typeof SERVICES)[number] }) {
         ))}
       </div>
 
-      {/* Description — absolute right, slides in on hover */}
+      {/* Description */}
       <div
         className="service-description"
         style={{

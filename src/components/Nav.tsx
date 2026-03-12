@@ -38,15 +38,14 @@ export default function Nav() {
           left: 0,
           right: 0,
           zIndex: 200,
-          backgroundColor: scrolled ? 'rgba(7,5,4,0.97)' : 'rgba(7,5,4,0.9)',
-          backdropFilter: 'blur(14px)',
-          WebkitBackdropFilter: 'blur(14px)',
+          backgroundColor: 'rgba(7,5,4,0.6)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
           borderBottom: '1px solid rgba(242,232,211,0.06)',
           padding: '20px 5vw',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          transition: 'background-color 0.3s ease',
         }}
       >
         {/* Logo */}

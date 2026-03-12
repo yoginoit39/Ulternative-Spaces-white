@@ -1,8 +1,5 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import dynamic from 'next/dynamic';
-
-const ThreeBackground = dynamic(() => import('./ThreeBackground'), { ssr: false });
 
 const FILTER_BUTTONS = ['ALL WORK', 'RESIDENTIAL', 'COMMERCIAL', 'INTERIORS'] as const;
 
@@ -44,11 +41,7 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
   // Mouse parallax
   useEffect(() => {
     if (!siteReady) return;
-
-    const onMouseMove = (e: MouseEvent) => {
-      setMouseX(e.clientX);
-    };
-
+    const onMouseMove = (e: MouseEvent) => setMouseX(e.clientX);
     window.addEventListener('mousemove', onMouseMove);
     return () => window.removeEventListener('mousemove', onMouseMove);
   }, [siteReady]);
@@ -60,7 +53,6 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
     let x = 0;
     let raf: number;
     const speed = 0.5;
-
     const animate = () => {
       const tickerWidth = ticker.scrollWidth / 2;
       x -= speed;
@@ -73,9 +65,7 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
   }, []);
 
   const parallaxOffset =
-    typeof window !== 'undefined'
-      ? (mouseX / (window.innerWidth || 1) - 0.5)
-      : 0;
+    typeof window !== 'undefined' ? (mouseX / (window.innerWidth || 1) - 0.5) : 0;
 
   const tickerText =
     'ARCHITECTURE · INTERIOR DESIGN · CONSTRUCTION · KAMPALA, UGANDA · JUBA, SOUTH SUDAN · DESIGN-BUILD · ULTERNATIVE SPACES · ';
@@ -86,12 +76,23 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
       style={{
         minHeight: '100vh',
         position: 'relative',
-        backgroundColor: 'var(--ink)',
+        backgroundColor: 'transparent',
         overflowX: 'clip',
       }}
     >
-      {/* Three.js architectural background */}
-      <ThreeBackground />
+      {/* Bottom gradient overlay for text readability */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: '60%',
+          background: 'linear-gradient(to top, rgba(7,5,4,0.7) 0%, transparent 100%)',
+          pointerEvents: 'none',
+          zIndex: 1,
+        }}
+      />
 
       {/* Top-left corner label */}
       <span
@@ -151,9 +152,7 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
           >
             <div
               style={{
-                transform: siteReady
-                  ? `translateX(${parallaxOffset * -14}px)`
-                  : 'none',
+                transform: siteReady ? `translateX(${parallaxOffset * -14}px)` : 'none',
                 transition: 'transform 0.6s ease',
               }}
             >
@@ -189,17 +188,10 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
 
         {/* Line 2: SPACES. */}
         <div style={{ overflow: 'hidden' }}>
-          <div
-            ref={line2Ref}
-            style={{
-              willChange: 'transform',
-            }}
-          >
+          <div ref={line2Ref} style={{ willChange: 'transform' }}>
             <div
               style={{
-                transform: siteReady
-                  ? `translateX(${parallaxOffset * 10}px)`
-                  : 'none',
+                transform: siteReady ? `translateX(${parallaxOffset * 10}px)` : 'none',
                 transition: 'transform 0.6s ease',
               }}
             >
@@ -236,13 +228,7 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
           </p>
 
           {/* Filter buttons */}
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: 8,
-            }}
-          >
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {FILTER_BUTTONS.map((btn) => (
               <FilterButton
                 key={btn}
