@@ -121,8 +121,8 @@ export default async function ProjectPage({ params }: Props) {
             gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
             gap: 32,
             padding: '32px 0',
-            borderTop: '1px solid rgba(242,232,211,0.08)',
-            borderBottom: '1px solid rgba(242,232,211,0.08)',
+            borderTop: '1px solid rgba(0,0,0,0.1)',
+            borderBottom: '1px solid rgba(0,0,0,0.1)',
             marginBottom: 72,
           }}
         >
@@ -293,7 +293,7 @@ export default async function ProjectPage({ params }: Props) {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          borderTop: '1px solid rgba(242,232,211,0.06)',
+          borderTop: '1px solid rgba(0,0,0,0.08)',
           flexWrap: 'wrap',
           gap: 16,
         }}

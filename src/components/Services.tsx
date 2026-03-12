@@ -62,7 +62,7 @@ export default function Services() {
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'rgba(7,5,4,0.55)',
+          background: 'rgba(255,255,255,0.6)',
           zIndex: 0,
           pointerEvents: 'none',
         }}
@@ -108,7 +108,7 @@ export default function Services() {
         <div
           style={{
             overflow: 'hidden',
-            borderTop: '1px solid rgba(242,232,211,0.06)',
+            borderTop: '1px solid rgba(0,0,0,0.06)',
             padding: '16px 0',
             marginTop: 40,
             whiteSpace: 'nowrap',
@@ -148,8 +148,8 @@ function ServiceRow({ service }: { service: (typeof SERVICES)[number] }) {
         position: 'relative',
         padding: '32px 5vw',
         borderTop: hovered
-          ? '1px solid rgba(232,82,10,0.3)'
-          : '1px solid rgba(242,232,211,0.06)',
+          ? '1px solid rgba(0,0,0,0.3)'
+          : '1px solid rgba(0,0,0,0.06)',
         transition: 'border-top-color 0.4s ease',
       }}
     >
@@ -177,7 +177,7 @@ function ServiceRow({ service }: { service: (typeof SERVICES)[number] }) {
           fontSize: 'clamp(28px, 3.8vw, 56px)',
           letterSpacing: '-0.04em',
           lineHeight: 1,
-          color: hovered ? 'var(--parch)' : 'rgba(242,232,211,0.15)',
+          color: hovered ? 'var(--parch)' : 'rgba(0,0,0,0.12)',
           transition: 'color 0.4s ease',
           userSelect: 'none',
         }}
@@ -206,7 +206,7 @@ function ServiceRow({ service }: { service: (typeof SERVICES)[number] }) {
               color: 'var(--ember)',
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              border: '1px solid rgba(232,82,10,0.3)',
+              border: '1px solid rgba(0,0,0,0.3)',
               padding: '4px 10px',
             }}
           >

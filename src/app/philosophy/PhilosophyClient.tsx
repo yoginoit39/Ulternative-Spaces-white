@@ -89,7 +89,7 @@ function HeroSection() {
           width: 600,
           height: 600,
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(198,156,26,0.06) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(0,0,0,0.06) 0%, transparent 70%)',
           pointerEvents: 'none',
         }}
       />
@@ -195,7 +195,7 @@ function HeroSection() {
           fontFamily: 'var(--font-syne)',
           fontWeight: 800,
           fontSize: 'clamp(100px, 20vw, 260px)',
-          color: 'rgba(198,156,26,0.025)',
+          color: 'rgba(0,0,0,0.025)',
           letterSpacing: '-0.06em',
           lineHeight: 1,
           userSelect: 'none',
@@ -249,7 +249,7 @@ function MarkSection() {
           left: '5vw',
           right: '5vw',
           height: 1,
-          background: 'linear-gradient(90deg, transparent, rgba(198,156,26,0.3), transparent)',
+          background: 'linear-gradient(90deg, transparent, rgba(0,0,0,0.3), transparent)',
         }}
       />
 
@@ -264,8 +264,8 @@ function MarkSection() {
           {/* Background glow */}
           <defs>
             <radialGradient id="circleGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#c69c1a" stopOpacity="0.25" />
-              <stop offset="100%" stopColor="#c69c1a" stopOpacity="0" />
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
             </radialGradient>
           </defs>
           <ellipse cx="168" cy="120" rx="90" ry="90" fill="url(#circleGlow)"
@@ -275,11 +275,11 @@ function MarkSection() {
 
           {/* Filled circles (behind stroke) */}
           <circle cx="168" cy="120" r="60"
-            fill="#c69c1a"
+            fill="#ffffff"
             style={{ opacity: drawn ? 0.9 : 0, transition: 'opacity 0.6s ease 2.1s' }}
           />
           <circle cx="392" cy="120" r="60"
-            fill="#c69c1a"
+            fill="#ffffff"
             style={{ opacity: drawn ? 0.9 : 0, transition: 'opacity 0.6s ease 2.1s' }}
           />
 
@@ -295,7 +295,7 @@ function MarkSection() {
                C 502,182 460,228 392,228
                C 338,228 280,184 280,120"
             fill="none"
-            stroke="#c69c1a"
+            stroke="#ffffff"
             strokeWidth="5"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -420,7 +420,7 @@ function DualitySection() {
         bottom: '10%',
         left: '50%',
         width: 1,
-        background: 'linear-gradient(180deg, transparent, rgba(198,156,26,0.5), transparent)',
+        background: 'linear-gradient(180deg, transparent, rgba(0,0,0,0.5), transparent)',
         zIndex: 2,
       }} className="duality-divider" />
       <div style={{
@@ -441,7 +441,7 @@ function DualitySection() {
         style={{
           ...panelStyle(leftVisible, 'left'),
           backgroundColor: 'var(--mid)',
-          borderRight: '1px solid rgba(198,156,26,0.08)',
+          borderRight: '1px solid rgba(0,0,0,0.08)',
         }}
       >
         {/* Circle ornament */}
@@ -449,13 +449,13 @@ function DualitySection() {
           width: 80,
           height: 80,
           borderRadius: '50%',
-          border: '1.5px solid rgba(198,156,26,0.3)',
+          border: '1.5px solid rgba(0,0,0,0.3)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           marginBottom: 32,
         }}>
-          <div style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: 'rgba(198,156,26,0.15)' }} />
+          <div style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: 'rgba(0,0,0,0.1)' }} />
         </div>
 
         <p style={{
@@ -521,13 +521,13 @@ function DualitySection() {
           width: 80,
           height: 80,
           borderRadius: '50%',
-          border: '1.5px solid rgba(198,156,26,0.3)',
+          border: '1.5px solid rgba(0,0,0,0.3)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           marginBottom: 32,
         }}>
-          <div style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: 'rgba(198,156,26,0.15)' }} />
+          <div style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: 'rgba(0,0,0,0.1)' }} />
         </div>
 
         <p style={{
@@ -632,7 +632,7 @@ function PrinciplesSection() {
       <div style={{
         width: '100%',
         height: 1,
-        background: 'linear-gradient(90deg, rgba(198,156,26,0.3), transparent)',
+        background: 'linear-gradient(90deg, rgba(0,0,0,0.3), transparent)',
         marginBottom: 80,
       }} />
 
@@ -700,8 +700,8 @@ function PrincipleRow({
         gap: '40px',
         padding: '48px 0',
         borderBottom: hovered
-          ? '1px solid rgba(198,156,26,0.3)'
-          : '1px solid rgba(242,232,211,0.06)',
+          ? '1px solid rgba(0,0,0,0.3)'
+          : '1px solid rgba(0,0,0,0.06)',
         transition: 'border-color 0.3s ease',
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(32px)',
@@ -719,7 +719,7 @@ function PrincipleRow({
         fontFamily: 'var(--font-syne)',
         fontWeight: 800,
         fontSize: 'clamp(36px, 4vw, 56px)',
-        color: hovered ? 'rgba(198,156,26,0.5)' : 'rgba(198,156,26,0.15)',
+        color: hovered ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.1)',
         lineHeight: 1,
         transition: 'color 0.3s ease',
         paddingTop: 4,
@@ -792,7 +792,7 @@ function ProcessSection() {
         fontFamily: 'var(--font-syne)',
         fontWeight: 800,
         fontSize: '60vw',
-        color: 'rgba(198,156,26,0.02)',
+        color: 'rgba(0,0,0,0.02)',
         lineHeight: 1,
         userSelect: 'none',
         pointerEvents: 'none',
@@ -890,9 +890,9 @@ function CycleStep({
       onMouseLeave={() => setHovered(false)}
       style={{
         padding: '40px 36px',
-        border: '1px solid rgba(242,232,211,0.05)',
-        borderTop: index < 3 ? '1px solid rgba(242,232,211,0.05)' : 'none',
-        backgroundColor: hovered ? 'rgba(198,156,26,0.04)' : 'transparent',
+        border: '1px solid rgba(0,0,0,0.05)',
+        borderTop: index < 3 ? '1px solid rgba(0,0,0,0.05)' : 'none',
+        backgroundColor: hovered ? 'rgba(0,0,0,0.04)' : 'transparent',
         transition: 'background-color 0.3s ease',
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(32px)',
@@ -914,11 +914,11 @@ function CycleStep({
           width: 28,
           height: 28,
           borderRadius: '50%',
-          border: '1.5px solid rgba(198,156,26,0.4)',
+          border: '1.5px solid rgba(0,0,0,0.4)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: hovered ? 'rgba(198,156,26,0.12)' : 'transparent',
+          backgroundColor: hovered ? 'rgba(0,0,0,0.08)' : 'transparent',
           transition: 'background-color 0.3s ease',
           flexShrink: 0,
         }}>
@@ -992,7 +992,7 @@ function ManifestoSection() {
         left: '5vw',
         right: '5vw',
         height: 1,
-        background: 'linear-gradient(90deg, transparent, rgba(198,156,26,0.3), transparent)',
+        background: 'linear-gradient(90deg, transparent, rgba(0,0,0,0.3), transparent)',
       }} />
 
       {/* Logo mark watermark */}
@@ -1100,8 +1100,8 @@ function CTALink({
               backgroundColor: 'transparent',
               color: hovered ? 'var(--parch)' : 'var(--steel)',
               border: hovered
-                ? '1px solid rgba(242,232,211,0.4)'
-                : '1px solid rgba(242,232,211,0.15)',
+                ? '1px solid rgba(0,0,0,0.4)'
+                : '1px solid rgba(0,0,0,0.1)',
             }),
       }}
     >

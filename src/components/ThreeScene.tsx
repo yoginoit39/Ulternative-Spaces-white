@@ -48,11 +48,11 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
       const renderer = new THREE.WebGLRenderer({
         canvas,
         antialias: true,
-        alpha: true,
+        alpha: false,
       });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-      renderer.setClearColor(0x000000, 0);
+      renderer.setClearColor(0xffffff, 1);
 
       /* ── Scene & Camera ──────────────────────── */
       const scene = new THREE.Scene();
@@ -75,7 +75,7 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
         const geo = new THREE.BoxGeometry(w, h, d);
         const edges = new THREE.EdgesGeometry(geo);
         const mat = new THREE.LineBasicMaterial({
-          color: 0xffffff,
+          color: 0x000000,
           transparent: true,
           opacity,
         });
@@ -88,51 +88,51 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
 
       /* ── A) Main Building ─────────────────────── */
       // Ground plinth
-      addBox(13, 0.5, 8,    0,     0.25,  0,    0,    0.14);
+      addBox(13, 0.5, 8,    0,     0.25,  0,    0,    0.55);
       // Floor 1
-      addBox(10, 3.2, 6.5, -0.5,   1.85,  0.2,  180,  0.08);
+      addBox(10, 3.2, 6.5, -0.5,   1.85,  0.2,  180,  0.35);
       // Floor 2
-      addBox(10, 3.2, 6.5, -0.5,   5.05,  0.2,  360,  0.08);
+      addBox(10, 3.2, 6.5, -0.5,   5.05,  0.2,  360,  0.35);
       // Floor 3
-      addBox(7.5, 3.2, 6,  -0.5,   8.25,  0.2,  540,  0.07);
+      addBox(7.5, 3.2, 6,  -0.5,   8.25,  0.2,  540,  0.30);
       // Floor 4
-      addBox(5.5, 3.2, 5.5,-0.5,  11.45,  0.2,  720,  0.06);
+      addBox(5.5, 3.2, 5.5,-0.5,  11.45,  0.2,  720,  0.25);
       // Roof slab
-      addBox(11, 0.4, 7.5, -0.5,  13.25,  0.2,  900,  0.11);
+      addBox(11, 0.4, 7.5, -0.5,  13.25,  0.2,  900,  0.45);
       // Penthouse
-      addBox(3.5, 3.8, 3.5, 1.2,  15.15,  0,   1100,  0.07);
+      addBox(3.5, 3.8, 3.5, 1.2,  15.15,  0,   1100,  0.30);
       // Penthouse roof
-      addBox(4,   0.25, 4,  1.2,  17.15,  0,   1300,  0.10);
+      addBox(4,   0.25, 4,  1.2,  17.15,  0,   1300,  0.40);
       // Side wing
-      addBox(3.5, 6.4, 6.5,-6.25,  3.45,  0.2,  450,  0.06);
+      addBox(3.5, 6.4, 6.5,-6.25,  3.45,  0.2,  450,  0.25);
       // Side wing roof
-      addBox(4,   0.25, 7, -6.25,  6.65,  0.2,  650,  0.09);
+      addBox(4,   0.25, 7, -6.25,  6.65,  0.2,  650,  0.35);
       // 6 vertical columns
       for (let i = 0; i < 6; i++) {
-        addBox(0.22, 6.6, 0.22, -4.5 + i * 1.8, 3.5, 3.0, 250 + i * 60, 0.07);
+        addBox(0.22, 6.6, 0.22, -4.5 + i * 1.8, 3.5, 3.0, 250 + i * 60, 0.28);
       }
       // 4 horizontal spandrel beams
       for (let j = 0; j < 4; j++) {
-        addBox(10, 0.1, 6.5, -0.5, 3.15 + j * 3.2, 0.2, 200 + j * 140, 0.10);
+        addBox(10, 0.1, 6.5, -0.5, 3.15 + j * 3.2, 0.2, 200 + j * 140, 0.40);
       }
       // 10 windows floor 1
       for (let col = 0; col < 5; col++) {
         for (let row = 0; row < 2; row++) {
-          addBox(0.85, 1.35, 0.08, -3.8 + col * 2.0, 1.2 + row * 1.7, 3.28, 900 + col * 60 + row * 120, 0.14);
+          addBox(0.85, 1.35, 0.08, -3.8 + col * 2.0, 1.2 + row * 1.7, 3.28, 900 + col * 60 + row * 120, 0.55);
         }
       }
       // 5 windows floor 2
       for (let col = 0; col < 5; col++) {
-        addBox(0.85, 1.35, 0.08, -3.8 + col * 2.0, 4.6, 3.28, 1100 + col * 60, 0.12);
+        addBox(0.85, 1.35, 0.08, -3.8 + col * 2.0, 4.6, 3.28, 1100 + col * 60, 0.50);
       }
       // Balcony rail
-      addBox(7.8, 0.08, 1.2, -0.5, 7.65, 3.2, 800, 0.11);
+      addBox(7.8, 0.08, 1.2, -0.5, 7.65, 3.2, 800, 0.45);
 
       /* ── B) Blueprint ground grid ─────────────── */
       const gridMat = new THREE.LineBasicMaterial({
-        color: 0xc69c1a,
+        color: 0x000000,
         transparent: true,
-        opacity: 0.04,
+        opacity: 0.12,
       });
       for (let i = -10; i <= 10; i++) {
         const pts = [new THREE.Vector3(i, -0.1, -10), new THREE.Vector3(i, -0.1, 10)];
@@ -160,7 +160,7 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
       particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
 
       const particleMat = new THREE.PointsMaterial({
-        color: 0xffffff,
+        color: 0x000000,
         size: 1.2,
         transparent: true,
         opacity: 0.35,
@@ -172,9 +172,9 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
 
       /* ── D) Floating blueprint sheets ─────────── */
       const planeDefs = [
-        { w: 12, h: 8,  pos: [2, 2, -8],    rx: -Math.PI / 2, ry: 0,   opacity: 0.025, color: 0xc69c1a },
-        { w: 8,  h: 6,  pos: [-8, 6, -5],   rx: 0,            ry: 0.5, opacity: 0.02,  color: 0xffffff },
-        { w: 15, h: 10, pos: [4, -0.08, 2], rx: -Math.PI / 2, ry: 0,   opacity: 0.04,  color: 0xc69c1a },
+        { w: 12, h: 8,  pos: [2, 2, -8],    rx: -Math.PI / 2, ry: 0,   opacity: 0.025, color: 0x000000 },
+        { w: 8,  h: 6,  pos: [-8, 6, -5],   rx: 0,            ry: 0.5, opacity: 0.02,  color: 0x000000 },
+        { w: 15, h: 10, pos: [4, -0.08, 2], rx: -Math.PI / 2, ry: 0,   opacity: 0.04,  color: 0x000000 },
       ] as const;
 
       for (const pd of planeDefs) {
@@ -234,7 +234,7 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
           // Border
           const edges = new THREE.EdgesGeometry(geo);
           const borderMat = new THREE.LineBasicMaterial({
-            color: 0xffffff,
+            color: 0x000000,
             transparent: true,
             opacity: 0.15,
           });
@@ -257,7 +257,7 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
         const geo = new THREE.BoxGeometry(tw, th, td);
         const edges = new THREE.EdgesGeometry(geo);
         const mat = new THREE.LineBasicMaterial({
-          color: 0xffffff,
+          color: 0x000000,
           transparent: true,
           opacity: 0.0,
         });
@@ -271,7 +271,7 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
           const spandrelGeo = new THREE.BoxGeometry(tw + 0.1, 0.08, td + 0.1);
           const spandrelEdges = new THREE.EdgesGeometry(spandrelGeo);
           const spandrelMat = new THREE.LineBasicMaterial({
-            color: 0xffffff,
+            color: 0x000000,
             transparent: true,
             opacity: 0.0,
           });
@@ -284,9 +284,9 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
 
       /* ── G) Dimensional lines ─────────────────── */
       const dimMat = new THREE.LineBasicMaterial({
-        color: 0xc69c1a,
+        color: 0x000000,
         transparent: true,
-        opacity: 0.05,
+        opacity: 0.20,
       });
 
       // Vertical height marker
@@ -299,7 +299,7 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
       ));
 
       // Tick marks
-      const tickMat = new THREE.LineBasicMaterial({ color: 0xc69c1a, transparent: true, opacity: 0.05 });
+      const tickMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.20 });
       scene.add(new THREE.Line(
         new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(7.7, 17, -5), new THREE.Vector3(8.3, 17, -5)]),
         tickMat
@@ -381,7 +381,7 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
 
         // 6. Lerp service tower opacities
         towerMeshes.forEach(({ mat }) => {
-          const target = activeSectionRef.current === 'services' ? 0.09 : 0.0;
+          const target = activeSectionRef.current === 'services' ? 0.40 : 0.0;
           mat.opacity += (target - mat.opacity) * 0.05;
         });
 

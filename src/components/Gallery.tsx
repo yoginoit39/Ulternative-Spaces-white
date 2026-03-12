@@ -91,7 +91,7 @@ export default function Gallery() {
       {/* Glass panel wrapping the project list */}
       <div
         style={{
-          background: 'rgba(7,5,4,0.5)',
+          background: 'rgba(0,0,0,0.5)',
           backdropFilter: 'blur(3px)',
           WebkitBackdropFilter: 'blur(3px)',
           padding: '0 32px',
@@ -130,8 +130,8 @@ function GalleryRow({
         gap: 20,
         padding: '26px 0',
         borderBottom: hovered
-          ? '1px solid rgba(232,82,10,0.4)'
-          : '1px solid rgba(242,232,211,0.08)',
+          ? '1px solid rgba(0,0,0,0.4)'
+          : '1px solid rgba(0,0,0,0.08)',
         textDecoration: 'none',
         transition: 'border-color 0.25s ease',
         cursor: 'pointer',

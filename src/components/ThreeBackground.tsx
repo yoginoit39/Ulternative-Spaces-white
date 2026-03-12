@@ -26,10 +26,10 @@ export default function ThreeBackground() {
       camera.position.set(22, 14, 26);
       camera.lookAt(0, 5, 0);
 
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
       renderer.setSize(mount.clientWidth, mount.clientHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setClearColor(0x000000, 0);
+      renderer.setClearColor(0xffffff, 1);
       mount.appendChild(renderer.domElement);
 
       /* ── Helper: add wireframe box ───────────── */
@@ -45,7 +45,7 @@ export default function ThreeBackground() {
         const geo = new THREE.BoxGeometry(w, h, d);
         const edges = new THREE.EdgesGeometry(geo);
         const mat = new THREE.LineBasicMaterial({
-          color: 0xffffff,
+          color: 0x000000,
           transparent: true,
           opacity,
         });
@@ -57,34 +57,34 @@ export default function ThreeBackground() {
 
       /* ── Building geometry ───────────────────── */
       // Ground plinth
-      addBox(13, 0.5, 8, 0, 0.25, 0,   0,   0.14);
+      addBox(13, 0.5, 8, 0, 0.25, 0,   0,   0.55);
 
       // Floor 1 — wide base
-      addBox(10, 3.2, 6.5, -0.5, 1.85, 0.2,  180, 0.08);
+      addBox(10, 3.2, 6.5, -0.5, 1.85, 0.2,  180, 0.35);
       // Floor 2
-      addBox(10, 3.2, 6.5, -0.5, 5.05, 0.2,  360, 0.08);
+      addBox(10, 3.2, 6.5, -0.5, 5.05, 0.2,  360, 0.35);
       // Floor 3 — setback
-      addBox(7.5, 3.2, 6, -0.5, 8.25, 0.2,   540, 0.07);
+      addBox(7.5, 3.2, 6, -0.5, 8.25, 0.2,   540, 0.30);
       // Floor 4 — further setback
-      addBox(5.5, 3.2, 5.5, -0.5, 11.45, 0.2, 720, 0.06);
+      addBox(5.5, 3.2, 5.5, -0.5, 11.45, 0.2, 720, 0.25);
       // Roof slab
-      addBox(11, 0.4, 7.5, -0.5, 13.25, 0.2, 900, 0.11);
+      addBox(11, 0.4, 7.5, -0.5, 13.25, 0.2, 900, 0.45);
       // Penthouse
-      addBox(3.5, 3.8, 3.5, 1.2, 15.15, 0,  1100, 0.07);
-      addBox(4,   0.25, 4,  1.2, 17.15, 0,  1300, 0.10);
+      addBox(3.5, 3.8, 3.5, 1.2, 15.15, 0,  1100, 0.30);
+      addBox(4,   0.25, 4,  1.2, 17.15, 0,  1300, 0.40);
 
       // Side wing (lower annex)
-      addBox(3.5, 6.4, 6.5, -6.25, 3.45, 0.2, 450, 0.06);
-      addBox(4,   0.25, 7,  -6.25, 6.65, 0.2, 650, 0.09);
+      addBox(3.5, 6.4, 6.5, -6.25, 3.45, 0.2, 450, 0.25);
+      addBox(4,   0.25, 7,  -6.25, 6.65, 0.2, 650, 0.35);
 
       // Vertical structural columns (floor 1–2)
       for (let i = 0; i < 6; i++) {
-        addBox(0.22, 6.6, 0.22, -4.5 + i * 1.8, 3.5, 3.0, 250 + i * 60, 0.07);
+        addBox(0.22, 6.6, 0.22, -4.5 + i * 1.8, 3.5, 3.0, 250 + i * 60, 0.28);
       }
 
       // Horizontal spandrel beams
       for (let j = 0; j < 4; j++) {
-        addBox(10, 0.1, 6.5, -0.5, 3.15 + j * 3.2, 0.2, 200 + j * 140, 0.10);
+        addBox(10, 0.1, 6.5, -0.5, 3.15 + j * 3.2, 0.2, 200 + j * 140, 0.40);
       }
 
       // Windows — floor 1 façade (front)
@@ -92,7 +92,7 @@ export default function ThreeBackground() {
         for (let row = 0; row < 2; row++) {
           addBox(0.85, 1.35, 0.08,
             -3.8 + col * 2.0, 1.2 + row * 1.7, 3.28,
-            900 + col * 60 + row * 120, 0.14);
+            900 + col * 60 + row * 120, 0.55);
         }
       }
 
@@ -100,17 +100,17 @@ export default function ThreeBackground() {
       for (let col = 0; col < 5; col++) {
         addBox(0.85, 1.35, 0.08,
           -3.8 + col * 2.0, 4.6, 3.28,
-          1100 + col * 60, 0.12);
+          1100 + col * 60, 0.50);
       }
 
       // Balcony rail (thin flat slab extruding from floor 3)
-      addBox(7.8, 0.08, 1.2, -0.5, 7.65, 3.2, 800, 0.11);
+      addBox(7.8, 0.08, 1.2, -0.5, 7.65, 3.2, 800, 0.45);
 
       /* ── Blueprint grid on ground plane ─────── */
       const gridMat = new THREE.LineBasicMaterial({
-        color: 0xc69c1a,
+        color: 0x000000,
         transparent: true,
-        opacity: 0.035,
+        opacity: 0.12,
       });
       for (let i = -10; i <= 10; i++) {
         const pts = [
@@ -131,9 +131,9 @@ export default function ThreeBackground() {
 
       /* ── Dimension / construction lines ─────── */
       const dimMat = new THREE.LineBasicMaterial({
-        color: 0xf2e8d3,
+        color: 0x000000,
         transparent: true,
-        opacity: 0.04,
+        opacity: 0.18,
       });
       // Vertical height line
       scene.add(new THREE.Line(

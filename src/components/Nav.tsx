@@ -38,10 +38,10 @@ export default function Nav() {
           left: 0,
           right: 0,
           zIndex: 200,
-          backgroundColor: 'rgba(7,5,4,0.6)',
+          backgroundColor: 'rgba(255,255,255,0.9)',
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
-          borderBottom: '1px solid rgba(242,232,211,0.06)',
+          borderBottom: '1px solid rgba(0,0,0,0.08)',
           padding: '20px 5vw',
           display: 'flex',
           alignItems: 'center',
@@ -182,7 +182,7 @@ export default function Nav() {
             <li
               key={link.href}
               style={{
-                borderBottom: '1px solid rgba(242,232,211,0.07)',
+                borderBottom: '1px solid rgba(0,0,0,0.07)',
                 transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
                 opacity: menuOpen ? 1 : 0,
                 transition: `transform 0.5s var(--ease-out) ${i * 60}ms, opacity 0.5s ease ${i * 60}ms`,
@@ -311,7 +311,7 @@ function CTAButton() {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        border: hovered ? '1px solid var(--ember)' : '1px solid rgba(242,232,211,0.2)',
+        border: hovered ? '1px solid var(--ember)' : '1px solid rgba(0,0,0,0.2)',
         padding: '8px 16px',
         fontFamily: 'var(--font-mono)',
         fontSize: 9,

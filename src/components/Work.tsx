@@ -67,7 +67,7 @@ export default function Work() {
         >
           <div
             style={{
-              background: 'rgba(7,5,4,0.6)',
+              background: 'rgba(0,0,0,0.04)',
               backdropFilter: 'blur(4px)',
               WebkitBackdropFilter: 'blur(4px)',
               padding: '32px 40px',
@@ -114,8 +114,8 @@ function ProjectRow({
         gap: 24,
         padding: '20px 0',
         borderBottom: isActive
-          ? '1px solid rgba(232,82,10,0.5)'
-          : '1px solid rgba(242,232,211,0.08)',
+          ? '1px solid rgba(0,0,0,0.5)'
+          : '1px solid rgba(0,0,0,0.08)',
         cursor: 'pointer',
         transition: 'border-color 0.3s ease',
       }}

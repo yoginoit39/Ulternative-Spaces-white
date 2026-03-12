@@ -19,7 +19,7 @@ export default function Contact() {
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'rgba(7,5,4,0.7)',
+          background: 'rgba(255,255,255,0.6)',
           zIndex: 0,
           pointerEvents: 'none',
         }}
@@ -73,7 +73,7 @@ export default function Contact() {
             fontSize: 'clamp(20px, 3vw, 48px)',
             color: emailHovered ? 'var(--parch)' : 'var(--steel)',
             textDecoration: 'none',
-            borderBottom: emailHovered ? '1px solid rgba(242,232,211,0.4)' : '1px solid transparent',
+            borderBottom: emailHovered ? '1px solid rgba(0,0,0,0.4)' : '1px solid transparent',
             transition: 'color 0.3s ease, border-bottom-color 0.3s ease',
             letterSpacing: '-0.02em',
           }}
@@ -85,7 +85,7 @@ export default function Contact() {
         {/* Info row */}
         <div
           style={{
-            borderTop: '1px solid rgba(242,232,211,0.06)',
+            borderTop: '1px solid rgba(0,0,0,0.06)',
             marginTop: 80,
             paddingTop: 40,
             display: 'flex',

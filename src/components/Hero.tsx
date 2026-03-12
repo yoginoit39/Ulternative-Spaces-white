@@ -88,7 +88,7 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
           left: 0,
           right: 0,
           height: '60%',
-          background: 'linear-gradient(to top, rgba(7,5,4,0.7) 0%, transparent 100%)',
+          background: 'linear-gradient(to top, rgba(255,255,255,0.7) 0%, transparent 100%)',
           pointerEvents: 'none',
           zIndex: 1,
         }}
@@ -287,8 +287,8 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
           left: 0,
           right: 0,
           overflow: 'hidden',
-          borderTop: '1px solid rgba(242,232,211,0.06)',
-          backgroundColor: 'rgba(14,12,10,0.6)',
+          borderTop: '1px solid rgba(0,0,0,0.08)',
+          backgroundColor: 'rgba(255,255,255,0.6)',
           padding: '10px 0',
           whiteSpace: 'nowrap',
           zIndex: 2,
@@ -332,17 +332,17 @@ function FilterButton({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        border: active || hovered ? '1px solid var(--ember)' : '1px solid rgba(242,232,211,0.15)',
+        border: active || hovered ? '1px solid var(--ember)' : '1px solid rgba(0,0,0,0.15)',
         padding: '6px 12px',
         fontFamily: 'var(--font-mono)',
         fontSize: 9,
         letterSpacing: '0.12em',
         textTransform: 'uppercase',
         color: active || hovered ? 'var(--parch)' : 'var(--steel)',
-        backgroundColor: active ? 'rgba(232,82,10,0.12)' : 'transparent',
+        backgroundColor: active ? 'rgba(0,0,0,0.08)' : 'transparent',
         cursor: 'pointer',
         transition: 'all 0.2s ease',
-        boxShadow: active ? '0 0 12px rgba(232,82,10,0.2)' : 'none',
+        boxShadow: active ? '0 0 12px rgba(0,0,0,0.15)' : 'none',
       }}
     >
       {label}
