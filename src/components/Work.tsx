@@ -67,10 +67,7 @@ export default function Work() {
         >
           <div
             style={{
-              background: 'rgba(0,0,0,0.04)',
-              backdropFilter: 'blur(4px)',
-              WebkitBackdropFilter: 'blur(4px)',
-              padding: '32px 40px',
+              padding: '32px 0',
             }}
           >
             {WORK_PROJECTS.map((project, i) => (

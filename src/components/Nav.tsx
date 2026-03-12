@@ -9,7 +9,7 @@ const NAV_LINKS = [
   { href: '/#gallery', label: 'Gallery' },
   { href: '/#services', label: 'Services' },
   { href: '/philosophy', label: 'Philosophy' },
-  { href: '/#contact', label: 'Contact' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 export default function Nav() {

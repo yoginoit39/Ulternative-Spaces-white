@@ -95,9 +95,7 @@ export default function About() {
           {/* Glass-dark panel behind text */}
           <div
             style={{
-              background: 'rgba(255,255,255,0)',
-              backdropFilter: 'blur(2px)',
-              WebkitBackdropFilter: 'blur(2px)',
+              
               padding: 40,
               position: 'relative',
             }}
@@ -231,9 +229,7 @@ export default function About() {
               margin: '24px 0 0 0',
               borderLeft: '2px solid var(--ember)',
               paddingLeft: 20,
-              background: 'rgba(255,255,255,0)',
-              backdropFilter: 'blur(2px)',
-              WebkitBackdropFilter: 'blur(2px)',
+              
               padding: '16px 20px',
             }}
           >
