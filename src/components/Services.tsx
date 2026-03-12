@@ -88,7 +88,7 @@ export default function Services() {
             style={{
               fontFamily: 'var(--font-syne)',
               fontWeight: 800,
-              fontSize: 'clamp(36px, 5vw, 72px)',
+              fontSize: 'clamp(28px, 3.2vw, 48px)',
               color: 'var(--parch)',
               letterSpacing: '-0.03em',
               lineHeight: 0.9,

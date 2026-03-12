@@ -75,7 +75,7 @@ export default function Gallery() {
           style={{
             fontFamily: 'var(--font-syne)',
             fontWeight: 800,
-            fontSize: 'clamp(48px, 7vw, 110px)',
+            fontSize: 'clamp(32px, 4vw, 60px)',
             color: 'var(--parch)',
             letterSpacing: '-0.03em',
             lineHeight: 0.9,
