@@ -88,12 +88,9 @@ export default function Gallery() {
         </h2>
       </div>
 
-      {/* Glass panel wrapping the project list */}
+      {/* Project list */}
       <div
         style={{
-          background: 'rgba(0,0,0,0.5)',
-          backdropFilter: 'blur(3px)',
-          WebkitBackdropFilter: 'blur(3px)',
           padding: '0 32px',
         }}
       >
