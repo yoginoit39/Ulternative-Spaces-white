@@ -192,57 +192,6 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
         scene.add(mesh);
       }
 
-      /* ── E) Project image panels ─────────────── */
-      const coverImages = [
-        '/images/Image from Facebook (1).jpg',
-        '/images/Image from Facebook (6).jpg',
-        '/images/Image from Facebook (11).jpg',
-        '/images/Image from Facebook (15).jpg',
-        '/images/Image from Facebook (19).jpg',
-        '/images/Image from Facebook (24).jpg',
-      ];
-
-      const panelPositions: [number, number, number][] = [
-        [-6, 8, -2],
-        [-2, 11, -4],
-        [3, 7, -3],
-        [7, 10, 1],
-        [4, 13, 4],
-        [-3, 6, 5],
-      ];
-
-      const panelRotations = [-0.12, 0.08, -0.15, 0.10, -0.08, 0.13];
-
-      const panelMeshes: import('three').Mesh[] = [];
-      const loader = new THREE.TextureLoader();
-
-      coverImages.forEach((src, i) => {
-        loader.load(src, (texture) => {
-          const geo = new THREE.PlaneGeometry(4, 3);
-          const mat = new THREE.MeshBasicMaterial({
-            map: texture,
-            transparent: true,
-            opacity: 0.0,
-            side: THREE.DoubleSide,
-          });
-          const mesh = new THREE.Mesh(geo, mat);
-          mesh.position.set(...panelPositions[i]);
-          mesh.rotation.y = panelRotations[i];
-          scene.add(mesh);
-          panelMeshes[i] = mesh;
-
-          // Border
-          const edges = new THREE.EdgesGeometry(geo);
-          const borderMat = new THREE.LineBasicMaterial({
-            color: 0x000000,
-            transparent: true,
-            opacity: 0.15,
-          });
-          const border = new THREE.LineSegments(edges, borderMat);
-          mesh.add(border);
-        });
-      });
-
       /* ── F) Service towers ────────────────────── */
       type TowerMesh = { mesh: import('three').LineSegments; mat: import('three').LineBasicMaterial };
       const towerMeshes: TowerMesh[] = [];
@@ -371,15 +320,7 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
           }
         }
 
-        // 5. Lerp image panel opacities
-        panelMeshes.forEach((mesh) => {
-          if (!mesh) return;
-          const target = activeSectionRef.current === 'work' ? 0.85 : 0.0;
-          const mat = mesh.material as THREE.MeshBasicMaterial;
-          mat.opacity += (target - mat.opacity) * 0.05;
-        });
-
-        // 6. Lerp service tower opacities
+        // 5. Lerp service tower opacities
         towerMeshes.forEach(({ mat }) => {
           const target = activeSectionRef.current === 'services' ? 0.40 : 0.0;
           mat.opacity += (target - mat.opacity) * 0.05;
