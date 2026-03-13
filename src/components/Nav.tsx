@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
+import TransitionLink from '@/components/TransitionLink';
 
 const NAV_LINKS = [
   { href: '/#about', label: 'About' },
@@ -49,7 +49,7 @@ export default function Nav() {
         }}
       >
         {/* Logo */}
-        <Link href="/" onClick={closeMenu} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+        <TransitionLink href="/" onClick={closeMenu} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
           <Image
             src="/images/logo.svg"
             alt="Ulternative Spaces"
@@ -81,7 +81,7 @@ export default function Nav() {
           >
             ULTERNATIVE SPACES
           </span>
-        </Link>
+        </TransitionLink>
 
         {/* Center nav links — desktop only */}
         <ul
@@ -188,23 +188,23 @@ export default function Nav() {
                 transition: `transform 0.5s var(--ease-out) ${i * 60}ms, opacity 0.5s ease ${i * 60}ms`,
               }}
             >
-              <a
+              <TransitionLink
                 href={link.href}
                 onClick={closeMenu}
                 style={{
                   display: 'block',
                   fontFamily: 'var(--font-syne)',
-                  fontWeight: 800,
-                  fontSize: 'clamp(36px, 10vw, 56px)',
+                  fontWeight: 500,
+                  fontSize: 'clamp(26px, 7vw, 44px)',
                   color: 'var(--parch)',
                   textDecoration: 'none',
-                  padding: '16px 0',
-                  letterSpacing: '-0.02em',
+                  padding: '14px 0',
+                  letterSpacing: '-0.01em',
                   lineHeight: 1,
                 }}
               >
                 {link.label}
-              </a>
+              </TransitionLink>
             </li>
           ))}
         </ul>
@@ -284,10 +284,8 @@ export default function Nav() {
 function NavLink({ href, label }: { href: string; label: string }) {
   const [hovered, setHovered] = useState(false);
   return (
-    <a
+    <TransitionLink
       href={href}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       style={{
         fontFamily: 'var(--font-mono)',
         fontSize: 9,
@@ -296,10 +294,13 @@ function NavLink({ href, label }: { href: string; label: string }) {
         textDecoration: 'none',
         textTransform: 'uppercase',
         transition: 'color 0.2s ease',
+        display: 'inline-block',
       }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       {label}
-    </a>
+    </TransitionLink>
   );
 }
 

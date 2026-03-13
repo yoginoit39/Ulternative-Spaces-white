@@ -27,6 +27,7 @@ const SERVICES = [
 
 export default function Services() {
   const tickerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const ticker = tickerRef.current;
@@ -45,11 +46,59 @@ export default function Services() {
     return () => cancelAnimationFrame(raf);
   }, []);
 
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    let isMounted = true;
+
+    (async () => {
+      const gsapModule = await import('gsap');
+      const gsap = gsapModule.default || gsapModule.gsap;
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+      gsap.registerPlugin(ScrollTrigger);
+      if (!isMounted) return;
+
+      const heading = section.querySelector('h2');
+      if (heading) {
+        gsap.from(heading, {
+          y: 30,
+          opacity: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: heading,
+            start: 'top 88%',
+            toggleActions: 'play none none none',
+          },
+        });
+      }
+
+      const serviceRows = section.querySelectorAll('.gs-service-row');
+      if (serviceRows.length) {
+        gsap.from(serviceRows, {
+          y: 40,
+          opacity: 0,
+          stagger: 0.12,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: serviceRows[0],
+            start: 'top 82%',
+            toggleActions: 'play none none none',
+          },
+        });
+      }
+    })();
+
+    return () => { isMounted = false; };
+  }, []);
+
   const tickerText = 'ARCHITECTURE · INTERIOR DESIGN · DESIGN-BUILD · ';
 
   return (
     <section
       id="services"
+      ref={sectionRef}
       style={{
         backgroundColor: 'transparent',
         padding: '120px 0 100px',
@@ -57,7 +106,6 @@ export default function Services() {
         position: 'relative',
       }}
     >
-      {/* Full-section dark overlay for readability */}
       <div
         style={{
           position: 'absolute',
@@ -68,14 +116,12 @@ export default function Services() {
         }}
       />
 
-      {/* Content at zIndex 1 */}
       <div style={{ position: 'relative', zIndex: 1 }}>
-        {/* Header */}
         <div style={{ padding: '0 5vw', marginBottom: 60 }}>
           <p
             style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: 10,
+              fontSize: 9,
               color: 'var(--ember)',
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
@@ -87,24 +133,22 @@ export default function Services() {
           <h2
             style={{
               fontFamily: 'var(--font-syne)',
-              fontWeight: 800,
-              fontSize: 'clamp(28px, 3.2vw, 48px)',
+              fontWeight: 600,
+              fontSize: 'clamp(18px, 2.2vw, 32px)',
               color: 'var(--parch)',
-              letterSpacing: '-0.03em',
-              lineHeight: 0.9,
+              letterSpacing: '-0.01em',
+              lineHeight: 0.95,
               margin: 0,
             }}
           >
-            WHAT WE BUILD
+            What We Build
           </h2>
         </div>
 
-        {/* Service rows */}
         {SERVICES.map((service) => (
           <ServiceRow key={service.num} service={service} />
         ))}
 
-        {/* Bottom marquee */}
         <div
           style={{
             overflow: 'hidden',
@@ -142,22 +186,20 @@ function ServiceRow({ service }: { service: (typeof SERVICES)[number] }) {
 
   return (
     <div
+      className="gs-service-row"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
         position: 'relative',
-        padding: '32px 5vw',
-        borderTop: hovered
-          ? '1px solid rgba(0,0,0,0.3)'
-          : '1px solid rgba(0,0,0,0.06)',
+        padding: '28px 5vw',
+        borderTop: hovered ? '1px solid rgba(0,0,0,0.3)' : '1px solid rgba(0,0,0,0.06)',
         transition: 'border-top-color 0.4s ease',
       }}
     >
-      {/* Number — top right */}
       <span
         style={{
           position: 'absolute',
-          top: 40,
+          top: 36,
           right: '5vw',
           fontFamily: 'var(--font-mono)',
           fontSize: 9,
@@ -169,13 +211,12 @@ function ServiceRow({ service }: { service: (typeof SERVICES)[number] }) {
         {service.num}
       </span>
 
-      {/* The big word */}
       <div
         style={{
           fontFamily: 'var(--font-syne)',
-          fontWeight: 800,
-          fontSize: 'clamp(28px, 3.8vw, 56px)',
-          letterSpacing: '-0.04em',
+          fontWeight: 600,
+          fontSize: 'clamp(20px, 2.6vw, 40px)',
+          letterSpacing: '-0.01em',
           lineHeight: 1,
           color: hovered ? 'var(--parch)' : 'rgba(0,0,0,0.12)',
           transition: 'color 0.4s ease',
@@ -185,12 +226,11 @@ function ServiceRow({ service }: { service: (typeof SERVICES)[number] }) {
         {service.word}
       </div>
 
-      {/* Tags */}
       <div
         style={{
           display: 'flex',
           gap: 8,
-          marginTop: 12,
+          marginTop: 10,
           flexWrap: 'wrap',
           opacity: hovered ? 1 : 0,
           transform: hovered ? 'translateY(0)' : 'translateY(8px)',
@@ -215,16 +255,13 @@ function ServiceRow({ service }: { service: (typeof SERVICES)[number] }) {
         ))}
       </div>
 
-      {/* Description */}
       <div
         className="service-description"
         style={{
           position: 'absolute',
           right: '5vw',
           top: '50%',
-          transform: hovered
-            ? 'translateY(-50%) translateX(0)'
-            : 'translateY(-50%) translateX(20px)',
+          transform: hovered ? 'translateY(-50%) translateX(0)' : 'translateY(-50%) translateX(20px)',
           maxWidth: 380,
           opacity: hovered ? 1 : 0,
           transition: 'opacity 0.4s ease, transform 0.4s ease',
@@ -235,7 +272,7 @@ function ServiceRow({ service }: { service: (typeof SERVICES)[number] }) {
           style={{
             fontFamily: 'var(--font-cormorant)',
             fontWeight: 300,
-            fontSize: 18,
+            fontSize: 16,
             color: 'var(--steel)',
             lineHeight: 1.7,
             margin: 0,

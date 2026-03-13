@@ -12,7 +12,7 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
   const [activeFilter, setActiveFilter] = useState<string>('ALL WORK');
   const [mouseX, setMouseX] = useState(0);
 
-  // GSAP entrance
+  // GSAP character-split entrance
   useEffect(() => {
     if (!siteReady) return;
 
@@ -21,17 +21,20 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
       const gsap = gsapModule.default || gsapModule.gsap;
       if (!gsap) return;
 
-      gsap.set(line1Ref.current, { y: '110%' });
-      gsap.set(line2Ref.current, { y: '110%' });
+      const chars1 = Array.from(line1Ref.current?.querySelectorAll('.hero-char') ?? []);
+      const chars2 = Array.from(line2Ref.current?.querySelectorAll('.hero-char') ?? []);
+
+      gsap.set(chars1, { y: 70, opacity: 0 });
+      gsap.set(chars2, { y: 70, opacity: 0 });
       gsap.set(ruleRef.current, { scaleX: 0, transformOrigin: 'left center' });
       gsap.set(infoRef.current, { opacity: 0, y: 20 });
       gsap.set(tickerRef.current, { opacity: 0 });
 
       const tl = gsap.timeline({ delay: 0.1 });
-      tl.to(line1Ref.current, { y: '0%', duration: 1.1, ease: 'power4.out' })
-        .to(ruleRef.current, { scaleX: 1, duration: 0.8, ease: 'power3.inOut' }, '-=0.6')
-        .to(line2Ref.current, { y: '0%', duration: 1.1, ease: 'power4.out' }, '-=0.8')
-        .to(infoRef.current, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.4')
+      tl.to(chars1, { y: 0, opacity: 1, stagger: 0.025, duration: 0.9, ease: 'power4.out' })
+        .to(ruleRef.current, { scaleX: 1, duration: 0.8, ease: 'power3.inOut' }, '-=0.55')
+        .to(chars2, { y: 0, opacity: 1, stagger: 0.025, duration: 0.9, ease: 'power4.out' }, '-=0.65')
+        .to(infoRef.current, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.35')
         .to(tickerRef.current, { opacity: 1, duration: 0.6 }, '-=0.2');
     };
 
@@ -70,6 +73,16 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
   const tickerText =
     'ARCHITECTURE · INTERIOR DESIGN · CONSTRUCTION · KAMPALA, UGANDA · JUBA, SOUTH SUDAN · DESIGN-BUILD · ULTERNATIVE SPACES · ';
 
+  const titleStyle: React.CSSProperties = {
+    fontFamily: 'var(--font-syne)',
+    fontWeight: 700,
+    fontSize: 'clamp(36px, 5vw, 72px)',
+    letterSpacing: '-0.01em',
+    lineHeight: 0.9,
+    color: 'var(--parch)',
+    margin: 0,
+  };
+
   return (
     <section
       id="hero"
@@ -80,7 +93,7 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
         overflowX: 'clip',
       }}
     >
-      {/* Bottom gradient overlay for text readability */}
+      {/* Bottom gradient */}
       <div
         style={{
           position: 'absolute',
@@ -94,7 +107,7 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
         }}
       />
 
-      {/* Top-left corner label */}
+      {/* Top-left label */}
       <span
         style={{
           position: 'absolute',
@@ -111,7 +124,7 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
         DESIGN-BUILD · EST. KAMPALA
       </span>
 
-      {/* Top-right corner label */}
+      {/* Top-right label */}
       <span
         style={{
           position: 'absolute',
@@ -142,46 +155,36 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
       >
         {/* Line 1: ULTERNATIVE */}
         <div style={{ overflow: 'hidden' }}>
-          <div
-            ref={line1Ref}
-            style={{
-              transform: siteReady ? undefined : 'translateY(110%)',
-              transition: 'transform 0.6s ease',
-              willChange: 'transform',
-            }}
-          >
+          <div ref={line1Ref} style={{ willChange: 'transform' }}>
             <div
               style={{
                 transform: siteReady ? `translateX(${parallaxOffset * -14}px)` : 'none',
                 transition: 'transform 0.6s ease',
               }}
             >
-              <h1
-                style={{
-                  fontFamily: 'var(--font-syne)',
-                  fontWeight: 800,
-                  fontSize: 'clamp(52px, 7.5vw, 110px)',
-                  letterSpacing: '-0.04em',
-                  lineHeight: 0.88,
-                  color: 'var(--parch)',
-                  margin: 0,
-                }}
-              >
-                ULTERNATIVE
+              <h1 style={titleStyle}>
+                {'ULTERNATIVE'.split('').map((char, i) => (
+                  <span
+                    key={i}
+                    className="hero-char"
+                    style={{ display: 'inline-block', opacity: 0 }}
+                  >
+                    {char}
+                  </span>
+                ))}
               </h1>
             </div>
           </div>
         </div>
 
-        {/* Gold rule */}
+        {/* Rule */}
         <div
           ref={ruleRef}
           style={{
             width: '60%',
             height: 1,
             background: 'linear-gradient(90deg, transparent, var(--gold), transparent)',
-            marginLeft: '5%',
-            margin: '16px 0 16px 5%',
+            margin: '12px 0 12px 5%',
             willChange: 'transform',
           }}
         />
@@ -195,39 +198,42 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
                 transition: 'transform 0.6s ease',
               }}
             >
-              <h1
-                style={{
-                  fontFamily: 'var(--font-syne)',
-                  fontWeight: 800,
-                  fontSize: 'clamp(52px, 7.5vw, 110px)',
-                  letterSpacing: '-0.04em',
-                  lineHeight: 0.88,
-                  color: 'var(--parch)',
-                  margin: 0,
-                }}
-              >
-                SPACES<span style={{ color: 'var(--ember)' }}>.</span>
+              <h1 style={titleStyle}>
+                {'SPACES'.split('').map((char, i) => (
+                  <span
+                    key={i}
+                    className="hero-char"
+                    style={{ display: 'inline-block', opacity: 0 }}
+                  >
+                    {char}
+                  </span>
+                ))}
+                <span
+                  className="hero-char"
+                  style={{ display: 'inline-block', opacity: 0, color: 'var(--ember)' }}
+                >
+                  .
+                </span>
               </h1>
             </div>
           </div>
         </div>
 
         {/* Info row */}
-        <div ref={infoRef} style={{ marginTop: 40 }}>
+        <div ref={infoRef} style={{ marginTop: 36 }}>
           <p
             style={{
               fontFamily: 'var(--font-mono)',
-              fontSize: 10,
+              fontSize: 9,
               color: 'var(--steel)',
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
-              marginBottom: 24,
+              marginBottom: 20,
             }}
           >
             Architecture · Interior Design · Design-Build
           </p>
 
-          {/* Filter buttons */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {FILTER_BUTTONS.map((btn) => (
               <FilterButton
@@ -279,7 +285,7 @@ export default function Hero({ siteReady }: { siteReady: boolean }) {
         </span>
       </div>
 
-      {/* Bottom scrolling ticker */}
+      {/* Scrolling ticker */}
       <div
         style={{
           position: 'absolute',

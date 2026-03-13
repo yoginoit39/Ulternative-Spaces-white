@@ -3,8 +3,8 @@ import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 
 const METRICS = [
-  { target: 50, label: 'Projects',  suffix: '+' },
-  { target: 8,  label: 'Years',     suffix: '+' },
+  { target: 50, label: 'Projects', suffix: '+' },
+  { target: 8,  label: 'Years',    suffix: '+' },
   { target: 2,  label: 'Countries', suffix: '' },
 ];
 
@@ -13,25 +13,73 @@ export default function About() {
   const metricsRef = useRef<HTMLDivElement>(null);
   const counterRefs = useRef<(HTMLDivElement | null)[]>([]);
   const hasAnimated = useRef(false);
+  const imgWrapRef = useRef<HTMLDivElement>(null);
 
-  // Reveal-up observer
+  // GSAP ScrollTrigger animations
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    const elements = section.querySelectorAll<HTMLElement>('.reveal-up');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
+    let isMounted = true;
+
+    (async () => {
+      const gsapModule = await import('gsap');
+      const gsap = gsapModule.default || gsapModule.gsap;
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+      gsap.registerPlugin(ScrollTrigger);
+      if (!isMounted) return;
+
+      // Heading reveal
+      const heading = section.querySelector('h2');
+      if (heading) {
+        gsap.from(heading, {
+          y: 40,
+          opacity: 0,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: heading,
+            start: 'top 88%',
+            toggleActions: 'play none none none',
+          },
         });
-      },
-      { threshold: 0.15, rootMargin: '0px 0px -60px 0px' }
-    );
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+      }
+
+      // Body paragraphs stagger
+      const paras = section.querySelectorAll('.about-body-text');
+      if (paras.length) {
+        gsap.from(paras, {
+          y: 20,
+          opacity: 0,
+          stagger: 0.1,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: paras[0],
+            start: 'top 84%',
+            toggleActions: 'play none none none',
+          },
+        });
+      }
+
+      // Image clip-path reveal
+      if (imgWrapRef.current) {
+        gsap.from(imgWrapRef.current, {
+          clipPath: 'inset(100% 0 0 0)',
+          duration: 1.3,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: imgWrapRef.current,
+            start: 'top 82%',
+            toggleActions: 'play none none none',
+          },
+        });
+      }
+    })();
+
+    return () => { isMounted = false; };
   }, []);
 
-  // GSAP counter animation on scroll into view
+  // Counter animation on scroll into view
   useEffect(() => {
     const metricsEl = metricsRef.current;
     if (!metricsEl) return;
@@ -39,11 +87,9 @@ export default function About() {
     const animateCounters = async () => {
       if (hasAnimated.current) return;
       hasAnimated.current = true;
-
       const gsapModule = await import('gsap');
       const gsap = gsapModule.default || gsapModule.gsap;
       if (!gsap) return;
-
       METRICS.forEach((metric, i) => {
         const el = counterRefs.current[i];
         if (!el) return;
@@ -52,19 +98,13 @@ export default function About() {
           val: metric.target,
           duration: 2,
           ease: 'power2.out',
-          onUpdate: function () {
-            el.textContent = Math.round(obj.val) + metric.suffix;
-          },
+          onUpdate: () => { el.textContent = Math.round(obj.val) + metric.suffix; },
         });
       });
     };
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) animateCounters();
-        });
-      },
+      (entries) => { entries.forEach((e) => { if (e.isIntersecting) animateCounters(); }); },
       { threshold: 0.3 }
     );
     observer.observe(metricsEl);
@@ -75,11 +115,7 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      style={{
-        padding: '160px 5vw',
-        backgroundColor: 'transparent',
-        position: 'relative',
-      }}
+      style={{ padding: '160px 5vw', backgroundColor: 'transparent', position: 'relative' }}
     >
       <div
         style={{
@@ -90,20 +126,13 @@ export default function About() {
         }}
         className="about-grid"
       >
-        {/* Left column — text with glass panel */}
-        <div className="reveal-up">
-          {/* Glass-dark panel behind text */}
-          <div
-            style={{
-              
-              padding: 40,
-              position: 'relative',
-            }}
-          >
+        {/* Left column */}
+        <div>
+          <div style={{ padding: '0 0 40px 0', position: 'relative' }}>
             <p
               style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: 10,
+                fontSize: 9,
                 color: 'var(--ember)',
                 letterSpacing: '0.15em',
                 textTransform: 'uppercase',
@@ -116,24 +145,25 @@ export default function About() {
             <h2
               style={{
                 fontFamily: 'var(--font-syne)',
-                fontWeight: 800,
-                fontSize: 'clamp(40px, 5vw, 72px)',
+                fontWeight: 600,
+                fontSize: 'clamp(26px, 3.2vw, 48px)',
                 color: 'var(--parch)',
-                lineHeight: 1.05,
-                letterSpacing: '-0.03em',
+                lineHeight: 1.1,
+                letterSpacing: '-0.01em',
                 marginBottom: 24,
               }}
             >
-              WE BUILD FOR
+              We Build for
               <br />
-              EAST AFRICA.
+              East Africa.
             </h2>
 
             <p
+              className="about-body-text"
               style={{
                 fontFamily: 'var(--font-cormorant)',
                 fontWeight: 300,
-                fontSize: 20,
+                fontSize: 18,
                 color: 'var(--steel)',
                 lineHeight: 1.75,
                 marginBottom: 24,
@@ -144,10 +174,11 @@ export default function About() {
             </p>
 
             <p
+              className="about-body-text"
               style={{
                 fontFamily: 'var(--font-cormorant)',
                 fontWeight: 300,
-                fontSize: 20,
+                fontSize: 18,
                 color: 'var(--steel)',
                 lineHeight: 1.75,
                 marginBottom: 32,
@@ -159,23 +190,15 @@ export default function About() {
               we serve clients across East Africa with spaces that are not only beautiful, but enduring.
             </p>
 
-            {/* Metrics row */}
-            <div
-              ref={metricsRef}
-              style={{
-                display: 'flex',
-                gap: 40,
-                flexWrap: 'wrap',
-              }}
-            >
+            <div ref={metricsRef} style={{ display: 'flex', gap: 40, flexWrap: 'wrap' }}>
               {METRICS.map((m, i) => (
                 <div key={m.label}>
                   <div
                     ref={(el) => { counterRefs.current[i] = el; }}
                     style={{
                       fontFamily: 'var(--font-syne)',
-                      fontWeight: 800,
-                      fontSize: 'clamp(36px, 4vw, 52px)',
+                      fontWeight: 600,
+                      fontSize: 'clamp(28px, 3vw, 42px)',
                       color: 'var(--ember)',
                       lineHeight: 1,
                     }}
@@ -201,8 +224,9 @@ export default function About() {
         </div>
 
         {/* Right column — image */}
-        <div className="reveal-up" style={{ paddingTop: 48 }}>
+        <div style={{ paddingTop: 48 }}>
           <div
+            ref={imgWrapRef}
             style={{
               position: 'relative',
               aspectRatio: '4/5',
@@ -223,13 +247,11 @@ export default function About() {
             style={{
               fontFamily: 'var(--font-cormorant)',
               fontStyle: 'italic',
-              fontSize: 'clamp(18px, 2vw, 24px)',
+              fontSize: 'clamp(16px, 1.8vw, 22px)',
               color: 'var(--steel)',
               lineHeight: 1.5,
               margin: '24px 0 0 0',
               borderLeft: '2px solid var(--ember)',
-              paddingLeft: 20,
-              
               padding: '16px 20px',
             }}
           >
@@ -240,9 +262,7 @@ export default function About() {
 
       <style>{`
         @media (min-width: 900px) {
-          .about-grid {
-            grid-template-columns: 60% 40% !important;
-          }
+          .about-grid { grid-template-columns: 60% 40% !important; }
         }
       `}</style>
     </section>

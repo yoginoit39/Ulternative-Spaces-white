@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
-import { Syne, Cormorant_Garamond, JetBrains_Mono } from 'next/font/google';
+import { Playfair_Display, Cormorant_Garamond, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
+import { TransitionProvider } from '@/context/transition';
+import PageTransition from '@/components/PageTransition';
 
-const syne = Syne({
-  weight: ['800'],
+const playfair = Playfair_Display({
+  weight: ['400', '500', '700'],
+  style: ['normal', 'italic'],
   subsets: ['latin'],
   variable: '--font-syne',
   display: 'swap',
@@ -41,9 +44,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${syne.variable} ${cormorant.variable} ${jetbrains.variable}`}>
-      <body style={{ fontFamily: 'var(--font-cormorant), serif' }}>
-        {children}
+    <html lang="en" className={`${playfair.variable} ${cormorant.variable} ${jetbrains.variable}`}>
+      <body style={{ fontFamily: 'var(--font-cormorant), serif' }} suppressHydrationWarning>
+        <TransitionProvider>
+          <PageTransition />
+          {children}
+        </TransitionProvider>
       </body>
     </html>
   );
