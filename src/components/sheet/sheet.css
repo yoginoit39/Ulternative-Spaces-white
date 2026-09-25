@@ -62,7 +62,7 @@ a:hover .plate img, .plate:hover img { filter: grayscale(0) contrast(1.02); }
 .cv-tr { position: absolute; top: 20px; right: 0; text-align: right; }
 .cv-title { font-family: var(--font-syne); font-weight: 500; letter-spacing: -0.03em; line-height: .86; color: #000; margin: 0; font-size: clamp(60px, 9.2vw, 170px); }
 .cv-line { display: block; white-space: nowrap; }
-.cv-line-2 { padding-left: 0.9em; font-style: italic; font-weight: 400; }
+.cv-line-2 { padding-left: 0; font-style: italic; font-weight: 400; }
 .cv-mask { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .06em; }
 .cv-char { display: inline-block; will-change: transform; transform: translateY(110%); }
 .cv-dot { color: #000; font-style: normal; }
