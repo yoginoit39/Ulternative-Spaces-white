@@ -11,6 +11,15 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ── Type: heavy rounded geometric display, light contrast word instead of italic ── */
+h1, h2, h3, .h-display, .cv-title, .pj-name, .ct-title, .pj-next-name, .sv-word, .st-metric-v { font-weight: 700 !important; letter-spacing: -0.035em !important; }
+.h-display em, .cv-line-2, .pj-name em, .ct-title em, .pj-next-name em { font-style: normal !important; font-weight: 300 !important; letter-spacing: -0.02em !important; }
+.wk-num, .st-idx, .pr-idx, .sv-idx, .ct-idx, .pj-idx, .pj-plate-num { font-weight: 800 !important; }
+.wk-meta h3, .pr-steps h3 { font-weight: 600 !important; letter-spacing: -0.02em !important; }
+.lede, .cv-sub p, .st-quote, .pr-steps p, .sv-detail-item p { font-weight: 400; }
+.st-quote, .ct-mail { font-style: normal; }
+.ct-mail { font-weight: 300; letter-spacing: -0.01em; }
+
 /* ── Reset / base ──────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

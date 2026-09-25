@@ -228,13 +228,13 @@ export function buildDrawing(category = 'Residential', seed = 7): Drawing {
   note.push({ d: `M ${SX1 + 6} ${GY - FH * 0.5} L ${SX1 + 60} ${GY - FH * 0.5 + 50} L ${SX1 + 140} ${GY - FH * 0.5 + 50}`, layer: 'note', w: 0.6 });
   // north arrow
   note.push({ d: `M ${PX1 - 30} 150 a 26 26 0 1 0 52 0 a 26 26 0 1 0 -52 0`, layer: 'note', w: 0.8 });
-  note.push({ d: `M ${PX1 - 4} 128 L ${PX1 + 8} 166 L ${PX1 - 4} 158 L ${PX1 - 16} 166 Z`, layer: 'note', w: 0.8, fill: 'rgba(0,0,0,.6)' });
+  note.push({ d: `M ${PX1 - 4} 128 L ${PX1 + 8} 166 L ${PX1 - 4} 158 L ${PX1 - 16} 166 Z`, layer: 'note', w: 0.8, fill: 'rgba(0,0,0,.25)' });
   // scale bar
   const sbx = PX0, sby = PY1 + 70;
   note.push({ d: L(sbx, sby, sbx + 200, sby), layer: 'note', w: 1 });
   [0, 40, 80, 120, 200].forEach((o) => note.push({ d: L(sbx + o, sby - 5, sbx + o, sby + 5), layer: 'note', w: 0.8 }));
-  note.push({ d: R(sbx, sby - 3, 40, 3), layer: 'note', w: 0.3, fill: '#000' });
-  note.push({ d: R(sbx + 80, sby - 3, 40, 3), layer: 'note', w: 0.3, fill: '#000' });
+  note.push({ d: R(sbx, sby - 3, 40, 3), layer: 'note', w: 0.3, fill: 'rgba(0,0,0,.3)' });
+  note.push({ d: R(sbx + 80, sby - 3, 40, 3), layer: 'note', w: 0.3, fill: 'rgba(0,0,0,.3)' });
   // revision cloud around a plan window
   let cloud = `M ${PX1 - 176} ${PY0 - 18}`;
   for (let i = 0; i < 8; i++) cloud += ` a 12 12 0 0 1 20 0`;

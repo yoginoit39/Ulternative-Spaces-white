@@ -1,0 +1,22 @@
+// Copy to src/fonts/brand.ts once the files are present, then in src/app/fonts.ts:
+//   import { kruisel, colasta } from '@/fonts/brand';
+//   export const display = kruisel; export const body = colasta;
+import localFont from 'next/font/local';
+
+export const kruisel = localFont({
+  src: [
+    { path: './Kruisel-Bold.woff2', weight: '700', style: 'normal' },
+    // { path: './Kruisel-Regular.woff2', weight: '400', style: 'normal' },
+  ],
+  variable: '--font-syne',
+  display: 'swap',
+});
+
+export const colasta = localFont({
+  src: [
+    { path: './Colasta-Regular.woff2', weight: '400', style: 'normal' },
+    // { path: './Colasta-Medium.woff2', weight: '500', style: 'normal' },
+  ],
+  variable: '--font-cormorant',
+  display: 'swap',
+});

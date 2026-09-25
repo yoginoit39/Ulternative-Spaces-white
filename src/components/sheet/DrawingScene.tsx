@@ -5,7 +5,7 @@ import { subscribeSheet } from './useSheetScroll';
 
 const PARALLAX: Record<string, number> = { grid: 0.03, drawing: 0.06, hatch: 0.06, dim: 0.09, note: 0.11 };
 const INK: Record<string, string> = {
-  grid: 'rgba(0,0,0,.32)', drawing: 'rgba(0,0,0,.55)', hatch: 'rgba(0,0,0,.26)', dim: 'rgba(0,0,0,.5)', note: 'rgba(0,0,0,.58)',
+  grid: 'rgba(0,0,0,.14)', drawing: 'rgba(0,0,0,.22)', hatch: 'rgba(0,0,0,.10)', dim: 'rgba(0,0,0,.2)', note: 'rgba(0,0,0,.24)',
 };
 
 /**
@@ -128,9 +128,9 @@ export default function DrawingScene({ category = 'Residential', seed = 7 }: { c
       ))}
       {/* pen tip */}
       <g ref={penRef} style={{ opacity: 0, transition: 'opacity .3s' }}>
-        <circle r="3.2" fill="#000" />
-        <circle r="11" fill="none" stroke="rgba(0,0,0,.35)" strokeWidth="0.8" />
-        <path d="M -18 0 H -13 M 13 0 H 18 M 0 -18 V -13 M 0 13 V 18" stroke="rgba(0,0,0,.5)" strokeWidth="0.8" />
+        <circle r="2.6" fill="rgba(0,0,0,.5)" />
+        <circle r="11" fill="none" stroke="rgba(0,0,0,.18)" strokeWidth="0.8" />
+        <path d="M -18 0 H -13 M 13 0 H 18 M 0 -18 V -13 M 0 13 V 18" stroke="rgba(0,0,0,.25)" strokeWidth="0.8" />
       </g>
     </svg>
   );
