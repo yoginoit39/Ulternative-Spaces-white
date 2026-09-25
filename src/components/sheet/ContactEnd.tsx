@@ -1,5 +1,6 @@
 'use client';
 import Panel from './Panel';
+import DraftingBoard from './DraftingBoard';
 import { usePageTransition } from '@/context/transition';
 
 export default function ContactEnd() {
@@ -25,6 +26,10 @@ export default function ContactEnd() {
             <em>BRIEF US</em>
             <a href="/contact" onClick={(e) => { e.preventDefault(); navigate('/contact'); }} className="ct-btn">Contact form ↗</a>
           </div>
+        </div>
+
+        <div className="ct-board" data-reveal="right" data-delay="0.2">
+          <DraftingBoard />
         </div>
 
         <footer className="ct-foot" data-reveal="up" data-delay="0.2">
