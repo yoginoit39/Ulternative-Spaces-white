@@ -3,31 +3,30 @@ import { useEffect, useRef } from 'react';
 import type * as THREE from 'three';
 
 interface ThreeSceneProps {
-  activeSection: string;
-  scrollProgress: number;
+  /** 0..1 position along the horizontal sheet */
+  progress: number;
 }
 
-const WAYPOINTS: Record<string, { pos: [number, number, number]; target: [number, number, number] }> = {
-  hero:     { pos: [22, 14, 30],   target: [0, 6, 0]  },
-  about:    { pos: [2, 10, 18],    target: [0, 5, 0]  },
-  work:     { pos: [14, 18, 26],   target: [0, 3, 0]  },
-  services: { pos: [-18, 10, 24],  target: [0, 6, 0]  },
-  gallery:  { pos: [6, 8, 36],     target: [0, 8, 0]  },
-  contact:  { pos: [4, 26, 46],    target: [0, 0, 0]  },
-};
+// Camera walks a closed path around the building as the sheet is read.
+const CAM_PATH: [number, number, number][] = [
+  [26, 12, 30],   // cover — three-quarter view, distant
+  [6, 9, 22],     // studio — closer, frontal
+  [-14, 16, 28],  // work — swing left, higher
+  [-26, 8, 6],    // process — side elevation
+  [-16, 12, -22], // services — behind, towers visible
+  [10, 28, -30],  // contact — aerial, looking down
+];
+const LOOK_PATH: [number, number, number][] = [
+  [0, 6, 0], [0, 5, 0], [0, 4, 0], [0, 6, 0], [-8, 5, 0], [0, 0, 0],
+];
 
-export default function ThreeScene({ activeSection, scrollProgress }: ThreeSceneProps) {
+export default function ThreeScene({ progress }: ThreeSceneProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const activeSectionRef = useRef(activeSection);
-  const scrollProgressRef = useRef(scrollProgress);
+  const progressRef = useRef(progress);
 
   useEffect(() => {
-    activeSectionRef.current = activeSection;
-  }, [activeSection]);
-
-  useEffect(() => {
-    scrollProgressRef.current = scrollProgress;
-  }, [scrollProgress]);
+    progressRef.current = progress;
+  }, [progress]);
 
   useEffect(() => {
     // Skip on small touch devices
@@ -40,9 +39,11 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
 
     let raf: number;
     let cleanupFn: (() => void) | undefined;
+    let disposed = false;
 
     const init = async () => {
       const THREE = await import('three');
+      if (disposed) return; // unmounted while importing — don't create a 2nd renderer
 
       /* ── Renderer ─────────────────────────────── */
       const renderer = new THREE.WebGLRenderer({
@@ -57,7 +58,9 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
       /* ── Scene & Camera ──────────────────────── */
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(32, window.innerWidth / window.innerHeight, 0.1, 500);
-      const initWp = WAYPOINTS['hero'];
+      const camCurve = new THREE.CatmullRomCurve3(CAM_PATH.map((p) => new THREE.Vector3(...p)), false, 'catmullrom', 0.4);
+      const lookCurve = new THREE.CatmullRomCurve3(LOOK_PATH.map((p) => new THREE.Vector3(...p)), false, 'catmullrom', 0.4);
+      const initWp = { pos: CAM_PATH[0], target: LOOK_PATH[0] };
       camera.position.set(...initWp.pos);
       const lookAtTarget = new THREE.Vector3(...initWp.target);
       camera.lookAt(lookAtTarget);
@@ -301,14 +304,12 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
         }
         positions.needsUpdate = true;
 
-        // 2 & 3. Lerp camera toward active waypoint
-        const sec = activeSectionRef.current;
-        const wp = WAYPOINTS[sec] || WAYPOINTS['hero'];
-        camTargetPos.set(...wp.pos);
-        camTargetLook.set(...wp.target);
-
-        camera.position.lerp(camTargetPos, 0.025);
-        currentLook.lerp(camTargetLook, 0.025);
+        // 2 & 3. Camera follows the path according to sheet progress
+        const t = Math.min(1, Math.max(0, progressRef.current));
+        camCurve.getPointAt(t, camTargetPos);
+        lookCurve.getPointAt(t, camTargetLook);
+        camera.position.lerp(camTargetPos, 0.06);
+        currentLook.lerp(camTargetLook, 0.06);
         camera.lookAt(currentLook);
 
         // 4. Building parts rising
@@ -322,7 +323,8 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
 
         // 5. Lerp service tower opacities
         towerMeshes.forEach(({ mat }) => {
-          const target = activeSectionRef.current === 'services' ? 0.40 : 0.0;
+          const pt = progressRef.current;
+          const target = pt > 0.62 && pt < 0.9 ? 0.40 : 0.0;
           mat.opacity += (target - mat.opacity) * 0.05;
         });
 
@@ -353,10 +355,17 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
         dimMat.dispose();
         tickMat.dispose();
       };
+
+      // If we were unmounted while setting up, clean up immediately.
+      if (disposed) cleanupFn();
     };
 
     init();
-    return () => cleanupFn?.();
+    return () => {
+      disposed = true;
+      cancelAnimationFrame(raf);
+      cleanupFn?.();
+    };
   }, []); // Only run once
 
   // Mobile fallback: just show the canvas (it'll be empty, that's fine)
@@ -370,6 +379,7 @@ export default function ThreeScene({ activeSection, scrollProgress }: ThreeScene
         height: '100%',
         zIndex: 0,
         pointerEvents: 'none',
+        opacity: 0.55,
       }}
     />
   );

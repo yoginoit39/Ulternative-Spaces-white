@@ -1,78 +1,62 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import Cursor from '@/components/Cursor';
 import Loader from '@/components/Loader';
-import SmoothScroll from '@/components/SmoothScroll';
 import Nav from '@/components/Nav';
-import Hero from '@/components/Hero';
-import About from '@/components/About';
-import Work from '@/components/Work';
-import Services from '@/components/Services';
-import Gallery from '@/components/Gallery';
-import Contact from '@/components/Contact';
-import Footer from '@/components/Footer';
+import SmoothScroll from '@/components/SmoothScroll';
+import SheetChrome, { type Station } from '@/components/sheet/SheetChrome';
+import { useSheetScroll, subscribeSheet } from '@/components/sheet/useSheetScroll';
+import Cover from '@/components/sheet/Cover';
+import Studio from '@/components/sheet/Studio';
+import WorkStrip from '@/components/sheet/WorkStrip';
+import ProcessLine from '@/components/sheet/ProcessLine';
+import ServicesWall from '@/components/sheet/ServicesWall';
+import ContactEnd from '@/components/sheet/ContactEnd';
+import '@/components/sheet/sheet.css';
 
 const ThreeScene = dynamic(() => import('@/components/ThreeScene'), { ssr: false });
 
+const STATIONS: Station[] = [
+  { id: 'cover',    label: 'COVER',         sheet: '00' },
+  { id: 'studio',   label: 'THE STUDIO',    sheet: '01' },
+  { id: 'work',     label: 'SELECTED WORK', sheet: '02' },
+  { id: 'process',  label: 'PROCESS',       sheet: '03' },
+  { id: 'services', label: 'SERVICES',      sheet: '04' },
+  { id: 'contact',  label: 'CONTACT',       sheet: '05' },
+];
+
 export default function HomeClient() {
   const [siteReady, setSiteReady] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const ids = useMemo(() => STATIONS.map((s) => s.id), []);
+  const onLoaded = useCallback(() => setSiteReady(true), []);
 
-  // Track scroll progress
-  useEffect(() => {
-    const onScroll = () => {
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress(total > 0 ? window.scrollY / total : 0);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  // Track active section via IntersectionObserver
-  useEffect(() => {
-    if (!siteReady) return;
-    const sections = ['hero', 'about', 'work', 'services', 'gallery', 'contact'];
-    const observers: IntersectionObserver[] = [];
-    sections.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const obs = new IntersectionObserver(
-        ([e]) => {
-          if (e.isIntersecting) setActiveSection(id);
-        },
-        { threshold: 0.4 }
-      );
-      obs.observe(el);
-      observers.push(obs);
-    });
-    return () => observers.forEach((o) => o.disconnect());
-  }, [siteReady]);
+  useSheetScroll(wrapRef, trackRef, ids, siteReady);
+  useEffect(() => subscribeSheet((s) => setProgress(s.progress)), []);
 
   return (
-    <>
+    <SmoothScroll>
       <Cursor />
-      <Loader onComplete={() => setSiteReady(true)} />
+      <Loader onComplete={onLoaded} />
 
-      {/* Three.js canvas — fixed behind everything */}
-      {siteReady && (
-        <ThreeScene activeSection={activeSection} scrollProgress={scrollProgress} />
-      )}
+      {siteReady && <ThreeScene progress={progress} />}
 
-      {/* HTML content — normal flow over the canvas */}
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        <SmoothScroll>
-          <Nav />
-          <Hero siteReady={siteReady} />
-          <About />
-          <Work />
-          <Services />
-          <Gallery />
-          <Contact />
-          <Footer />
-        </SmoothScroll>
+      <Nav />
+      <SheetChrome stations={STATIONS} trackRef={trackRef} />
+
+      <div ref={wrapRef} className="sheet-wrap" style={{ position: 'relative', zIndex: 1 }}>
+        <div ref={trackRef} className="sheet-track">
+          <Cover ready={siteReady} />
+          <Studio />
+          <WorkStrip />
+          <ProcessLine />
+          <ServicesWall />
+          <ContactEnd />
+        </div>
       </div>
-    </>
+    </SmoothScroll>
   );
 }

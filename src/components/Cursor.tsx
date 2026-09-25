@@ -23,12 +23,12 @@ export default function Cursor() {
     const onMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
+      dot.style.opacity = '1';
+      ring.style.opacity = '1';
     };
 
-    const onEnterInteractive = () => {
-      isHoveringInteractive = true;
-      if (ring) ring.style.transform = `translate(${ringX - 22}px, ${ringY - 22}px) scale(2.5)`;
-    };
+    let ringScale = 1;
+    const onEnterInteractive = () => { isHoveringInteractive = true; };
 
     const onLeaveInteractive = () => {
       isHoveringInteractive = false;
@@ -36,17 +36,13 @@ export default function Cursor() {
 
     const loop = () => {
       // Dot: zero lag
-      dot.style.transform = `translate(${mouseX - 3}px, ${mouseY - 3}px)`;
+      dot.style.transform = `translate3d(${mouseX - 3}px, ${mouseY - 3}px, 0)`;
 
-      // Ring: lerp
-      ringX += (mouseX - ringX) * 0.1;
-      ringY += (mouseY - ringY) * 0.1;
-
-      if (!isHoveringInteractive) {
-        ring.style.transform = `translate(${ringX - 22}px, ${ringY - 22}px) scale(1)`;
-      } else {
-        ring.style.transform = `translate(${ringX - 22}px, ${ringY - 22}px) scale(2.5)`;
-      }
+      // Ring: tight follow, scale eased in the same loop
+      ringX += (mouseX - ringX) * 0.42;
+      ringY += (mouseY - ringY) * 0.42;
+      ringScale += ((isHoveringInteractive ? 2.2 : 1) - ringScale) * 0.25;
+      ring.style.transform = `translate3d(${ringX - 16}px, ${ringY - 16}px, 0) scale(${ringScale})`;
 
       rafId = requestAnimationFrame(loop);
     };
@@ -98,6 +94,7 @@ export default function Cursor() {
           zIndex: 99999,
           willChange: 'transform',
           mixBlendMode: 'difference',
+          opacity: 0,
         }}
       />
       {/* Ring */}
@@ -108,14 +105,14 @@ export default function Cursor() {
           position: 'fixed',
           top: 0,
           left: 0,
-          width: 44,
-          height: 44,
+          width: 32,
+          height: 32,
           borderRadius: '50%',
-          border: '1px solid rgba(0,0,0,0.5)',
+          border: '1px solid rgba(0,0,0,0.55)',
           pointerEvents: 'none',
           zIndex: 99998,
           willChange: 'transform',
-          transition: 'transform 0.15s ease',
+          opacity: 0,
         }}
       />
       <style>{`

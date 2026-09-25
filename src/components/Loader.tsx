@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type LoaderState = 'drawing' | 'revealing' | 'done';
 
@@ -8,11 +8,13 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
   const [circlesVisible, setCirclesVisible] = useState(false);
   const [slideUp, setSlideUp] = useState(false);
   const [unmounted, setUnmounted] = useState(false);
+  const onCompleteRef = useRef(onComplete);
+  useEffect(() => { onCompleteRef.current = onComplete; });
 
   useEffect(() => {
     // Check session storage for return visits
     if (typeof window !== 'undefined' && sessionStorage.getItem('ul-loaded')) {
-      const t = setTimeout(() => onComplete(), 50);
+      const t = setTimeout(() => onCompleteRef.current(), 50);
       setUnmounted(true);
       return () => clearTimeout(t);
     }
@@ -31,7 +33,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
     }, 2600);
 
     const t3 = setTimeout(() => {
-      onComplete();
+      onCompleteRef.current();
       setUnmounted(true);
     }, 3500);
 
@@ -40,7 +42,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
       clearTimeout(t2);
       clearTimeout(t3);
     };
-  }, [onComplete]);
+  }, []);
 
   if (unmounted) return null;
 

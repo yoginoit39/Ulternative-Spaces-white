@@ -1,26 +1,40 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import TransitionLink from '@/components/TransitionLink';
+import { gotoPanel } from '@/components/sheet/useSheetScroll';
 
 const NAV_LINKS = [
-  { href: '/#about', label: 'About' },
+  { href: '/#studio', label: 'Studio' },
   { href: '/#work', label: 'Work' },
-  { href: '/#gallery', label: 'Gallery' },
+  { href: '/#process', label: 'Process' },
   { href: '/#services', label: 'Services' },
   { href: '/philosophy', label: 'Philosophy' },
   { href: '/contact', label: 'Contact' },
 ];
 
 export default function Nav() {
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
+  // On the home sheet, hash links jump horizontally instead of reloading.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    if (pathname !== '/') return;
+    const onClick = (e: MouseEvent) => {
+      const a = (e.target as HTMLElement).closest('a');
+      if (!a) return;
+      const href = a.getAttribute('href') || '';
+      if (!href.startsWith('/#')) return;
+      e.preventDefault();
+      const id = href.slice(2);
+      history.replaceState(null, '', `#${id}`);
+      gotoPanel(id);
+      setMenuOpen(false);
+    };
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
@@ -38,18 +52,19 @@ export default function Nav() {
           left: 0,
           right: 0,
           zIndex: 200,
-          backgroundColor: 'rgba(255,255,255,0.9)',
+          backgroundColor: 'rgba(255,255,255,0.85)',
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
-          borderBottom: '1px solid rgba(0,0,0,0.08)',
-          padding: '20px 5vw',
+          borderBottom: '1px solid rgba(0,0,0,0.15)',
+          height: 64,
+          padding: '0 5vw',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
         }}
       >
         {/* Logo */}
-        <TransitionLink href="/" onClick={closeMenu} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+        <TransitionLink href="/" onClick={() => { closeMenu(); if (pathname === '/') gotoPanel('cover'); }} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
           <Image
             src="/images/logo.svg"
             alt="Ulternative Spaces"
@@ -266,8 +281,8 @@ export default function Nav() {
       </div>
 
       <style>{`
-        .nav-hamburger { display: none; }
-        .nav-overlay { display: none; }
+        .nav-hamburger { display: none !important; }
+        .nav-overlay { display: none !important; }
 
         @media (max-width: 767px) {
           .nav-center-links { display: none !important; }
@@ -288,9 +303,9 @@ function NavLink({ href, label }: { href: string; label: string }) {
       href={href}
       style={{
         fontFamily: 'var(--font-mono)',
-        fontSize: 9,
+        fontSize: 10,
         letterSpacing: '0.15em',
-        color: hovered ? 'var(--parch)' : 'var(--steel)',
+        color: hovered ? 'var(--parch)' : 'rgba(0,0,0,0.7)',
         textDecoration: 'none',
         textTransform: 'uppercase',
         transition: 'color 0.2s ease',
@@ -307,8 +322,8 @@ function NavLink({ href, label }: { href: string; label: string }) {
 function CTAButton() {
   const [hovered, setHovered] = useState(false);
   return (
-    <a
-      href="mailto:sulternative@gmail.com"
+    <TransitionLink
+      href="/contact"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -326,6 +341,6 @@ function CTAButton() {
       }}
     >
       Start a Project ↗
-    </a>
+    </TransitionLink>
   );
 }
