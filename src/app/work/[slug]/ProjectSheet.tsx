@@ -58,7 +58,7 @@ export default function ProjectSheet({
               <div className="pj-idx" data-parallax="0.3">{num}</div>
 
               <div className="pj-title-text paper">
-                <a href="/#work" onClick={go('/#work')} className="pj-back" data-reveal="up">← ALL WORK</a>
+                <a href="/work" onClick={go('/work')} className="pj-back" data-reveal="up">← DRAWING REGISTER</a>
                 <p className="eyebrow" data-reveal="up" data-delay="0.05">Project {num} / {String(total).padStart(2, '0')} · {project.category}</p>
                 <h1 className="pj-name" data-reveal="up" data-delay="0.1">{splitName(project.name)}</h1>
 

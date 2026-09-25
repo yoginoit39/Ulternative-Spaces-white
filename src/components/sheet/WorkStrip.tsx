@@ -1,7 +1,8 @@
 'use client';
 import Image from 'next/image';
 import Panel from './Panel';
-import { PROJECTS } from '@/lib/projects';
+import TransitionLink from '@/components/TransitionLink';
+import { FEATURED } from '@/lib/projects';
 import { usePageTransition } from '@/context/transition';
 
 // Rhythm of card widths (vw) — architecture reads better with unequal bays.
@@ -17,10 +18,15 @@ export default function WorkStrip() {
           <p className="eyebrow" data-reveal="up">02 / Selected work</p>
           <h2 className="h-display" data-reveal="up" data-delay="0.05">Six<br />buildings,<br /><em>one line.</em></h2>
           <p className="lede" data-reveal="up" data-delay="0.1">Walk the elevation. Each bay is a built project — click to enter.</p>
+          <div data-reveal="up" data-delay="0.15">
+            <TransitionLink href="/work" className="wk-all">
+              Open the full register <span>↗</span>
+            </TransitionLink>
+          </div>
         </header>
 
         <div className="wk-row">
-          {PROJECTS.map((p, i) => (
+          {FEATURED.map((p, i) => (
             <a
               key={p.slug}
               href={`/work/${p.slug}`}
