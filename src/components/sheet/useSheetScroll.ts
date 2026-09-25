@@ -46,8 +46,10 @@ export function useSheetScroll(
 ) {
   // Layout effect so the cleanup (un-pin, restore DOM) runs before React
   // detaches nodes on route change.
+  const idsKey = panelIds.join('|');
   useLayoutEffect(() => {
     if (!enabled) return;
+    const panelIds = idsKey.split('|');
     const wrap = wrapRef.current;
     const track = trackRef.current;
     if (!wrap || !track) return;
@@ -104,18 +106,28 @@ export function useSheetScroll(
             kind === 'scale' ? { scale: 0.92, opacity: 0 } :
             kind === 'line'  ? { scaleX: 0, transformOrigin: 'left center' } :
                                { y: 40, opacity: 0 };
-          gsap.from(el, {
+          const vars: gsap.TweenVars = {
             ...from,
             duration: kind === 'clip' ? 1.2 : 0.9,
             ease: kind === 'clip' ? 'power4.out' : 'power3.out',
             delay: Number(el.dataset.delay || 0),
-            scrollTrigger: {
-              trigger: el,
-              containerAnimation: scrub,
-              start: 'left 88%',
-              toggleActions: 'play none none none',
-            },
-          });
+          };
+          // Already on screen at load (first bay): a containerAnimation
+          // trigger whose start is before progress 0 never fires, so play now.
+          const inView = el.getBoundingClientRect().left < window.innerWidth * 0.88;
+          if (inView) {
+            gsap.from(el, { ...vars, delay: Number(el.dataset.delay || 0) + 0.2 });
+          } else {
+            gsap.from(el, {
+              ...vars,
+              scrollTrigger: {
+                trigger: el,
+                containerAnimation: scrub,
+                start: 'left 88%',
+                toggleActions: 'play none none none',
+              },
+            });
+          }
         });
 
         // Parallax drift: layers move at different horizontal speeds.
@@ -263,5 +275,5 @@ export function useSheetScroll(
       cancelled = true;
       teardown?.();
     };
-  }, [wrapRef, trackRef, panelIds, enabled]);
+  }, [wrapRef, trackRef, idsKey, enabled]);
 }

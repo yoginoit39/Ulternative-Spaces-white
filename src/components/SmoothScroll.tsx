@@ -22,10 +22,14 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     rafId = requestAnimationFrame(fallbackRaf);
 
     let tickerFn: ((time: number) => void) | undefined;
+    let destroyed = false;
     (async () => {
       const gsapModule = await import('gsap');
       const gsap = gsapModule.default || gsapModule.gsap;
       const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+      // Unmounted while importing (StrictMode double-mount): never attach a
+      // destroyed Lenis to the ticker or it keeps forcing scroll to 0.
+      if (destroyed) return;
       gsap.registerPlugin(ScrollTrigger);
       lenis.on('scroll', ScrollTrigger.update);
       tickerFn = (time: number) => lenis.raf(time * 1000);
@@ -36,6 +40,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     })();
 
     return () => {
+      destroyed = true;
       lenis.destroy();
       cancelAnimationFrame(rafId);
       if (window.__lenis === lenis) delete window.__lenis;
