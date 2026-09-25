@@ -1,18 +1,16 @@
 'use client';
-import { useRef, useEffect, useState, useMemo } from 'react';
-import dynamic from 'next/dynamic';
+import { useRef, useMemo } from 'react';
 import Image from 'next/image';
 import Cursor from '@/components/Cursor';
 import Nav from '@/components/Nav';
 import SmoothScroll from '@/components/SmoothScroll';
 import Panel from '@/components/sheet/Panel';
 import SheetChrome, { type Station } from '@/components/sheet/SheetChrome';
-import { useSheetScroll, subscribeSheet, gotoPanel } from '@/components/sheet/useSheetScroll';
+import { useSheetScroll, gotoPanel } from '@/components/sheet/useSheetScroll';
+import DrawingScene from '@/components/sheet/DrawingScene';
 import { usePageTransition } from '@/context/transition';
 import type { Project } from '@/lib/projects';
 import '@/components/sheet/sheet.css';
-
-const ThreeScene = dynamic(() => import('@/components/ThreeScene'), { ssr: false });
 
 // Plate rhythm: width (vw) and vertical placement, cycled across the gallery.
 const RHYTHM = [
@@ -31,7 +29,6 @@ export default function ProjectSheet({
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
   const navigate = usePageTransition();
 
   const plates = useMemo(() => project.gallery.slice(0, 5), [project.gallery]);
@@ -44,7 +41,6 @@ export default function ProjectSheet({
   const ids = useMemo(() => ['title', 'brief', ...plates.map((_, i) => `plate-${i + 1}`), 'next'], [plates]);
 
   useSheetScroll(wrapRef, trackRef, ids, true);
-  useEffect(() => subscribeSheet((s) => setProgress(s.progress)), []);
 
   const num = String(index + 1).padStart(2, '0');
   const go = (href: string) => (e: React.MouseEvent) => { e.preventDefault(); navigate(href); };
@@ -52,7 +48,7 @@ export default function ProjectSheet({
   return (
     <SmoothScroll>
       <Cursor />
-      <ThreeScene progress={progress} />
+      <DrawingScene category={project.category} seed={index + 11} />
       <Nav />
       <SheetChrome stations={stations} trackRef={trackRef} />
 

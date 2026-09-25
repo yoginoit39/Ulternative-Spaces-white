@@ -1,21 +1,19 @@
 'use client';
-import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
-import dynamic from 'next/dynamic';
+import { useState, useRef, useMemo, useCallback } from 'react';
 import Cursor from '@/components/Cursor';
 import Loader from '@/components/Loader';
 import Nav from '@/components/Nav';
 import SmoothScroll from '@/components/SmoothScroll';
 import SheetChrome, { type Station } from '@/components/sheet/SheetChrome';
-import { useSheetScroll, subscribeSheet } from '@/components/sheet/useSheetScroll';
+import { useSheetScroll } from '@/components/sheet/useSheetScroll';
 import Cover from '@/components/sheet/Cover';
 import Studio from '@/components/sheet/Studio';
 import WorkStrip from '@/components/sheet/WorkStrip';
 import ProcessLine from '@/components/sheet/ProcessLine';
 import ServicesWall from '@/components/sheet/ServicesWall';
 import ContactEnd from '@/components/sheet/ContactEnd';
+import DrawingScene from '@/components/sheet/DrawingScene';
 import '@/components/sheet/sheet.css';
-
-const ThreeScene = dynamic(() => import('@/components/ThreeScene'), { ssr: false });
 
 const STATIONS: Station[] = [
   { id: 'cover',    label: 'COVER',         sheet: '00' },
@@ -28,21 +26,19 @@ const STATIONS: Station[] = [
 
 export default function HomeClient() {
   const [siteReady, setSiteReady] = useState(false);
-  const [progress, setProgress] = useState(0);
   const wrapRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const ids = useMemo(() => STATIONS.map((s) => s.id), []);
   const onLoaded = useCallback(() => setSiteReady(true), []);
 
   useSheetScroll(wrapRef, trackRef, ids, siteReady);
-  useEffect(() => subscribeSheet((s) => setProgress(s.progress)), []);
 
   return (
     <SmoothScroll>
       <Cursor />
       <Loader onComplete={onLoaded} />
 
-      {siteReady && <ThreeScene progress={progress} />}
+      <DrawingScene category="Residential" seed={3} />
 
       <Nav />
       <SheetChrome stations={STATIONS} trackRef={trackRef} />
