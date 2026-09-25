@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, type RefObject } from 'react';
+import { useLayoutEffect, type RefObject } from 'react';
 import type {} from '@/components/SmoothScroll';
 
 export const SHEET_BREAKPOINT = 900;
@@ -44,7 +44,9 @@ export function useSheetScroll(
   panelIds: string[],
   enabled: boolean,
 ) {
-  useEffect(() => {
+  // Layout effect so the cleanup (un-pin, restore DOM) runs before React
+  // detaches nodes on route change.
+  useLayoutEffect(() => {
     if (!enabled) return;
     const wrap = wrapRef.current;
     const track = trackRef.current;

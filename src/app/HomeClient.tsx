@@ -47,7 +47,10 @@ export default function HomeClient() {
       <Nav />
       <SheetChrome stations={STATIONS} trackRef={trackRef} />
 
-      <div ref={wrapRef} className="sheet-wrap" style={{ position: 'relative', zIndex: 1 }}>
+      {/* Outer div is owned by React; ScrollTrigger re-parents .sheet-wrap
+          into a pin-spacer inside it, so route changes stay safe. */}
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <div ref={wrapRef} className="sheet-wrap">
         <div ref={trackRef} className="sheet-track">
           <Cover ready={siteReady} />
           <Studio />
@@ -55,6 +58,7 @@ export default function HomeClient() {
           <ProcessLine />
           <ServicesWall />
           <ContactEnd />
+        </div>
         </div>
       </div>
     </SmoothScroll>
