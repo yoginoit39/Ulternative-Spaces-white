@@ -1,13 +1,11 @@
 'use client';
 import { useRef, useMemo } from 'react';
 import Image from 'next/image';
-import Cursor from '@/components/Cursor';
 import Nav from '@/components/Nav';
 import SmoothScroll from '@/components/SmoothScroll';
 import Panel from '@/components/sheet/Panel';
 import SheetChrome, { type Station } from '@/components/sheet/SheetChrome';
 import { useSheetScroll, gotoPanel } from '@/components/sheet/useSheetScroll';
-import DrawingScene from '@/components/sheet/DrawingScene';
 import { usePageTransition } from '@/context/transition';
 import type { Project } from '@/lib/projects';
 import '@/components/sheet/sheet.css';
@@ -47,8 +45,6 @@ export default function ProjectSheet({
 
   return (
     <SmoothScroll>
-      <Cursor />
-      <DrawingScene category={project.category} seed={index + 11} />
       <Nav />
       <SheetChrome stations={stations} trackRef={trackRef} />
 

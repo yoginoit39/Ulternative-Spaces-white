@@ -17,7 +17,7 @@ html { --accent: #D8471F; --accent-soft: rgba(216,71,31,.12); --ember: var(--acc
 .bay {
   position: relative; flex: 0 0 auto;
   width: var(--bay-w); height: 100%;
-  padding: 118px 5vw 128px;
+  padding: 118px 5vw 138px;
   border-right: 1px dashed rgba(0,0,0,0.12);
 }
 .bay-auto { width: auto; }
@@ -279,3 +279,6 @@ a:hover .plate img, .plate:hover img { filter: grayscale(0) contrast(1.02); }
   .pj-next-fig { height: auto; margin-top: 32px; }
   .pj-idx { font-size: 40vw; bottom: 0; }
 }
+
+/* ghost index numbers off */
+.st-idx, .pr-idx, .sv-idx, .ct-idx, .pj-idx, .wk-num, .pj-plate-num { display: none !important; }

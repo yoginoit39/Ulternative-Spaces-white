@@ -1,6 +1,5 @@
 'use client';
 import { useState, useRef, useMemo, useCallback } from 'react';
-import Cursor from '@/components/Cursor';
 import Loader from '@/components/Loader';
 import Nav from '@/components/Nav';
 import SmoothScroll from '@/components/SmoothScroll';
@@ -12,7 +11,6 @@ import WorkStrip from '@/components/sheet/WorkStrip';
 import ProcessLine from '@/components/sheet/ProcessLine';
 import ServicesWall from '@/components/sheet/ServicesWall';
 import ContactEnd from '@/components/sheet/ContactEnd';
-import DrawingScene from '@/components/sheet/DrawingScene';
 import '@/components/sheet/sheet.css';
 
 const STATIONS: Station[] = [
@@ -35,10 +33,8 @@ export default function HomeClient() {
 
   return (
     <SmoothScroll>
-      <Cursor />
       <Loader onComplete={onLoaded} />
 
-      <DrawingScene category="Residential" seed={3} />
 
       <Nav />
       <SheetChrome stations={STATIONS} trackRef={trackRef} />
