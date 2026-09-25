@@ -49,7 +49,7 @@ export default function ContactClient() {
           className="contact-grid"
         >
           {/* Left — info */}
-          <div style={{ position: 'sticky', top: 120 }}>
+          <div className="contact-info" style={{ position: 'sticky', top: 120 }}>
             <p style={{
               fontFamily: 'var(--font-mono)',
               fontSize: 9,
@@ -186,6 +186,10 @@ export default function ContactClient() {
           .contact-grid {
             grid-template-columns: 1fr !important;
             gap: 48px !important;
+          }
+          .contact-info {
+            position: static !important;
+            top: auto !important;
           }
         }
         input, textarea, select {
