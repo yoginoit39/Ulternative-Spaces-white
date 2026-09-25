@@ -68,8 +68,8 @@ export default function Nav() {
           <Image
             src="/images/logo.svg"
             alt="Ulternative Spaces"
-            width={28}
-            height={28}
+            width={32}
+            height={32}
             unoptimized
             style={{ borderRadius: '50%', flexShrink: 0 }}
           />
@@ -77,24 +77,12 @@ export default function Nav() {
             style={{
               fontFamily: 'var(--font-syne)',
               fontWeight: 800,
-              fontSize: 14,
+              fontSize: 20,
+              letterSpacing: '-0.02em',
               color: 'var(--ember)',
             }}
           >
             U.S
-          </span>
-          <span style={{ color: 'var(--steel)', fontSize: 12 }}>·</span>
-          <span
-            className="nav-wordmark"
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: 9,
-              letterSpacing: '0.2em',
-              color: 'var(--parch)',
-              textTransform: 'uppercase',
-            }}
-          >
-            ULTERNATIVE SPACES
           </span>
         </TransitionLink>
 
@@ -289,7 +277,6 @@ export default function Nav() {
           .nav-cta-desktop { display: none !important; }
           .nav-hamburger { display: flex !important; }
           .nav-overlay { display: flex !important; }
-          .nav-wordmark { display: none !important; }
         }
       `}</style>
     </>
@@ -305,7 +292,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
         fontFamily: 'var(--font-mono)',
         fontSize: 10,
         letterSpacing: '0.15em',
-        color: hovered ? 'var(--parch)' : 'rgba(0,0,0,0.7)',
+        color: hovered ? 'var(--accent)' : 'rgba(0,0,0,0.7)',
         textDecoration: 'none',
         textTransform: 'uppercase',
         transition: 'color 0.2s ease',
@@ -328,6 +315,7 @@ function CTAButton() {
       onMouseLeave={() => setHovered(false)}
       style={{
         border: hovered ? '1px solid var(--ember)' : '1px solid rgba(0,0,0,0.2)',
+        borderRadius: hovered ? 999 : 0,
         padding: '8px 16px',
         fontFamily: 'var(--font-mono)',
         fontSize: 9,
@@ -336,7 +324,7 @@ function CTAButton() {
         color: hovered ? 'white' : 'var(--parch)',
         backgroundColor: hovered ? 'var(--ember)' : 'transparent',
         textDecoration: 'none',
-        transition: 'all 0.2s ease',
+        transition: 'all 0.3s var(--ease-out)',
         whiteSpace: 'nowrap',
       }}
     >
