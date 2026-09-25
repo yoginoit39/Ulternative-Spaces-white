@@ -98,15 +98,15 @@ export default function SheetChrome({ stations, trackRef }: {
         .sheet-ruler-ticks i { position: absolute; top: 0; width: 1px; height: 5px; background: rgba(0,0,0,.35); }
         .sheet-ruler-ticks i.mid { height: 8px; }
         .sheet-ruler-ticks i.maj { height: 14px; background: #000; }
-        .sheet-ruler-fill { position: absolute; left: 0; top: 0; height: 1px; width: 100%; background: #000; transform-origin: left; }
-        .sheet-needle { position: absolute; top: 0; width: 1px; height: 100%; background: #000; transform: translateX(-.5px); transition: none; }
-        .sheet-needle span { position: absolute; top: 18px; left: 6px; font-size: 9px; letter-spacing: .15em; color: #000; }
+        .sheet-ruler-fill { position: absolute; left: 0; top: 0; height: 2px; width: 100%; background: var(--accent); transform-origin: left; }
+        .sheet-needle { position: absolute; top: 0; width: 1px; height: 100%; background: var(--accent); transform: translateX(-.5px); transition: none; }
+        .sheet-needle span { position: absolute; top: 18px; left: 6px; font-size: 9px; letter-spacing: .15em; color: var(--accent); }
         .sheet-station { position: absolute; top: 0; height: 100%; background: none; border: 0; padding: 0; cursor: pointer; transform: translateX(-4px); font-family: inherit; }
         .sheet-station b { display: block; width: 7px; height: 7px; border: 1px solid #000; background: #fff; transform: rotate(45deg); margin-top: 11px; transition: background .3s; }
         .sheet-station span { position: absolute; left: 0; bottom: 8px; font-size: 9px; letter-spacing: .18em; color: rgba(0,0,0,.62); white-space: nowrap; transition: color .3s; }
-        .sheet-station.on b { background: #000; }
-        .sheet-station.on span { color: #000; }
-        .sheet-station:hover span { color: #000; }
+        .sheet-station.on b { background: var(--accent); border-color: var(--accent); }
+        .sheet-station.on span { color: var(--accent); }
+        .sheet-station:hover span { color: var(--accent); }
         .sheet-station:first-of-type { transform: none; }
         .sheet-station:first-of-type span { left: 2px; }
         .sheet-station:last-of-type { transform: translateX(-8px); }
@@ -114,6 +114,7 @@ export default function SheetChrome({ stations, trackRef }: {
         .sheet-title { position: absolute; right: 0; bottom: 58px; display: flex; border: 1px solid rgba(0,0,0,.2); border-right: 0; border-bottom: 0; background: rgba(255,255,255,.92); }
         .sheet-title > div { padding: 8px 14px; border-right: 1px solid rgba(0,0,0,.2); display: flex; flex-direction: column; gap: 3px; }
         .sheet-title > div:last-child { border-right: 0; }
+        .sheet-title > div:last-child strong { color: var(--accent); }
         .sheet-title em { font-style: normal; font-size: 8px; letter-spacing: .25em; color: rgba(0,0,0,.6); }
         .sheet-title strong { font-weight: 400; font-size: 10px; letter-spacing: .15em; color: #000; white-space: nowrap; }
         @media (max-width: 899px) { .sheet-chrome { display: none; } }

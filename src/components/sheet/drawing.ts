@@ -15,10 +15,11 @@ export interface Stroke {
   w?: number;          // stroke width
   dash?: string;       // dasharray for dashed datums
   fill?: string;       // filled shapes (north arrow)
+  accent?: boolean;    // drawn in the accent colour (red-line markup)
 }
 export interface Label {
   x: number; y: number; text: string; t: number;
-  size?: number; anchor?: 'start' | 'middle' | 'end'; rotate?: number; layer: Stroke['layer'];
+  size?: number; anchor?: 'start' | 'middle' | 'end'; rotate?: number; layer: Stroke['layer']; accent?: boolean;
 }
 export interface Drawing { strokes: Stroke[]; labels: Label[] }
 
@@ -241,7 +242,7 @@ export function buildDrawing(category = 'Residential', seed = 7): Drawing {
   cloud += ` a 12 12 0 0 1 0 22 a 12 12 0 0 1 0 22`;
   for (let i = 0; i < 8; i++) cloud += ` a 12 12 0 0 1 -20 0`;
   cloud += ` a 12 12 0 0 1 0 -22 a 12 12 0 0 1 0 -22`;
-  note.push({ d: cloud, layer: 'note', w: 0.7 });
+  note.push({ d: cloud, layer: 'note', w: 0.9, accent: true });
   // section cut marker on plan
   note.push({ d: L(PX0 - 30, PY0 + 200, PX0 - 6, PY0 + 200), layer: 'note', w: 1.2 });
   note.push({ d: L(PX1 + 6, PY0 + 200, PX1 + 30, PY0 + 200), layer: 'note', w: 1.2 });
@@ -259,7 +260,7 @@ export function buildDrawing(category = 'Residential', seed = 7): Drawing {
     { x: PX1 + 30, y: PY0 + 230, text: 'A', t: 0.92, anchor: 'middle', size: 10, layer: 'note' },
     { x: (SX0 + SX1) / 2, y: 862, text: 'SECTION A-A  ·  1 : 100', t: 0.94, anchor: 'middle', size: 10, layer: 'note' },
     { x: PX0 + PW / 2, y: 862, text: `${category.toUpperCase()}  ·  GROUND FLOOR PLAN  ·  1 : 100`, t: 0.96, anchor: 'middle', size: 10, layer: 'note' },
-    { x: PX1 - 176, y: PY0 - 30, text: 'REV A', t: 0.98, anchor: 'end', size: 8, layer: 'note' },
+    { x: PX1 - 176, y: PY0 - 30, text: 'REV A', t: 0.98, anchor: 'end', size: 8, layer: 'note', accent: true },
   );
 
   return { strokes, labels };

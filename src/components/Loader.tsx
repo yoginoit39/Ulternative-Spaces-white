@@ -75,7 +75,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
           cx={168}
           cy={120}
           r={60}
-          fill="#000000"
+          fill="var(--accent)"
           style={{
             opacity: circlesVisible ? 0.9 : 0,
             transition: circlesVisible ? 'opacity 0.5s ease' : 'none',
@@ -85,7 +85,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
           cx={392}
           cy={120}
           r={60}
-          fill="#000000"
+          fill="var(--accent)"
           style={{
             opacity: circlesVisible ? 0.9 : 0,
             transition: circlesVisible ? 'opacity 0.5s ease 0.1s' : 'none',

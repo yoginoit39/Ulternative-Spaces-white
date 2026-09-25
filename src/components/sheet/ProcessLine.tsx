@@ -23,7 +23,7 @@ export default function ProcessLine() {
             {[6, 256, 506, 756].map((x, i) => (
               <g key={i}>
                 <path data-draw d={`M ${x} 130 V ${i % 2 ? 215 : 45}`} stroke="#000" strokeWidth="1" fill="none" vectorEffect="non-scaling-stroke" />
-                <circle cx={x} cy={130} r="5" fill="#fff" stroke="#000" strokeWidth="1.2" vectorEffect="non-scaling-stroke" />
+                <circle cx={x} cy={130} r="5" fill="#fff" stroke="var(--accent)" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
               </g>
             ))}
           </svg>

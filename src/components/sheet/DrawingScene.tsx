@@ -5,7 +5,7 @@ import { subscribeSheet } from './useSheetScroll';
 
 const PARALLAX: Record<string, number> = { grid: 0.03, drawing: 0.06, hatch: 0.06, dim: 0.09, note: 0.11 };
 const INK: Record<string, string> = {
-  grid: 'rgba(0,0,0,.14)', drawing: 'rgba(0,0,0,.22)', hatch: 'rgba(0,0,0,.10)', dim: 'rgba(0,0,0,.2)', note: 'rgba(0,0,0,.24)',
+  grid: 'rgba(0,0,0,.055)', drawing: 'rgba(0,0,0,.09)', hatch: 'rgba(0,0,0,.04)', dim: 'rgba(0,0,0,.08)', note: 'rgba(0,0,0,.09)',
 };
 
 /**
@@ -104,6 +104,8 @@ export default function DrawingScene({ category = 'Residential', seed = 7 }: { c
               d={s.d}
               strokeWidth={s.w ?? 0.8}
               strokeDasharray={s.dash}
+              stroke={s.accent ? 'var(--accent)' : undefined}
+              strokeOpacity={s.accent ? 0.45 : undefined}
               fill={s.fill ?? 'none'}
               style={{ fillOpacity: 0, vectorEffect: 'non-scaling-stroke' } as React.CSSProperties}
             />
@@ -117,7 +119,8 @@ export default function DrawingScene({ category = 'Residential', seed = 7 }: { c
               fontSize={l.size ?? 10}
               textAnchor={l.anchor ?? 'start'}
               transform={l.rotate ? `rotate(${l.rotate} ${l.x} ${l.y})` : undefined}
-              fill={INK[layer]}
+              fill={l.accent ? 'var(--accent)' : INK[layer]}
+              fillOpacity={l.accent ? 0.7 : undefined}
               stroke="none"
               style={{ fontFamily: 'var(--font-mono)', letterSpacing: '0.18em', opacity: 0 }}
             >
@@ -128,9 +131,9 @@ export default function DrawingScene({ category = 'Residential', seed = 7 }: { c
       ))}
       {/* pen tip */}
       <g ref={penRef} style={{ opacity: 0, transition: 'opacity .3s' }}>
-        <circle r="2.6" fill="rgba(0,0,0,.5)" />
-        <circle r="11" fill="none" stroke="rgba(0,0,0,.18)" strokeWidth="0.8" />
-        <path d="M -18 0 H -13 M 13 0 H 18 M 0 -18 V -13 M 0 13 V 18" stroke="rgba(0,0,0,.25)" strokeWidth="0.8" />
+        <circle r="2.6" fill="var(--accent)" fillOpacity="0.8" />
+        <circle r="11" fill="none" stroke="var(--accent)" strokeOpacity="0.35" strokeWidth="0.8" />
+        <path d="M -18 0 H -13 M 13 0 H 18 M 0 -18 V -13 M 0 13 V 18" stroke="var(--accent)" strokeOpacity="0.45" strokeWidth="0.8" />
       </g>
     </svg>
   );

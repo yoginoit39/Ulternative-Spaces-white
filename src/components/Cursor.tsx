@@ -89,11 +89,10 @@ export default function Cursor() {
           width: 6,
           height: 6,
           borderRadius: '50%',
-          background: 'var(--gold)',
+          background: 'var(--accent)',
           pointerEvents: 'none',
           zIndex: 99999,
           willChange: 'transform',
-          mixBlendMode: 'difference',
           opacity: 0,
         }}
       />
