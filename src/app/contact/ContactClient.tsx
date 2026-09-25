@@ -128,7 +128,7 @@ export default function ContactClient() {
                 />
 
                 {/* Project type */}
-                <div style={{ borderBottom: '1px solid rgba(0,0,0,0.1)', paddingBottom: 32, marginBottom: 0 }}>
+                <div style={{ borderBottom: '1px solid rgba(var(--fg-rgb),0.1)', paddingBottom: 32, marginBottom: 0 }}>
                   <label style={{
                     fontFamily: 'var(--font-mono)',
                     fontSize: 9,
@@ -196,7 +196,7 @@ export default function ContactClient() {
           outline: none;
         }
         input::placeholder, textarea::placeholder {
-          color: rgba(0,0,0,0.25);
+          color: rgba(var(--fg-rgb),0.25);
         }
       `}</style>
     </SmoothScroll>
@@ -223,7 +223,7 @@ function ContactDetail({ label, value, href }: { label: string; value: string; h
           borderBottom: '1px solid transparent',
           transition: 'border-color 0.2s ease',
         }}
-          onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'rgba(0,0,0,0.3)')}
+          onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'rgba(var(--fg-rgb),0.3)')}
           onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'transparent')}
         >{value}</a>
       ) : (
@@ -240,7 +240,7 @@ function FormField({
   onChange: (v: string) => void; required?: boolean; placeholder?: string;
 }) {
   return (
-    <div style={{ borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
+    <div style={{ borderBottom: '1px solid rgba(var(--fg-rgb),0.1)' }}>
       <label style={{
         fontFamily: 'var(--font-mono)',
         fontSize: 9,
@@ -281,7 +281,7 @@ function FormTextarea({
   onChange: (v: string) => void; required?: boolean; placeholder?: string;
 }) {
   return (
-    <div style={{ borderBottom: '1px solid rgba(0,0,0,0.1)', marginBottom: 32 }}>
+    <div style={{ borderBottom: '1px solid rgba(var(--fg-rgb),0.1)', marginBottom: 32 }}>
       <label style={{
         fontFamily: 'var(--font-mono)',
         fontSize: 9,
@@ -327,7 +327,7 @@ function TypeButton({ label, active, onClick }: { label: string; active: boolean
         letterSpacing: '0.12em',
         textTransform: 'uppercase',
         padding: '7px 14px',
-        border: active ? '1px solid var(--parch)' : '1px solid rgba(0,0,0,0.15)',
+        border: active ? '1px solid var(--parch)' : '1px solid rgba(var(--fg-rgb),0.15)',
         background: active ? 'var(--parch)' : 'transparent',
         color: active ? 'var(--ink)' : 'var(--steel)',
         cursor: 'pointer',
@@ -351,7 +351,7 @@ function SubmitButton({ sending }: { sending: boolean }) {
         textTransform: 'uppercase',
         padding: '18px 40px',
         border: '1px solid var(--parch)',
-        background: sending ? 'rgba(0,0,0,0.05)' : 'var(--parch)',
+        background: sending ? 'rgba(var(--fg-rgb),0.05)' : 'var(--parch)',
         color: sending ? 'var(--steel)' : 'var(--ink)',
         cursor: sending ? 'not-allowed' : 'pointer',
         transition: 'all 0.25s ease',
@@ -439,7 +439,7 @@ function SuccessMessage() {
           textTransform: 'uppercase',
           color: 'var(--steel)',
           textDecoration: 'none',
-          borderBottom: '1px solid rgba(0,0,0,0.15)',
+          borderBottom: '1px solid rgba(var(--fg-rgb),0.15)',
           paddingBottom: 4,
         }}
       >

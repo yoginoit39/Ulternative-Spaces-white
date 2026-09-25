@@ -107,7 +107,7 @@ export default function Cursor() {
           width: 32,
           height: 32,
           borderRadius: '50%',
-          border: '1px solid rgba(0,0,0,0.55)',
+          border: '1px solid rgba(var(--fg-rgb),0.55)',
           pointerEvents: 'none',
           zIndex: 99998,
           willChange: 'transform',

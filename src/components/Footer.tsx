@@ -6,7 +6,7 @@ export default function Footer() {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        borderTop: '1px solid rgba(0,0,0,0.1)',
+        borderTop: '1px solid rgba(var(--fg-rgb),0.1)',
         flexWrap: 'wrap',
         gap: 16,
       }}

@@ -5,7 +5,7 @@ import { subscribeSheet } from './useSheetScroll';
 
 const PARALLAX: Record<string, number> = { grid: 0.03, drawing: 0.06, hatch: 0.06, dim: 0.09, note: 0.11 };
 const INK: Record<string, string> = {
-  grid: 'rgba(0,0,0,.055)', drawing: 'rgba(0,0,0,.09)', hatch: 'rgba(0,0,0,.04)', dim: 'rgba(0,0,0,.08)', note: 'rgba(0,0,0,.09)',
+  grid: 'rgba(var(--fg-rgb),.055)', drawing: 'rgba(var(--fg-rgb),.09)', hatch: 'rgba(var(--fg-rgb),.04)', dim: 'rgba(var(--fg-rgb),.08)', note: 'rgba(var(--fg-rgb),.09)',
 };
 
 /**
@@ -93,7 +93,7 @@ export default function DrawingScene({ category = 'Residential', seed = 7 }: { c
       viewBox="0 0 1600 900"
       preserveAspectRatio="xMidYMid slice"
       aria-hidden
-      style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none', background: '#fff' }}
+      style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 0, pointerEvents: 'none', background: 'var(--ink)' }}
     >
       {LAYERS.map((layer) => (
         <g key={layer} data-layer={layer} fill="none" stroke={INK[layer]} strokeLinecap="round" strokeLinejoin="round">

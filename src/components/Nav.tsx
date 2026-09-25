@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import ThemeToggle from '@/components/ThemeToggle';
 import { usePathname } from 'next/navigation';
 import TransitionLink from '@/components/TransitionLink';
 import { gotoPanel } from '@/components/sheet/useSheetScroll';
@@ -8,6 +9,7 @@ import { gotoPanel } from '@/components/sheet/useSheetScroll';
 const NAV_LINKS = [
   { href: '/#studio', label: 'Studio' },
   { href: '/#work', label: 'Work' },
+  { href: '/work', label: 'Archive' },
   { href: '/#process', label: 'Process' },
   { href: '/#services', label: 'Services' },
   { href: '/philosophy', label: 'Philosophy' },
@@ -52,10 +54,10 @@ export default function Nav() {
           left: 0,
           right: 0,
           zIndex: 200,
-          backgroundColor: 'rgba(255,255,255,0.85)',
+          backgroundColor: 'rgba(var(--bg-rgb),0.85)',
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
-          borderBottom: '1px solid rgba(0,0,0,0.15)',
+          borderBottom: '1px solid rgba(var(--fg-rgb),0.15)',
           height: 64,
           padding: '0 5vw',
           display: 'flex',
@@ -104,13 +106,17 @@ export default function Nav() {
           ))}
         </ul>
 
-        {/* CTA — desktop only */}
-        <div className="nav-cta-desktop">
-          <CTAButton />
-        </div>
+        {/* Right cluster: theme toggle + CTA (desktop) / hamburger (mobile) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          <ThemeToggle />
 
-        {/* Hamburger — mobile only */}
-        <button
+          {/* CTA — desktop only */}
+          <div className="nav-cta-desktop">
+            <CTAButton />
+          </div>
+
+          {/* Hamburger — mobile only */}
+          <button
           className="nav-hamburger"
           onClick={() => setMenuOpen((o) => !o)}
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
@@ -159,7 +165,8 @@ export default function Nav() {
               transition: 'transform 0.3s var(--ease-out), width 0.3s ease',
             }}
           />
-        </button>
+          </button>
+        </div>
       </nav>
 
       {/* Mobile full-screen overlay */}
@@ -185,7 +192,7 @@ export default function Nav() {
             <li
               key={link.href}
               style={{
-                borderBottom: '1px solid rgba(0,0,0,0.07)',
+                borderBottom: '1px solid rgba(var(--fg-rgb),0.07)',
                 transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
                 opacity: menuOpen ? 1 : 0,
                 transition: `transform 0.5s var(--ease-out) ${i * 60}ms, opacity 0.5s ease ${i * 60}ms`,
@@ -292,7 +299,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
         fontFamily: 'var(--font-mono)',
         fontSize: 10,
         letterSpacing: '0.15em',
-        color: hovered ? 'var(--accent)' : 'rgba(0,0,0,0.7)',
+        color: hovered ? 'var(--accent)' : 'rgba(var(--fg-rgb),0.7)',
         textDecoration: 'none',
         textTransform: 'uppercase',
         transition: 'color 0.2s ease',
@@ -314,7 +321,7 @@ function CTAButton() {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        border: hovered ? '1px solid var(--ember)' : '1px solid rgba(0,0,0,0.2)',
+        border: hovered ? '1px solid var(--ember)' : '1px solid rgba(var(--fg-rgb),0.2)',
         borderRadius: hovered ? 999 : 0,
         padding: '8px 16px',
         fontFamily: 'var(--font-mono)',

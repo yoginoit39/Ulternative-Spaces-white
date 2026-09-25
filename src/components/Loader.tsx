@@ -94,7 +94,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
         {/* Infinity path */}
         <path
           d="M 280,120 C 280,56 222,12 168,12 C 100,12 58,58 58,120 C 58,182 100,228 168,228 C 222,228 280,184 280,120 C 280,56 338,12 392,12 C 460,12 502,58 502,120 C 502,182 460,228 392,228 C 338,228 280,184 280,120"
-          stroke="#000000"
+          stroke="var(--parch)"
           strokeWidth={5}
           fill="none"
           strokeLinecap="round"

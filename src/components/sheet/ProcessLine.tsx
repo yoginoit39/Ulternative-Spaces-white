@@ -19,11 +19,11 @@ export default function ProcessLine() {
 
         <ol className="pr-steps">
           <svg className="pr-svg" viewBox="0 0 1000 260" preserveAspectRatio="none" aria-hidden>
-            <path data-draw d="M 0 130 H 1000" stroke="#000" strokeWidth="1.2" fill="none" vectorEffect="non-scaling-stroke" />
+            <path data-draw d="M 0 130 H 1000" stroke="var(--parch)" strokeWidth="1.2" fill="none" vectorEffect="non-scaling-stroke" />
             {[6, 256, 506, 756].map((x, i) => (
               <g key={i}>
-                <path data-draw d={`M ${x} 130 V ${i % 2 ? 215 : 45}`} stroke="#000" strokeWidth="1" fill="none" vectorEffect="non-scaling-stroke" />
-                <circle cx={x} cy={130} r="5" fill="#fff" stroke="var(--accent)" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
+                <path data-draw d={`M ${x} 130 V ${i % 2 ? 215 : 45}`} stroke="var(--parch)" strokeWidth="1" fill="none" vectorEffect="non-scaling-stroke" />
+                <circle cx={x} cy={130} r="5" fill="var(--ink)" stroke="var(--accent)" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
               </g>
             ))}
           </svg>
