@@ -40,10 +40,59 @@ export default function SheetChrome({ stations, trackRef }: {
     return () => { clearTimeout(t); window.removeEventListener('resize', compute); };
   }, [stations, trackRef]);
 
+  // Mobile: which sheet is on screen (the track is a vertical stack there).
+  const [mActive, setMActive] = useState(0);
+  const [indexOpen, setIndexOpen] = useState(false);
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const panels = stations
+      .map((st) => track.querySelector<HTMLElement>(`[data-panel="${st.id}"]`))
+      .filter(Boolean) as HTMLElement[];
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => { if (e.isIntersecting) setMActive(panels.indexOf(e.target as HTMLElement)); });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    panels.forEach((p) => io.observe(p));
+    return () => io.disconnect();
+  }, [stations, trackRef]);
+  useEffect(() => {
+    document.documentElement.classList.toggle('index-open', indexOpen);
+    return () => document.documentElement.classList.remove('index-open');
+  }, [indexOpen]);
+  const mSt = stations[mActive] ?? stations[0];
+
   const active = stations[s.activeIndex] ?? stations[0];
   const letters = Array.from({ length: 60 }, (_, i) => String.fromCharCode(65 + (i % 26)) + (i >= 26 ? Math.floor(i / 26) : ''));
 
   return (
+    <>
+    {/* ── Mobile title block (bottom) + index sheet ── */}
+    <div className="sheet-mchrome">
+      <div className="sheet-mprog" style={{ transform: `scaleX(${s.progress})` }} />
+      <button type="button" className="sheet-mtitle" onClick={() => setIndexOpen(true)} aria-label="Open sheet index">
+        <span className="sheet-mnum">{mSt?.sheet}</span>
+        <span className="sheet-mlabel">{mSt?.label}</span>
+        <span className="sheet-mcount">{String(mActive + 1).padStart(2, '0')} / {String(stations.length).padStart(2, '0')}</span>
+        <span className="sheet-mindex">Index</span>
+      </button>
+      <div className={`sheet-mindex-sheet${indexOpen ? ' open' : ''}`} role="dialog" aria-label="Sheet index">
+        <div className="sheet-mindex-head">
+          <span>Drawing index</span>
+          <button type="button" onClick={() => setIndexOpen(false)} aria-label="Close">✕</button>
+        </div>
+        <ol>
+          {stations.map((st, i) => (
+            <li key={st.id} className={i === mActive ? 'on' : ''}>
+              <button type="button" onClick={() => { setIndexOpen(false); setTimeout(() => gotoPanel(st.id), 60); }}>
+                <b>{st.sheet}</b><span>{st.label}</span><i />
+              </button>
+            </li>
+          ))}
+        </ol>
+        <div className="sheet-mindex-foot">ULTERNATIVE SPACES · DRAWING SET · KAMPALA — JUBA</div>
+      </div>
+    </div>
+
     <div className="sheet-chrome" aria-hidden>
       {/* Top grid letters */}
       <div className="sheet-grid-row">
@@ -118,7 +167,33 @@ export default function SheetChrome({ stations, trackRef }: {
         .sheet-title em { font-style: normal; font-size: 8px; letter-spacing: .25em; color: rgba(var(--fg-rgb),.6); }
         .sheet-title strong { font-weight: 400; font-size: 10px; letter-spacing: .15em; color: var(--parch); white-space: nowrap; }
         @media (max-width: 899px) { .sheet-chrome { display: none; } }
+
+        /* ── mobile chrome ── */
+        .sheet-mchrome { display: none; }
+        @media (max-width: 899px) {
+          .sheet-mchrome { display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 180; font-family: var(--font-mono); }
+          .sheet-mprog { position: absolute; left: 0; top: 0; height: 2px; width: 100%; background: var(--accent); transform-origin: left; z-index: 2; }
+          .sheet-mtitle { width: 100%; display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 12px; padding: 12px 20px calc(12px + env(safe-area-inset-bottom)); background: rgba(var(--bg-rgb),.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 0; border-top: 1px solid rgba(var(--fg-rgb),.18); color: var(--parch); text-align: left; cursor: pointer; }
+          .sheet-mnum { font-size: 10px; letter-spacing: .2em; color: var(--accent); }
+          .sheet-mlabel { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+          .sheet-mcount { font-size: 9px; letter-spacing: .15em; color: rgba(var(--fg-rgb),.5); }
+          .sheet-mindex { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; border: 1px solid rgba(var(--fg-rgb),.3); padding: 5px 9px; }
+          .sheet-mindex-sheet { position: fixed; inset: 0; z-index: 190; background: var(--ink); color: var(--parch); padding: 20px 20px calc(20px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; overflow-y: auto; -webkit-overflow-scrolling: touch; transform: translateY(100%); transition: transform .55s var(--ease-out); }
+          html.index-open, html.index-open body { overflow: hidden; }
+          .sheet-mindex-sheet.open { transform: none; }
+          .sheet-mindex-head { display: flex; justify-content: space-between; align-items: center; font-size: 9px; letter-spacing: .3em; text-transform: uppercase; color: rgba(var(--fg-rgb),.6); padding-bottom: 14px; border-bottom: 1px solid rgba(var(--fg-rgb),.3); }
+          .sheet-mindex-head button { background: none; border: 1px solid rgba(var(--fg-rgb),.3); color: var(--parch); width: 36px; height: 36px; font-size: 14px; cursor: pointer; }
+          .sheet-mindex-sheet ol { list-style: none; margin: 0; padding: 0; flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 0; }
+          .sheet-mindex-sheet li button { width: 100%; display: flex; align-items: center; gap: 14px; background: none; border: 0; border-bottom: 1px solid rgba(var(--fg-rgb),.14); padding: clamp(9px, 1.6vh, 16px) 0; color: var(--parch); cursor: pointer; text-align: left; }
+          .sheet-mindex-sheet li b { font-weight: 400; font-size: 10px; letter-spacing: .2em; color: rgba(var(--fg-rgb),.5); min-width: 44px; }
+          .sheet-mindex-sheet li span { font-family: var(--font-syne); font-weight: 600; font-size: clamp(19px, min(6vw, 3.6vh), 30px); letter-spacing: -0.02em; text-transform: none; }
+          .sheet-mindex-sheet li i { flex: 1; height: 1px; background: rgba(var(--fg-rgb),.2); }
+          .sheet-mindex-sheet li.on b, .sheet-mindex-sheet li.on span { color: var(--accent); }
+          .sheet-mindex-sheet li.on i { background: var(--accent); }
+          .sheet-mindex-foot { font-size: 8px; letter-spacing: .3em; color: rgba(var(--fg-rgb),.45); padding-top: 16px; }
+        }
       `}</style>
     </div>
+    </>
   );
 }

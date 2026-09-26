@@ -94,20 +94,31 @@
 .el-end-links a.ct-btn { padding: 12px 18px; border-bottom: 1px solid var(--accent); }
 .el-plot { align-self: end; margin-bottom: var(--ground); height: calc(3 * var(--lvl)); border: 1px dashed rgba(var(--fg-rgb),.5); display: grid; place-items: center; font-family: var(--font-syne); font-weight: 300; font-size: clamp(60px, 8vw, 140px); color: rgba(var(--fg-rgb),.18); background: repeating-linear-gradient(45deg, rgba(var(--fg-rgb),.04) 0 1px, transparent 1px 14px); }
 
-/* ── mobile: vertical stack ── */
+/* ── mobile: each year is a swipeable panorama on the ground line ── */
 @media (max-width: 899px) {
+  .el-track { --lvl: 40px; --ground: 68px; }
   .el-legend { display: none; }
   .el-title, .el-end { display: block; }
-  .el-key { margin: 40px 0 0; }
+  .el-h1 { font-size: clamp(52px, 16vw, 92px); }
+  .el-block { max-width: none; }
+  .el-key { margin: 34px 0 0; }
+  .el-key-list button i { width: 26px !important; }
   .el-north { display: none; }
-  .el-levels, .el-gridline, .el-ground, .el-ht, .el-callout, .el-floors, .el-door { display: none; }
-  .el-bay { padding-left: 5vw !important; padding-right: 5vw !important; }
-  .el-year-m { display: block; }
-  .el-street { display: block; padding: 0; height: auto; }
-  .el-bld { display: block; margin-bottom: 44px; }
-  .el-mass { height: auto; aspect-ratio: 4 / 3; }
-  .el-base { position: static; padding-top: 12px; }
-  .el-name { white-space: normal; font-size: 22px; }
+  .el-year-m { display: block; padding: 0 20px; margin-bottom: 4px; border: 0; font-size: clamp(36px, 12vw, 56px); }
+  .el-bay { padding-left: 0 !important; padding-right: 0 !important; }
+  .el-bay .bay-dim { left: 20px; right: 20px; }
+  .el-gridline, .el-ht, .el-callout { display: none; }
+  .el-levels { top: auto; bottom: 72px; height: calc(var(--ground) + 4 * var(--lvl) + 16px); }
+  .el-lvl span { left: 20px; font-size: 7px; }
+  .el-street { position: relative; height: calc(var(--ground) + 4 * var(--lvl) + 28px); display: flex; align-items: flex-end; gap: 12px; padding: 0 20px var(--ground); overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-left: 20px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .el-street::-webkit-scrollbar { display: none; }
+  .el-bld { flex: 0 0 calc(var(--w) * 2.3); scroll-snap-align: start; }
+  .el-mass:hover { transform: none; }
+  .el-name { font-size: 15px; }
+  .el-base { padding-top: 10px; }
+  .el-ground { bottom: calc(72px + var(--ground)); }
+  .el-datum { right: 20px; }
+  .el-end { padding: 0 20px; }
+  .el-end-links { margin-top: 6px; }
   .el-plot { display: none; }
-  .el-h1 { font-size: clamp(48px, 15vw, 90px); }
 }

@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 
 /**
  * The drafting board on the Contact sheet.
@@ -77,6 +77,10 @@ const LABELS: { x: number; y: number; t: string; anchor?: 'start' | 'end' | 'mid
 
 const TOTAL_MS = 6400;
 
+const hoverMq = () => window.matchMedia('(hover: none)');
+const subscribeHover = (cb: () => void) => { const m = hoverMq(); m.addEventListener('change', cb); return () => m.removeEventListener('change', cb); };
+const readHover = () => hoverMq().matches;
+
 export default function DraftingBoard() {
   const svgRef = useRef<SVGSVGElement>(null);
   const penRef = useRef<SVGGElement>(null);
@@ -85,6 +89,10 @@ export default function DraftingBoard() {
   const readRef = useRef<HTMLSpanElement>(null);
   const [phase, setPhase] = useState<'idle' | 'drawing' | 'yours' | 'sketched'>('idle');
   const [seed, setSeed] = useState(0); // bump to replay
+  const touch = useSyncExternalStore(subscribeHover, readHover, () => false); // coarse pointer device
+  const [lock, setLock] = useState(false);     // touch sketching enabled
+  const lockRef = useRef(false);
+  useEffect(() => { lockRef.current = lock; }, [lock]);
 
   /* ── auto-draw ── */
   useEffect(() => {
@@ -161,6 +169,7 @@ export default function DraftingBoard() {
     const fmt = (v: number) => String(Math.max(0, Math.round(v * 20))).padStart(5, '0').replace(/(\d{2})(\d{3})/, '$1 $2');
 
     const move = (e: PointerEvent) => {
+      if (e.pointerType === 'touch' && !lockRef.current) return;
       const { x, y } = toSvg(e);
       cross.style.opacity = '1';
       cross.setAttribute('transform', `translate(${x} ${y})`);
@@ -172,6 +181,7 @@ export default function DraftingBoard() {
     };
     const down = (e: PointerEvent) => {
       if (e.button !== 0) return;
+      if (e.pointerType === 'touch' && !lockRef.current) return;
       svg.setPointerCapture(e.pointerId);
       const { x, y } = toSvg(e);
       pts = [`${x.toFixed(1)},${y.toFixed(1)}`];
@@ -210,7 +220,7 @@ export default function DraftingBoard() {
 
   return (
     <div className={`db db-${phase}`} aria-hidden>
-      <svg ref={svgRef} viewBox="0 0 640 440" preserveAspectRatio="xMidYMid meet" className="db-svg">
+      <svg ref={svgRef} viewBox="0 0 640 440" preserveAspectRatio="xMidYMid meet" className={`db-svg${lock ? ' db-lock' : ''}`}>
         <defs>
           <pattern id="db-grid" width="20" height="20" patternUnits="userSpaceOnUse">
             <path d="M 20 0 H 0 V 20" fill="none" stroke="currentColor" strokeWidth=".4" opacity=".18" />
@@ -272,7 +282,9 @@ export default function DraftingBoard() {
         <span ref={readRef} className="db-read">X 00 000  Y 00 000</span>
         <span className="db-hint">
           {phase === 'drawing' && 'Drawing…'}
-          {phase === 'yours' && 'Your turn — drag to sketch'}
+          {phase === 'yours' && !touch && 'Your turn — drag to sketch'}
+          {phase === 'yours' && touch && !lock && <button type="button" className="db-go" onClick={() => setLock(true)}>Your turn — tap to sketch</button>}
+          {touch && lock && <button type="button" className="db-go" onClick={() => setLock(false)}>Done sketching</button>}
           {phase === 'sketched' && <button type="button" onClick={clear}>Clear sketch</button>}
           {phase !== 'drawing' && <button type="button" onClick={replay}>Redraw</button>}
         </span>

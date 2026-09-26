@@ -21,7 +21,7 @@ export default function ServicesWall() {
 
         <ul className="sv-list">
           {SERVICES.map((s, i) => (
-            <li key={s.num} className={i === on ? 'on' : ''} onMouseEnter={() => setOn(i)} onFocus={() => setOn(i)} tabIndex={0} data-reveal="up" data-delay={String(i * 0.08)}>
+            <li key={s.num} className={i === on ? 'on' : ''} onMouseEnter={() => setOn(i)} onFocus={() => setOn(i)} onClick={() => setOn(i)} tabIndex={0} data-reveal="up" data-delay={String(i * 0.08)}>
               <span className="sv-num">{s.num}</span>
               <span className="sv-word">{s.word}</span>
             </li>

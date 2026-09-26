@@ -1,4 +1,5 @@
 'use client';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Panel from './Panel';
 import TransitionLink from '@/components/TransitionLink';
@@ -11,6 +12,22 @@ const DIM = ['9 400', '7 200', '11 000', '7 800', '9 900', '8 300'];
 
 export default function WorkStrip() {
   const navigate = usePageTransition();
+  const rowRef = useRef<HTMLDivElement>(null);
+  const [bay, setBay] = useState(0);
+  // Mobile: the row is a horizontal swipe strip; track which bay is centred.
+  useEffect(() => {
+    const row = rowRef.current;
+    if (!row) return;
+    const onScroll = () => {
+      const cards = Array.from(row.children) as HTMLElement[];
+      const mid = row.scrollLeft + row.clientWidth / 2;
+      let best = 0, d = Infinity;
+      cards.forEach((c, i) => { const cd = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (cd < d) { d = cd; best = i; } });
+      setBay(best);
+    };
+    row.addEventListener('scroll', onScroll, { passive: true });
+    return () => row.removeEventListener('scroll', onScroll);
+  }, []);
   return (
     <Panel id="work" width="auto" sheet="02" label="SELECTED WORK" mm="62 600" className="bay-auto">
       <div className="wk">
@@ -25,7 +42,12 @@ export default function WorkStrip() {
           </div>
         </header>
 
-        <div className="wk-row">
+        <div className="wk-mcount" aria-hidden>
+          <span><b>{String(bay + 1).padStart(2, '0')}</b> / {String(FEATURED.length).padStart(2, '0')}</span>
+          <i />
+          <span>Swipe the elevation →</span>
+        </div>
+        <div className="wk-row" ref={rowRef}>
           {FEATURED.map((p, i) => (
             <a
               key={p.slug}
