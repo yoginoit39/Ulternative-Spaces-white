@@ -46,10 +46,10 @@
 .el-gridline { position: absolute; left: 0; top: 118px; bottom: 138px; width: 0; border-left: 1px dashed rgba(var(--fg-rgb),.45); pointer-events: none; }
 .el-bubble { position: absolute; top: -8px; left: 0; transform: translate(-50%, -10%); width: 54px; height: 54px; border: 1px solid var(--parch); border-radius: 50%; display: grid; place-items: center; background: var(--ink); font-family: var(--font-syne); font-weight: 700; font-size: 15px; letter-spacing: -0.03em; color: var(--parch); }
 
-.el-street { position: relative; height: 100%; display: flex; align-items: flex-end; gap: 2.4vw; padding: 0 3vw 0 6vw; padding-bottom: var(--ground); }
+.el-street { position: relative; height: 100%; width: max-content; display: flex; align-items: flex-end; gap: 2.4vw; padding: 0 3vw 0 6vw; padding-bottom: var(--ground); }
 
 /* a building */
-.el-bld { position: relative; flex: 0 0 var(--w); display: flex; flex-direction: column; justify-content: flex-end; text-decoration: none; color: var(--parch); }
+.el-bld { position: relative; flex: 0 0 var(--w); width: var(--w); min-width: var(--w); display: flex; flex-direction: column; justify-content: flex-end; text-decoration: none; color: var(--parch); }
 .el-ht { display: flex; align-items: flex-end; gap: 6px; height: 26px; margin-bottom: 4px; font-family: var(--font-mono); font-size: 8px; letter-spacing: .18em; color: rgba(var(--fg-rgb),.5); }
 .el-ht i { width: 1px; height: 100%; background: rgba(var(--fg-rgb),.4); }
 .el-ht b { font-weight: 400; padding-bottom: 2px; }
@@ -110,9 +110,9 @@
   .el-gridline, .el-ht, .el-callout { display: none; }
   .el-levels { top: auto; bottom: 72px; height: calc(var(--ground) + 4 * var(--lvl) + 16px); }
   .el-lvl span { left: 20px; font-size: 7px; }
-  .el-street { position: relative; height: calc(var(--ground) + 4 * var(--lvl) + 28px); display: flex; align-items: flex-end; gap: 12px; padding: 0 20px var(--ground); overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-left: 20px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .el-street { position: relative; width: auto; height: calc(var(--ground) + 4 * var(--lvl) + 28px); display: flex; align-items: flex-end; gap: 12px; padding: 0 20px var(--ground); overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-left: 20px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .el-street::-webkit-scrollbar { display: none; }
-  .el-bld { flex: 0 0 calc(var(--w) * 2.3); scroll-snap-align: start; }
+  .el-bld { flex: 0 0 calc(var(--w) * 2.3); width: calc(var(--w) * 2.3); min-width: calc(var(--w) * 2.3); scroll-snap-align: start; }
   .el-mass:hover { transform: none; }
   .el-name { font-size: 15px; }
   .el-base { padding-top: 10px; }
