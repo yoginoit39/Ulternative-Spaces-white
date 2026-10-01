@@ -1,7 +1,12 @@
 'use client';
 import { createContext, useContext, useRef } from 'react';
 
-type NavigateFn = (href: string) => void;
+/**
+ * Navigate with the page transition. Pass `from` (a plate holding a photo,
+ * with data-photo set to the photo's src) to have that photograph carry the
+ * visitor into the next page instead of the wipe.
+ */
+type NavigateFn = (href: string, from?: HTMLElement | null) => void;
 
 interface TransitionCtx {
   navigateRef: React.MutableRefObject<NavigateFn>;
@@ -22,5 +27,5 @@ export function TransitionProvider({ children }: { children: React.ReactNode }) 
 
 export function usePageTransition(): NavigateFn {
   const { navigateRef } = useContext(TransitionContext);
-  return (href: string) => navigateRef.current(href);
+  return (href, from) => navigateRef.current(href, from);
 }

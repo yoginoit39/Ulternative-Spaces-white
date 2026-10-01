@@ -6,7 +6,7 @@ import { usePageTransition } from '@/context/transition';
 export default function ContactEnd() {
   const navigate = usePageTransition();
   return (
-    <Panel id="contact" width="100vw" sheet="05" label="CONTACT" mm="10 000">
+    <Panel id="contact" width="100vw" sheet="05" label="CONTACT" mm="10 000" mat="slate" depth={1}>
       <div className="ct">
         <div className="ct-idx" data-parallax="0.35">05</div>
         <p className="eyebrow" data-reveal="up">05 / Start a project</p>

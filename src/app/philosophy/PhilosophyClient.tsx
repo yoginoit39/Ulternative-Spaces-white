@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import SmoothScroll from '@/components/SmoothScroll';
+import { useNavMaterial } from '@/components/useNavMaterial';
+import { useScrollParallax } from '@/components/useScrollParallax';
 
 /* ─── reusable reveal hook ─────────────────────────── */
 function useReveal(threshold = 0.2) {
@@ -24,6 +26,8 @@ function useReveal(threshold = 0.2) {
 
 /* ─── main page ────────────────────────────────────── */
 export default function PhilosophyClient() {
+  useNavMaterial();
+  useScrollParallax();
   return (
     <SmoothScroll>
       <Nav />
@@ -67,6 +71,8 @@ function HeroSection() {
 
   return (
     <section
+      className="mat mat-stone"
+      data-mat="stone"
       style={{
         minHeight: '100vh',
         display: 'flex',
@@ -95,6 +101,7 @@ function HeroSection() {
       />
 
       {/* Logo mark */}
+      <div data-py-exit="-0.05" style={{ position: 'relative', zIndex: 2 }}>
       <div
         style={{
           opacity: loaded ? 1 : 0,
@@ -113,6 +120,7 @@ function HeroSection() {
           unoptimized
           style={{ borderRadius: '50%' }}
         />
+      </div>
       </div>
 
       {/* Thin gold rule */}
@@ -144,6 +152,7 @@ function HeroSection() {
       </p>
 
       {/* Main heading */}
+      <div data-py-exit="0.08">
       <h1
         style={{
           fontFamily: 'var(--font-syne)',
@@ -164,6 +173,7 @@ function HeroSection() {
         <br />
         PHILOSOPHY
       </h1>
+      </div>
 
       {/* Scroll hint */}
       <p
@@ -236,10 +246,10 @@ function MarkSection() {
         gridTemplateColumns: '1fr 1fr',
         gap: '80px',
         alignItems: 'center',
-        backgroundColor: 'var(--ink)',
         position: 'relative',
       }}
-      className="mark-section-grid"
+      className="mark-section-grid mat mat-plaster"
+      data-mat="plaster"
     >
       {/* Gold decorative rule top */}
       <div
@@ -254,7 +264,7 @@ function MarkSection() {
       />
 
       {/* SVG — left */}
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div data-py="-0.14" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <svg
           ref={svgRef}
           viewBox="0 0 560 240"
@@ -264,8 +274,8 @@ function MarkSection() {
           {/* Background glow */}
           <defs>
             <radialGradient id="circleGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="var(--ink)" stopOpacity="0.25" />
-              <stop offset="100%" stopColor="var(--ink)" stopOpacity="0" />
+              <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.22" />
+              <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
             </radialGradient>
           </defs>
           <ellipse cx="168" cy="120" rx="90" ry="90" fill="url(#circleGlow)"
@@ -275,11 +285,11 @@ function MarkSection() {
 
           {/* Filled circles (behind stroke) */}
           <circle cx="168" cy="120" r="60"
-            fill="var(--ink)"
+            fill="var(--accent)"
             style={{ opacity: drawn ? 0.9 : 0, transition: 'opacity 0.6s ease 2.1s' }}
           />
           <circle cx="392" cy="120" r="60"
-            fill="var(--ink)"
+            fill="var(--accent)"
             style={{ opacity: drawn ? 0.9 : 0, transition: 'opacity 0.6s ease 2.1s' }}
           />
 
@@ -295,7 +305,7 @@ function MarkSection() {
                C 502,182 460,228 392,228
                C 338,228 280,184 280,120"
             fill="none"
-            stroke="var(--ink)"
+            stroke="var(--parch)"
             strokeWidth="5"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -307,7 +317,7 @@ function MarkSection() {
           />
 
           {/* Center crossing dot */}
-          <circle cx="280" cy="120" r="4" fill="var(--ink)"
+          <circle cx="280" cy="120" r="4" fill="var(--parch)"
             style={{ opacity: drawn ? 1 : 0, transition: 'opacity 0.3s ease 2.4s' }} />
         </svg>
       </div>
@@ -412,6 +422,7 @@ function DualitySection() {
         position: 'relative',
       }}
       className="duality-grid"
+      data-mat="sand"
     >
       {/* Center divider line */}
       <div style={{
@@ -420,7 +431,7 @@ function DualitySection() {
         bottom: '10%',
         left: '50%',
         width: 1,
-        background: 'linear-gradient(180deg, transparent, rgba(var(--fg-rgb),0.5), transparent)',
+        background: 'transparent',
         zIndex: 2,
       }} className="duality-divider" />
       <div style={{
@@ -438,11 +449,8 @@ function DualitySection() {
       {/* LEFT — Design */}
       <div
         ref={leftRef}
-        style={{
-          ...panelStyle(leftVisible, 'left'),
-          backgroundColor: 'var(--mid)',
-          borderRight: '1px solid rgba(var(--fg-rgb),0.08)',
-        }}
+        className="mat mat-sand"
+        style={panelStyle(leftVisible, 'left')}
       >
         {/* Circle ornament */}
         <div style={{
@@ -455,7 +463,7 @@ function DualitySection() {
           justifyContent: 'center',
           marginBottom: 32,
         }}>
-          <div style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: 'rgba(var(--fg-rgb),0.1)' }} />
+          <div style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: 'var(--accent)' }} />
         </div>
 
         <p style={{
@@ -469,7 +477,7 @@ function DualitySection() {
           Circle One
         </p>
 
-        <h2 style={{
+        <h2 data-px="-0.07" style={{
           fontFamily: 'var(--font-syne)',
           fontWeight: 800,
           fontSize: 'clamp(52px, 7vw, 96px)',
@@ -511,10 +519,8 @@ function DualitySection() {
       {/* RIGHT — Build */}
       <div
         ref={rightRef}
-        style={{
-          ...panelStyle(rightVisible, 'right'),
-          backgroundColor: 'var(--ink)',
-        }}
+        className="mat mat-clay"
+        style={panelStyle(rightVisible, 'right')}
       >
         {/* Circle ornament */}
         <div style={{
@@ -527,7 +533,7 @@ function DualitySection() {
           justifyContent: 'center',
           marginBottom: 32,
         }}>
-          <div style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: 'rgba(var(--fg-rgb),0.1)' }} />
+          <div style={{ width: 48, height: 48, borderRadius: '50%', backgroundColor: 'var(--accent)' }} />
         </div>
 
         <p style={{
@@ -541,7 +547,7 @@ function DualitySection() {
           Circle Two
         </p>
 
-        <h2 style={{
+        <h2 data-px="0.07" style={{
           fontFamily: 'var(--font-syne)',
           fontWeight: 800,
           fontSize: 'clamp(52px, 7vw, 96px)',
@@ -622,9 +628,10 @@ function PrinciplesSection() {
 
   return (
     <section
+      className="mat mat-plaster"
+      data-mat="plaster"
       style={{
         padding: '140px 5vw',
-        backgroundColor: 'var(--ink)',
         position: 'relative',
       }}
     >
@@ -656,7 +663,7 @@ function PrinciplesSection() {
         }}>
           04 / What We Believe
         </p>
-        <h2 style={{
+        <h2 data-px="0.06" style={{
           fontFamily: 'var(--font-syne)',
           fontWeight: 800,
           fontSize: 'clamp(48px, 7vw, 110px)',
@@ -715,11 +722,11 @@ function PrincipleRow({
       className="principle-row"
     >
       {/* Large faint number */}
-      <div style={{
+      <div data-py="0.05" style={{
         fontFamily: 'var(--font-syne)',
         fontWeight: 800,
         fontSize: 'clamp(36px, 4vw, 56px)',
-        color: hovered ? 'rgba(var(--fg-rgb),0.5)' : 'rgba(var(--fg-rgb),0.1)',
+        color: hovered ? 'var(--accent)' : 'rgba(var(--fg-rgb),0.16)',
         lineHeight: 1,
         transition: 'color 0.3s ease',
         paddingTop: 4,
@@ -776,9 +783,10 @@ function ProcessSection() {
 
   return (
     <section
+      className="mat mat-forest"
+      data-mat="forest"
       style={{
         padding: '140px 5vw',
-        backgroundColor: 'var(--mid)',
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -820,7 +828,7 @@ function ProcessSection() {
         }}>
           05 / How We Work
         </p>
-        <h2 style={{
+        <h2 data-px="-0.06" style={{
           fontFamily: 'var(--font-syne)',
           fontWeight: 800,
           fontSize: 'clamp(48px, 7vw, 110px)',
@@ -890,8 +898,8 @@ function CycleStep({
       onMouseLeave={() => setHovered(false)}
       style={{
         padding: '40px 36px',
-        border: '1px solid rgba(var(--fg-rgb),0.05)',
-        borderTop: index < 3 ? '1px solid rgba(var(--fg-rgb),0.05)' : 'none',
+        border: '1px solid rgba(var(--fg-rgb),0.12)',
+        borderTop: index < 3 ? '1px solid rgba(var(--fg-rgb),0.12)' : 'none',
         backgroundColor: hovered ? 'rgba(var(--fg-rgb),0.04)' : 'transparent',
         transition: 'background-color 0.3s ease',
         opacity: visible ? 1 : 0,
@@ -974,9 +982,10 @@ function ManifestoSection() {
 
   return (
     <section
+      className="mat mat-slate"
+      data-mat="slate"
       style={{
         padding: '160px 5vw',
-        backgroundColor: 'var(--ink)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

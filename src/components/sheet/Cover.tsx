@@ -24,17 +24,17 @@ export default function Cover({ ready }: { ready: boolean }) {
   ));
 
   return (
-    <Panel id="cover" width="110vw" sheet="00" label="COVER" mm="00 000">
+    <Panel id="cover" width="110vw" sheet="00" label="COVER" mm="00 000" mat="clay" depth={1}>
       <div ref={ref} className="cv">
         <div className="cv-meta cv-tl">DESIGN-BUILD STUDIO<br />EST. KAMPALA</div>
-        <div className="cv-meta cv-tr">0°19′N 32°35′E<br />4°51′N 31°36′E</div>
+        <div className="cv-meta cv-tr" data-drift="-0.05">0°19′N 32°35′E<br />4°51′N 31°36′E</div>
 
         <h1 className="cv-title">
-          <span className="cv-line">{word('ULTERNATIVE')}</span>
-          <span className="cv-line cv-line-2">{word('SPACES')}<span className="cv-mask"><span className="cv-char cv-dot">.</span></span></span>
+          <span className="cv-line" data-drift="0.05">{word('ULTERNATIVE')}</span>
+          <span className="cv-line cv-line-2" data-drift="0.16">{word('SPACES')}<span className="cv-mask"><span className="cv-char cv-dot">.</span></span></span>
         </h1>
 
-        <div className="cv-meta cv-sub">
+        <div className="cv-meta cv-sub" data-drift="-0.07">
           <p>Architecture · Interiors · Construction.<br />One studio, from first line to last brick.</p>
         </div>
 

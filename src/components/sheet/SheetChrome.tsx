@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { subscribeSheet, gotoPanel, type SheetState } from './useSheetScroll';
+import { subscribeSheet, gotoPanel, SHEET_BREAKPOINT, type SheetState } from './useSheetScroll';
 
 export interface Station { id: string; label: string; sheet: string }
 
@@ -40,20 +40,68 @@ export default function SheetChrome({ stations, trackRef }: {
     return () => { clearTimeout(t); window.removeEventListener('resize', compute); };
   }, [stations, trackRef]);
 
+  // The fixed chrome (nav, ruler, title block) takes the material of whichever
+  // bay is under the middle of the viewport, via data-mat on <html>.
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const root = document.documentElement;
+    const mq = window.matchMedia(`(min-width: ${SHEET_BREAKPOINT}px)`);
+    let bays: { el: HTMLElement; left: number; mat: string }[] = [];
+    const measure = () => {
+      bays = Array.from(track.querySelectorAll<HTMLElement>('[data-panel]'))
+        .map((el) => ({ el, left: el.offsetLeft, mat: el.dataset.mat ?? '' }));
+    };
+    const apply = (st: SheetState) => {
+      let mat = bays[0]?.mat ?? '';
+      if (mq.matches) {
+        const probe = -st.x + window.innerWidth * 0.5;
+        bays.forEach((b) => { if (b.left <= probe) mat = b.mat; });
+      } else {
+        bays.forEach((b) => { if (b.el.getBoundingClientRect().top <= 64) mat = b.mat; });
+      }
+      if (mat) { if (root.dataset.mat !== mat) root.dataset.mat = mat; }
+      else delete root.dataset.mat;
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(track);
+    const unsub = subscribeSheet(apply);
+    const onScroll = () => { if (!mq.matches) apply({ progress: 0, x: 0, maxX: 1, activeIndex: 0 }); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => { unsub(); ro.disconnect(); window.removeEventListener('scroll', onScroll); delete root.dataset.mat; };
+  }, [trackRef]);
+
   // Mobile: which sheet is on screen (the track is a vertical stack there).
   const [mActive, setMActive] = useState(0);
   const [indexOpen, setIndexOpen] = useState(false);
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
-    const panels = stations
-      .map((st) => track.querySelector<HTMLElement>(`[data-panel="${st.id}"]`))
-      .filter(Boolean) as HTMLElement[];
-    const io = new IntersectionObserver((es) => {
-      es.forEach((e) => { if (e.isIntersecting) setMActive(panels.indexOf(e.target as HTMLElement)); });
-    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
-    panels.forEach((p) => io.observe(p));
-    return () => io.disconnect();
+    const mq = window.matchMedia(`(min-width: ${SHEET_BREAKPOINT}px)`);
+    // The sheets stack and hold on screen, so "which is showing" is read from
+    // the scroll position against each bay's place in the page (from heights).
+    const onScroll = () => {
+      if (mq.matches) return;
+      const mid = window.scrollY + window.innerHeight * 0.5;
+      let y = 0, at = '';
+      track.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => {
+        if (y <= mid) at = p.dataset.panel ?? at;
+        y += p.offsetHeight;
+      });
+      // a station covers its own bay and any unlisted bays after it
+      const ids = stations.map((st) => st.id);
+      let active = 0;
+      for (const p of Array.from(track.querySelectorAll<HTMLElement>('[data-panel]'))) {
+        const i = ids.indexOf(p.dataset.panel ?? '');
+        if (i >= 0) active = i;
+        if (p.dataset.panel === at) break;
+      }
+      setMActive(active);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, [stations, trackRef]);
   useEffect(() => {
     document.documentElement.classList.toggle('index-open', indexOpen);
@@ -138,9 +186,11 @@ export default function SheetChrome({ stations, trackRef }: {
 
       <style>{`
         .sheet-chrome { position: fixed; inset: 0; pointer-events: none; z-index: 150; font-family: var(--font-mono); }
-        .sheet-grid-row { position: absolute; top: 64px; left: 0; right: 0; height: 22px; overflow: hidden; border-bottom: 1px solid rgba(var(--fg-rgb),0.08); }
+        .sheet-grid-row { position: absolute; top: 64px; left: 0; right: 0; height: 22px; border-bottom: 1px solid rgba(var(--fg-rgb),0.08); }
         .sheet-grid-letters { position: absolute; top: 0; left: 0; height: 100%; width: 1200vw; will-change: transform; }
         .sheet-grid-letters span { position: absolute; top: 0; font-size: 9px; letter-spacing: .2em; color: rgba(var(--fg-rgb),.35); padding-left: 6px; border-left: 1px solid rgba(var(--fg-rgb),.15); height: 100%; line-height: 22px; }
+        /* structural grid: each letter drops a hairline down the whole sheet */
+        .sheet-grid-letters span::after { content: ''; position: absolute; left: -1px; top: 100%; width: 1px; height: 100vh; background: rgba(var(--fg-rgb),.05); }
         .sheet-stamp { position: absolute; left: 14px; top: 50%; transform: rotate(-90deg) translateX(-50%); transform-origin: left center; font-size: 8px; letter-spacing: .3em; color: rgba(var(--fg-rgb),.4); white-space: nowrap; }
         .sheet-ruler { position: absolute; left: 0; right: 0; bottom: 0; height: 68px; background: rgba(var(--bg-rgb),.92); backdrop-filter: blur(10px); border-top: 1px solid rgba(var(--fg-rgb),.15); pointer-events: auto; }
         .sheet-ruler-ticks { position: absolute; left: 0; right: 0; top: 0; height: 14px; }

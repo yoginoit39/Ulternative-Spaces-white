@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Panel from './Panel';
 
 const SERVICES = [
@@ -10,8 +10,21 @@ const SERVICES = [
 
 export default function ServicesWall() {
   const [on, setOn] = useState(0);
+  const listRef = useRef<HTMLUListElement>(null);
+  // Phones have no hover: each word lights as it crosses the middle of the
+  // screen, so the list reads itself while the sheet slides in. Tap still picks.
+  useEffect(() => {
+    const list = listRef.current;
+    if (!list || !window.matchMedia('(max-width: 899px)').matches) return;
+    const items = Array.from(list.children);
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) setOn(items.indexOf(e.target)); });
+    }, { rootMargin: '-55% 0px -44% 0px' });
+    items.forEach((li) => io.observe(li));
+    return () => io.disconnect();
+  }, []);
   return (
-    <Panel id="services" width="100vw" sheet="04" label="SERVICES" mm="12 000">
+    <Panel id="services" width="100vw" sheet="04" label="SERVICES" mm="12 000" mat="ochre" depth={1}>
       <div className="sv">
         <div className="sv-idx" data-parallax="0.35">04</div>
         <header className="sv-head paper">
@@ -19,9 +32,9 @@ export default function ServicesWall() {
           <h2 className="h-display" data-reveal="up" data-delay="0.05">What<br />we <em>build.</em></h2>
         </header>
 
-        <ul className="sv-list">
+        <ul className="sv-list" ref={listRef}>
           {SERVICES.map((s, i) => (
-            <li key={s.num} className={i === on ? 'on' : ''} onMouseEnter={() => setOn(i)} onFocus={() => setOn(i)} onClick={() => setOn(i)} tabIndex={0} data-reveal="up" data-delay={String(i * 0.08)}>
+            <li key={s.num} className={i === on ? 'on' : ''} onMouseEnter={() => setOn(i)} onFocus={() => setOn(i)} onClick={() => setOn(i)} tabIndex={0} data-reveal="up" data-delay={String(i * 0.08)} data-parallax={String(0.04 + i * 0.05)}>
               <span className="sv-num">{s.num}</span>
               <span className="sv-word">{s.word}</span>
             </li>

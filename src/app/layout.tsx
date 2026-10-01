@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { display, body, mono } from './fonts';
 import './globals.css';
+import './materials.css';
 import { TransitionProvider } from '@/context/transition';
 import PageTransition from '@/components/PageTransition';
 

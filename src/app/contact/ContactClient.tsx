@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import SmoothScroll from '@/components/SmoothScroll';
+import { useNavMaterial } from '@/components/useNavMaterial';
 
 const PROJECT_TYPES = ['Residential', 'Commercial', 'Interiors', 'Design-Build', 'Mixed-Use', 'Other'];
 
@@ -11,6 +12,7 @@ type FormState = 'idle' | 'sending' | 'success' | 'error';
 export default function ContactClient() {
   const [form, setForm] = useState({ name: '', email: '', projectType: '', message: '' });
   const [state, setState] = useState<FormState>('idle');
+  useNavMaterial();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +37,9 @@ export default function ContactClient() {
   return (
     <SmoothScroll>
       <Nav />
-      <main style={{ backgroundColor: 'var(--ink)', minHeight: '100vh' }}>
+      <main className="mat mat-stone contact-main" data-mat="stone" style={{ position: 'relative', minHeight: '100vh' }}>
+        {/* the left half of the page is a slate wall behind the studio details */}
+        <div className="mat mat-slate contact-wall" aria-hidden />
         <div
           style={{
             maxWidth: 1100,
@@ -45,11 +49,12 @@ export default function ContactClient() {
             gridTemplateColumns: '1fr 1fr',
             gap: '80px',
             alignItems: 'start',
+            position: 'relative',
           }}
           className="contact-grid"
         >
           {/* Left — info */}
-          <div className="contact-info" style={{ position: 'sticky', top: 120 }}>
+          <div className="contact-info mat mat-slate" data-mat="slate" style={{ position: 'sticky', top: 120 }}>
             <p style={{
               fontFamily: 'var(--font-mono)',
               fontSize: 9,
@@ -105,7 +110,7 @@ export default function ContactClient() {
           </div>
 
           {/* Right — form */}
-          <div>
+          <div data-mat="stone">
             {state === 'success' ? (
               <SuccessMessage />
             ) : (
@@ -182,14 +187,19 @@ export default function ContactClient() {
       <Footer />
 
       <style>{`
+        .contact-wall { position: absolute; inset: 64px 50% 0 0; }
         @media (max-width: 767px) {
+          .contact-wall { display: none; }
           .contact-grid {
             grid-template-columns: 1fr !important;
-            gap: 48px !important;
+            gap: 0 !important;
+            padding: 0 !important;
           }
+          .contact-grid > div { padding: 56px 6vw 72px; }
           .contact-info {
             position: static !important;
             top: auto !important;
+            padding-top: 120px !important;
           }
         }
         input, textarea, select {
@@ -350,8 +360,8 @@ function SubmitButton({ sending }: { sending: boolean }) {
         letterSpacing: '0.15em',
         textTransform: 'uppercase',
         padding: '18px 40px',
-        border: '1px solid var(--parch)',
-        background: sending ? 'rgba(var(--fg-rgb),0.05)' : 'var(--parch)',
+        border: '1px solid var(--accent)',
+        background: sending ? 'rgba(var(--fg-rgb),0.05)' : 'var(--accent)',
         color: sending ? 'var(--steel)' : 'var(--ink)',
         cursor: sending ? 'not-allowed' : 'pointer',
         transition: 'all 0.25s ease',
@@ -360,12 +370,12 @@ function SubmitButton({ sending }: { sending: boolean }) {
       onMouseEnter={(e) => {
         if (!sending) {
           (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
-          (e.currentTarget as HTMLButtonElement).style.color = 'var(--parch)';
+          (e.currentTarget as HTMLButtonElement).style.color = 'var(--accent)';
         }
       }}
       onMouseLeave={(e) => {
         if (!sending) {
-          (e.currentTarget as HTMLButtonElement).style.background = 'var(--parch)';
+          (e.currentTarget as HTMLButtonElement).style.background = 'var(--accent)';
           (e.currentTarget as HTMLButtonElement).style.color = 'var(--ink)';
         }
       }}

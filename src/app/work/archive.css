@@ -8,6 +8,7 @@
 .el-legend { position: fixed; bottom: 84px; left: 5vw; z-index: 160; display: flex; align-items: center; gap: 4px; padding: 4px; border: 1px solid rgba(var(--fg-rgb),.18); background: rgba(var(--bg-rgb),.78); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 .el-legend-k { font-family: var(--font-mono); font-size: 8px; letter-spacing: .3em; text-transform: uppercase; color: rgba(var(--fg-rgb),.45); padding: 0 8px 0 10px; }
 .el-legend button { background: none; border: 1px solid transparent; color: rgba(var(--fg-rgb),.65); font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .16em; text-transform: uppercase; padding: 6px 10px; cursor: pointer; transition: all .3s var(--ease-out); white-space: nowrap; }
+.el-dot { display: inline-block; width: 7px; height: 7px; margin-right: 7px; background: rgb(var(--cat-rgb)); }
 .el-legend button sup { font-size: 6.5px; color: var(--accent); margin-left: 4px; }
 .el-legend button:hover { color: var(--parch); border-color: rgba(var(--fg-rgb),.3); }
 .el-legend button.on { background: var(--parch); color: var(--ink); border-color: var(--parch); border-radius: 999px; }
@@ -24,10 +25,10 @@
 .el-key-h { font-family: var(--font-mono); font-size: 8px; letter-spacing: .3em; text-transform: uppercase; color: rgba(var(--fg-rgb),.5); margin: 0 0 14px; padding-bottom: 8px; border-bottom: 1px solid rgba(var(--fg-rgb),.3); }
 .el-key-list { list-style: none; margin: 0 0 18px; padding: 0; display: flex; flex-direction: column; gap: 4px; }
 .el-key-list button { display: grid; grid-template-columns: 34px 1fr auto; align-items: end; gap: 12px; width: 100%; background: none; border: 0; padding: 6px 0; cursor: pointer; color: var(--parch); font-family: var(--font-mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; text-align: left; transition: color .25s; }
-.el-key-list button i { display: block; justify-self: start; background: rgba(var(--fg-rgb),.18); border: 1px solid rgba(var(--fg-rgb),.6); border-bottom-width: 1.5px; transition: background .25s, border-color .25s; }
+.el-key-list button i { display: block; justify-self: start; background: rgb(var(--cat-rgb)); border: 1px solid rgba(var(--fg-rgb),.6); border-bottom-width: 1.5px; transition: opacity .25s; }
 .el-key-list button em { font-style: normal; color: rgba(var(--fg-rgb),.5); }
 .el-key-list button:hover, .el-key-list button.on { color: var(--accent); }
-.el-key-list button:hover i, .el-key-list button.on i { background: var(--accent-soft); border-color: var(--accent); }
+.el-key-list:has(button.on) button:not(.on) i { opacity: .3; }
 .el-key-notes { display: flex; flex-direction: column; gap: 6px; font-family: var(--font-mono); font-size: 8px; letter-spacing: .2em; text-transform: uppercase; color: rgba(var(--fg-rgb),.55); }
 .el-key-notes span { display: flex; align-items: center; gap: 10px; }
 .el-key-notes b { display: inline-block; width: 26px; height: 0; }
@@ -68,6 +69,7 @@
 .el-name { font-family: var(--font-syne); font-weight: 600; font-size: clamp(14px, 1.15vw, 19px); letter-spacing: -0.02em; line-height: 1.05; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .3s; }
 .el-bld:hover .el-name { color: var(--accent); }
 .el-meta { font-family: var(--font-mono); font-size: 7.5px; letter-spacing: .18em; text-transform: uppercase; color: rgba(var(--fg-rgb),.5); }
+.el-meta::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-right: 6px; background: rgb(var(--cat-rgb, var(--accent-rgb))); }
 
 /* callout on hover: leader line up-right, boxed note */
 .el-callout { position: absolute; left: 60%; bottom: calc(100% - 10px); width: 0; pointer-events: none; opacity: 0; transition: opacity .3s ease; z-index: 5; }
@@ -84,7 +86,7 @@
 /* ground line + earth hatch */
 .el-ground { position: absolute; left: 0; right: 0; bottom: calc(138px + var(--ground)); height: 0; pointer-events: none; color: var(--parch); }
 .el-ground-svg { position: absolute; left: 0; right: 0; top: -1px; width: 100%; height: 2px; overflow: visible; }
-.el-ground-hatch { position: absolute; left: 0; right: 0; top: 1px; height: 12px; background: repeating-linear-gradient(135deg, rgba(var(--fg-rgb),.28) 0 1px, transparent 1px 7px); mask-image: linear-gradient(to bottom, #000, transparent); -webkit-mask-image: linear-gradient(to bottom, #000, transparent); }
+.el-ground-hatch { position: absolute; left: 0; right: 0; top: 1px; height: 12px; background: repeating-linear-gradient(135deg, rgba(var(--accent-rgb),.6) 0 1px, transparent 1px 7px); mask-image: linear-gradient(to bottom, #000, transparent); -webkit-mask-image: linear-gradient(to bottom, #000, transparent); }
 .el-datum { position: absolute; right: 4vw; top: -16px; font-family: var(--font-mono); font-size: 7.5px; letter-spacing: .22em; color: rgba(var(--fg-rgb),.5); }
 
 /* ── end / vacant lot ── */
@@ -93,6 +95,12 @@
 .el-end-links a { color: var(--parch); text-decoration: none; border-bottom: 1px solid rgba(var(--fg-rgb),.4); padding-bottom: 3px; }
 .el-end-links a.ct-btn { padding: 12px 18px; border-bottom: 1px solid var(--accent); }
 .el-plot { align-self: end; margin-bottom: var(--ground); height: calc(3 * var(--lvl)); border: 1px dashed rgba(var(--fg-rgb),.5); display: grid; place-items: center; font-family: var(--font-syne); font-weight: 300; font-size: clamp(60px, 8vw, 140px); color: rgba(var(--fg-rgb),.18); background: repeating-linear-gradient(45deg, rgba(var(--fg-rgb),.04) 0 1px, transparent 1px 14px); }
+
+/* the end bay's levels and ground hang off .el-end (inside the bay padding), not the bay */
+@media (min-width: 900px) {
+  .el-end > .el-levels { top: 0; bottom: 0; left: -5vw; right: -5vw; }
+  .el-end > .el-ground { bottom: var(--ground); left: -5vw; right: -5vw; }
+}
 
 /* ── mobile: each year is a swipeable panorama on the ground line ── */
 @media (max-width: 899px) {
@@ -106,6 +114,8 @@
   .el-north { display: none; }
   .el-year-m { display: block; padding: 0 20px; margin-bottom: 4px; border: 0; font-size: clamp(36px, 12vw, 56px); }
   .el-bay { padding-left: 0 !important; padding-right: 0 !important; }
+  /* the years read as one continuous street: they scroll normally, no stacking */
+  .bay.el-bay { position: relative; top: auto; }
   .el-bay .bay-dim { left: 20px; right: 20px; }
   .el-gridline, .el-ht, .el-callout { display: none; }
   .el-levels { top: auto; bottom: 72px; height: calc(var(--ground) + 4 * var(--lvl) + 16px); }

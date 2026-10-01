@@ -328,7 +328,7 @@ function CTAButton() {
         fontSize: 9,
         letterSpacing: '0.1em',
         textTransform: 'uppercase',
-        color: hovered ? 'white' : 'var(--parch)',
+        color: hovered ? 'rgb(var(--bg-rgb))' : 'var(--parch)',
         backgroundColor: hovered ? 'var(--ember)' : 'transparent',
         textDecoration: 'none',
         transition: 'all 0.3s var(--ease-out)',

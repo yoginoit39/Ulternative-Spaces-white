@@ -1,13 +1,13 @@
 'use client';
 import { useRef, useMemo } from 'react';
-import Image from 'next/image';
+import Photo from '@/components/Photo';
 import Nav from '@/components/Nav';
 import SmoothScroll from '@/components/SmoothScroll';
 import Panel from '@/components/sheet/Panel';
 import SheetChrome, { type Station } from '@/components/sheet/SheetChrome';
 import { useSheetScroll, gotoPanel } from '@/components/sheet/useSheetScroll';
 import { usePageTransition } from '@/context/transition';
-import type { Project } from '@/lib/projects';
+import { matOf, type Project } from '@/lib/projects';
 import '@/components/sheet/sheet.css';
 
 // Plate rhythm: width (vw) and vertical placement, cycled across the gallery.
@@ -41,7 +41,8 @@ export default function ProjectSheet({
   useSheetScroll(wrapRef, trackRef, ids, true);
 
   const num = String(index + 1).padStart(2, '0');
-  const go = (href: string) => (e: React.MouseEvent) => { e.preventDefault(); navigate(href); };
+  // Links off a plate carry its photograph into the next page.
+  const go = (href: string) => (e: React.MouseEvent<HTMLElement>) => { e.preventDefault(); navigate(href, e.currentTarget.querySelector<HTMLElement>('[data-photo]')); };
 
   return (
     <SmoothScroll>
@@ -53,14 +54,25 @@ export default function ProjectSheet({
         <div ref={trackRef} className="sheet-track">
 
           {/* ── A-00 Title sheet ── */}
-          <Panel id="title" width="128vw" sheet={num} label={project.name.toUpperCase()} mm="00 000">
+          <Panel id="title" width="128vw" sheet={num} label={project.name.toUpperCase()} mm="00 000" mat={matOf(project.category)} depth={1}>
+            {/* The cover photograph. Desktop: sits on the cover plate and, on the
+                first scroll, grows until it is the page. Phone: it is the
+                opening screen and the title sheet slides up over it. */}
+            <div className="pj-zoom" data-zoom=".pj-cover-plate" data-reveal="clip" data-photo-target aria-hidden>
+              <Photo src={project.cover} alt="" sizes="(max-width: 899px) 180vh, 100vw" priority />
+              <i className="pj-zoom-shade" data-zoom-in />
+              <div className="pj-zoom-card">
+                <span data-zoom-in>Project {num} · {project.category} · {project.location}</span>
+                <strong data-zoom-in>{project.name}</strong>
+              </div>
+            </div>
             <div className="pj-title">
               <div className="pj-idx" data-parallax="0.3">{num}</div>
 
               <div className="pj-title-text paper">
                 <a href="/work" onClick={go('/work')} className="pj-back" data-reveal="up">← DRAWING REGISTER</a>
                 <p className="eyebrow" data-reveal="up" data-delay="0.05">Project {num} / {String(total).padStart(2, '0')} · {project.category}</p>
-                <h1 className="pj-name" data-reveal="up" data-delay="0.1">{splitName(project.name)}</h1>
+                <h1 className="pj-name" data-reveal="up" data-delay="0.1" data-drift="0.08">{splitName(project.name)}</h1>
 
                 <table className="pj-block" data-reveal="up" data-delay="0.2">
                   <tbody>
@@ -72,21 +84,24 @@ export default function ProjectSheet({
               </div>
 
               <figure className="pj-cover" data-reveal="clip">
-                <div className="plate pj-cover-plate" data-parallax="0.08">
-                  <Image src={project.cover} alt={project.name} fill unoptimized priority sizes="60vw" style={{ objectFit: 'cover' }} />
+                <div className="plate pj-cover-plate" data-photo-target>
+                  <div className="plate-in" data-parallax="0.08">
+                    <Photo src={project.cover} alt={project.name} sizes="(max-width: 899px) 100vw, 62vw" priority />
+                  </div>
                 </div>
                 <figcaption><span>COVER PLATE</span><span>{project.name.toUpperCase()} · 1 : 100</span></figcaption>
               </figure>
             </div>
+
           </Panel>
 
           {/* ── A-01 Brief ── */}
-          <Panel id="brief" width="120vw" sheet="A-01" label="BRIEF" mm="12 000">
+          <Panel id="brief" width="120vw" sheet="A-01" label="BRIEF" mm="12 000" mat="stone" depth={1}>
             <div className="pj-brief">
               <div className="pj-idx pj-idx-r" data-parallax="0.3">§</div>
               <header className="pj-brief-head paper">
                 <p className="eyebrow" data-reveal="up">A-01 / Brief</p>
-                <h2 className="h-display" data-reveal="up" data-delay="0.05">The<br /><em>brief.</em></h2>
+                <h2 className="h-display" data-reveal="up" data-delay="0.05" data-parallax="0.05">The<br /><em>brief.</em></h2>
               </header>
               <div className="pj-brief-body paper" data-reveal="up" data-delay="0.1">
                 <p className="pj-spec-num">1.0 &nbsp; GENERAL</p>
@@ -117,12 +132,14 @@ export default function ProjectSheet({
             const r = RHYTHM[i % RHYTHM.length];
             const pl = String(i + 1).padStart(2, '0');
             return (
-              <Panel key={src + i} id={`plate-${i + 1}`} width={`${r.w}vw`} sheet={`A-${String(i + 2).padStart(2, '0')}`} label={`PLATE ${pl}`} mm={DIMS[i % DIMS.length]}>
+              <Panel key={src + i} id={`plate-${i + 1}`} width={`${r.w}vw`} sheet={`A-${String(i + 2).padStart(2, '0')}`} label={`PLATE ${pl}`} mm={DIMS[i % DIMS.length]} mat="plaster" depth={1}>
                 <div className={`pj-plate pj-plate-${r.pos}`}>
                   <span className="pj-plate-num" data-parallax="0.22">{pl}</span>
                   <figure data-reveal="clip">
                     <div className="plate pj-plate-img" data-parallax="0.06">
-                      <Image src={src} alt={`${project.name} — plate ${pl}`} fill unoptimized sizes="70vw" style={{ objectFit: 'cover' }} />
+                      <div className="plate-in" data-parallax="0.08">
+                        <Photo src={src} alt={`${project.name} — plate ${pl}`} sizes="(max-width: 899px) 100vw, 80vw" />
+                      </div>
                     </div>
                     <figcaption>
                       <span>PLATE {pl} / {String(plates.length).padStart(2, '0')}</span>
@@ -135,7 +152,7 @@ export default function ProjectSheet({
           })}
 
           {/* ── Next ── */}
-          <Panel id="next" width="100vw" sheet={`A-${String(plates.length + 2).padStart(2, '0')}`} label="NEXT PROJECT" mm="10 000">
+          <Panel id="next" width="100vw" sheet={`A-${String(plates.length + 2).padStart(2, '0')}`} label="NEXT PROJECT" mm="10 000" mat={matOf(next.category)} depth={1}>
             <div className="pj-next">
               <div className="pj-idx" data-parallax="0.3">{String(((index + 1) % total) + 1).padStart(2, '0')}</div>
               <div className="pj-next-text paper">
@@ -151,8 +168,10 @@ export default function ProjectSheet({
                 </div>
               </div>
               <a href={`/work/${next.slug}`} onClick={go(`/work/${next.slug}`)} className="pj-next-fig" data-reveal="clip">
-                <div className="plate pj-next-plate" data-parallax="0.08">
-                  <Image src={next.cover} alt={next.name} fill unoptimized sizes="40vw" style={{ objectFit: 'cover' }} />
+                <div className="plate pj-next-plate" data-parallax="0.08" data-photo={next.cover}>
+                  <div className="plate-in" data-parallax="0.06">
+                    <Photo src={next.cover} alt={next.name} sizes="(max-width: 899px) 100vw, 40vw" />
+                  </div>
                 </div>
               </a>
               <footer className="ct-foot" data-reveal="up" data-delay="0.2">

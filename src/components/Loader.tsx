@@ -48,6 +48,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
 
   return (
     <div
+      className="mat mat-clay"
       style={{
         position: 'fixed',
         inset: 0,

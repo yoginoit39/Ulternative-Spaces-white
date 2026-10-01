@@ -1,0 +1,68 @@
+/* ═══════════════════════════════════════════════════════════
+   MATERIAL BOARD — the colour system
+   Colour comes from what the studio builds with: fired clay, limestone,
+   lime plaster, sand, planting, murram ochre, barkcloth, and blueprint slate.
+   Every surface is one flat material; nothing decorative sits behind copy.
+
+   A material is a scope that overrides three rgb triplets (surface, ink,
+   accent). Put `.mat .mat-<name>` on any element, or set data-mat on <html>
+   to skin the fixed chrome (nav, ruler, title block).
+   ═══════════════════════════════════════════════════════════ */
+
+/* Named tokens re-derive from the triplets inside every scope. */
+:root, .mat {
+  --ink:   rgb(var(--bg-rgb));
+  --parch: rgb(var(--fg-rgb));
+  --steel: rgba(var(--fg-rgb), .58);
+  --mid:   color-mix(in srgb, rgb(var(--bg-rgb)) 94%, rgb(var(--fg-rgb)));
+  --accent: rgb(var(--accent-rgb));
+  --accent-soft: rgba(var(--accent-rgb), .14);
+  --ember: var(--accent);
+  --gold:  var(--accent);
+}
+.mat { background-color: var(--ink); color: var(--parch); }
+
+/* ── light surfaces: dark ink, terracotta line ── */
+:root[data-mat="plaster"], .mat-plaster { --bg-rgb: 247,244,238; --fg-rgb: 27,25,22; --accent-rgb: 178,72,42; }
+:root[data-mat="stone"],   .mat-stone   { --bg-rgb: 238,232,221; --fg-rgb: 27,25,22; --accent-rgb: 174,68,40; }
+:root[data-mat="sand"],    .mat-sand    { --bg-rgb: 226,214,194; --fg-rgb: 30,25,18; --accent-rgb: 160,58,32; }
+:root[data-mat="ochre"],   .mat-ochre   { --bg-rgb: 204,162,88;  --fg-rgb: 30,22,10; --accent-rgb: 118,40,20; }
+
+/* ── deep surfaces: cream ink ── */
+:root[data-mat="clay"],    .mat-clay    { --bg-rgb: 172,70,42;   --fg-rgb: 250,241,228; --accent-rgb: 246,208,150; }
+:root[data-mat="forest"],  .mat-forest  { --bg-rgb: 38,56,45;    --fg-rgb: 240,234,220; --accent-rgb: 214,170,92; }
+:root[data-mat="slate"],   .mat-slate   { --bg-rgb: 27,36,58;    --fg-rgb: 240,234,220; --accent-rgb: 214,170,92; }
+:root[data-mat="bark"],    .mat-bark    { --bg-rgb: 72,50,40;    --fg-rgb: 244,234,220; --accent-rgb: 226,172,112; }
+
+/* ── dark theme: the same board, low light ── */
+:root[data-theme="dark"][data-mat="plaster"], :root[data-theme="dark"] .mat-plaster { --bg-rgb: 17,16,15; --fg-rgb: 240,234,222; --accent-rgb: 222,112,78; }
+:root[data-theme="dark"][data-mat="stone"],   :root[data-theme="dark"] .mat-stone   { --bg-rgb: 24,22,20; --fg-rgb: 240,234,222; --accent-rgb: 222,112,78; }
+:root[data-theme="dark"][data-mat="sand"],    :root[data-theme="dark"] .mat-sand    { --bg-rgb: 34,29,23; --fg-rgb: 240,234,222; --accent-rgb: 222,112,78; }
+:root[data-theme="dark"][data-mat="ochre"],   :root[data-theme="dark"] .mat-ochre   { --bg-rgb: 70,52,20; --fg-rgb: 246,234,206; --accent-rgb: 236,190,110; }
+:root[data-theme="dark"][data-mat="clay"],    :root[data-theme="dark"] .mat-clay    { --bg-rgb: 88,32,18; --fg-rgb: 250,238,224; --accent-rgb: 240,196,136; }
+:root[data-theme="dark"][data-mat="forest"],  :root[data-theme="dark"] .mat-forest  { --bg-rgb: 18,30,23; }
+:root[data-theme="dark"][data-mat="slate"],   :root[data-theme="dark"] .mat-slate   { --bg-rgb: 13,18,32; }
+:root[data-theme="dark"][data-mat="bark"],    :root[data-theme="dark"] .mat-bark    { --bg-rgb: 36,25,19; }
+
+/* ── Building types: one material each, shown only as small key swatches ── */
+:root {
+  --c-residential: 174,68,40;    /* clay */
+  --c-commercial: 58,82,124;     /* slate */
+  --c-interiors: 196,148,66;     /* ochre */
+  --c-mixed-use: 62,98,72;       /* planting */
+  --c-architecture: 116,80,62;   /* bark */
+}
+:root[data-theme="dark"] {
+  --c-residential: 222,112,78; --c-commercial: 120,150,204; --c-interiors: 226,180,100;
+  --c-mixed-use: 120,172,132; --c-architecture: 186,142,118;
+}
+.cat-residential  { --cat-rgb: var(--c-residential); }
+.cat-commercial   { --cat-rgb: var(--c-commercial); }
+.cat-interiors    { --cat-rgb: var(--c-interiors); }
+.cat-mixed-use    { --cat-rgb: var(--c-mixed-use); }
+.cat-architecture { --cat-rgb: var(--c-architecture); }
+
+/* Fixed chrome follows the material under it without snapping. */
+nav, .sheet-ruler, .sheet-title, .sheet-mtitle, .el-legend {
+  transition: background-color .6s ease, border-color .6s ease, color .6s ease;
+}

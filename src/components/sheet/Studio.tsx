@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Photo from '@/components/Photo';
 import Panel from './Panel';
 
 const METRICS = [
@@ -9,13 +9,13 @@ const METRICS = [
 
 export default function Studio() {
   return (
-    <Panel id="studio" width="125vw" sheet="01" label="THE STUDIO" mm="15 000">
+    <Panel id="studio" width="125vw" sheet="01" label="THE STUDIO" mm="15 000" mat="stone" depth={1}>
       <div className="st">
         <div className="st-idx" data-parallax="0.35">01</div>
 
         <div className="st-text paper">
           <p className="eyebrow" data-reveal="up">01 / The studio</p>
-          <h2 className="h-display" data-reveal="up" data-delay="0.05">
+          <h2 className="h-display" data-reveal="up" data-delay="0.05" data-parallax="0.05">
             We build<br />for East<br /><em>Africa.</em>
           </h2>
           <p className="lede" data-reveal="up" data-delay="0.1">
@@ -29,7 +29,7 @@ export default function Studio() {
           </p>
         </div>
 
-        <div className="st-metrics paper" data-reveal="up" data-delay="0.2">
+        <div className="st-metrics paper" data-reveal="up" data-delay="0.2" data-parallax="-0.04">
           {METRICS.map((m) => (
             <div key={m.l} className="st-metric">
               <div className="st-metric-v" data-count={m.v} data-suffix={m.s}>0{m.s}</div>
@@ -40,7 +40,9 @@ export default function Studio() {
 
         <figure className="st-fig" data-reveal="clip">
           <div className="st-img plate" data-parallax="0.12">
-            <Image src="/images/Image from Facebook (18).jpg" alt="Ulternative Spaces — built work" fill unoptimized sizes="40vw" style={{ objectFit: 'cover' }} />
+            <div className="plate-in" data-parallax="0.08">
+              <Photo src="/images/Image from Facebook (18).jpg" alt="Ulternative Spaces — built work" sizes="(max-width: 899px) 100vw, 55vw" />
+            </div>
           </div>
           <figcaption>PLATE 01 — PRIVATE RESIDENCE, KAMPALA · STREET ELEVATION</figcaption>
           <blockquote className="st-quote" data-reveal="up">

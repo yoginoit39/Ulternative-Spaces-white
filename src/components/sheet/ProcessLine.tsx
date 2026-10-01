@@ -9,15 +9,15 @@ const STEPS = [
 
 export default function ProcessLine() {
   return (
-    <Panel id="process" width="140vw" sheet="03" label="PROCESS" mm="14 000">
+    <Panel id="process" width="140vw" sheet="03" label="PROCESS" mm="14 000" mat="forest" depth={1}>
       <div className="pr">
         <div className="pr-idx" data-parallax="0.35">03</div>
         <header className="pr-head paper">
           <p className="eyebrow" data-reveal="up">03 / Process</p>
-          <h2 className="h-display" data-reveal="up" data-delay="0.05">From first<br />line to<br /><em>last brick.</em></h2>
+          <h2 className="h-display" data-reveal="up" data-delay="0.05" data-parallax="0.05">From first<br />line to<br /><em>last brick.</em></h2>
         </header>
 
-        <ol className="pr-steps">
+        <ol className="pr-steps" data-spine>
           <svg className="pr-svg" viewBox="0 0 1000 260" preserveAspectRatio="none" aria-hidden>
             <path data-draw d="M 0 130 H 1000" stroke="var(--parch)" strokeWidth="1.2" fill="none" vectorEffect="non-scaling-stroke" />
             {[6, 256, 506, 756].map((x, i) => (
@@ -28,7 +28,7 @@ export default function ProcessLine() {
             ))}
           </svg>
           {STEPS.map((s, i) => (
-            <li key={s.num} className={`paper ${i % 2 ? 'below' : 'above'}`} data-reveal="up" data-delay={String(i * 0.06)}>
+            <li key={s.num} className={`paper ${i % 2 ? 'below' : 'above'}`} data-reveal="up" data-delay={String(i * 0.06)} data-lift={i % 2 ? 16 : -16}>
               <span className="pr-num">{s.num}</span>
               <h3>{s.name}</h3>
               <p>{s.d}</p>

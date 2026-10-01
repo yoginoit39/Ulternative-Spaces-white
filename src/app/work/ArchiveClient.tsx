@@ -1,13 +1,13 @@
 'use client';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import Image from 'next/image';
+import Photo from '@/components/Photo';
 import Nav from '@/components/Nav';
 import SmoothScroll from '@/components/SmoothScroll';
 import Panel from '@/components/sheet/Panel';
 import SheetChrome, { type Station } from '@/components/sheet/SheetChrome';
 import { useSheetScroll } from '@/components/sheet/useSheetScroll';
 import { usePageTransition } from '@/context/transition';
-import { PROJECTS, CATEGORIES, YEARS, storeysOf, type Project } from '@/lib/projects';
+import { PROJECTS, CATEGORIES, YEARS, storeysOf, catClass, type Project } from '@/lib/projects';
 import '@/components/sheet/sheet.css';
 import './archive.css';
 
@@ -42,8 +42,8 @@ export default function ArchiveClient() {
           All <sup>{String(PROJECTS.length).padStart(2, '0')}</sup>
         </button>
         {CATEGORIES.map((c) => (
-          <button key={c} type="button" role="tab" aria-selected={cat === c} className={cat === c ? 'on' : ''} onClick={() => setCat(cat === c ? null : c)}>
-            {c} <sup>{String(PROJECTS.filter((p) => p.category === c).length).padStart(2, '0')}</sup>
+          <button key={c} type="button" role="tab" aria-selected={cat === c} className={`${catClass(c)}${cat === c ? ' on' : ''}`} onClick={() => setCat(cat === c ? null : c)}>
+            <i className="el-dot" />{c} <sup>{String(PROJECTS.filter((p) => p.category === c).length).padStart(2, '0')}</sup>
           </button>
         ))}
       </div>
@@ -76,7 +76,8 @@ function Street({ years, list, cat, setCat }: {
     window.scrollTo(0, 0);
   }, []);
 
-  const go = (href: string) => (e: React.MouseEvent) => { e.preventDefault(); navigate(href); };
+  // Links off a building or plate carry its photograph into the next page.
+  const go = (href: string) => (e: React.MouseEvent<HTMLElement>) => { e.preventDefault(); navigate(href, e.currentTarget.querySelector<HTMLElement>('[data-photo]')); };
   const total = PROJECTS.length;
   const span = `${YEARS[YEARS.length - 1]} – ${YEARS[0]}`;
   const totalStoreys = list.reduce((n, p) => n + storeysOf(p), 0);
@@ -92,11 +93,11 @@ function Street({ years, list, cat, setCat }: {
         <div ref={trackRef} className="sheet-track el-track">
 
           {/* ── A-000 · Title sheet ── */}
-          <Panel id="title" width="118vw" sheet="A-000" label="STREET ELEVATION" mm="00 000">
+          <Panel id="title" width="118vw" sheet="A-000" label="STREET ELEVATION" mm="00 000" mat="stone" depth={1}>
             <div className="el-title">
               <div className="el-title-text paper">
                 <p className="eyebrow" data-reveal="up">A-000 · Street elevation · {span}</p>
-                <h1 className="el-h1" data-reveal="up" data-delay="0.05">
+                <h1 className="el-h1" data-reveal="up" data-delay="0.05" data-drift="0.08">
                   The whole<br /><em>street.</em>
                 </h1>
                 <p className="lede" data-reveal="up" data-delay="0.1">
@@ -115,12 +116,12 @@ function Street({ years, list, cat, setCat }: {
               </div>
 
               {/* Key: how to read the drawing */}
-              <div className="el-key paper" data-reveal="up" data-delay="0.22">
+              <div className="el-key paper" data-reveal="up" data-delay="0.22" data-drift="-0.05">
                 <p className="el-key-h">Key</p>
                 <ul className="el-key-list">
                   {CATEGORIES.map((c) => (
                     <li key={c}>
-                      <button type="button" className={cat === c ? 'on' : ''} onClick={() => setCat(cat === c ? null : c)}>
+                      <button type="button" className={`${catClass(c)}${cat === c ? ' on' : ''}`} onClick={() => setCat(cat === c ? null : c)}>
                         <i style={{ height: 6 + 5 * (storeysOf({ category: c } as Project)), width: WIDTH[c] * 0.9 }} />
                         <span>{c}</span>
                         <em>{String(PROJECTS.filter((p) => p.category === c).length).padStart(2, '0')}</em>
@@ -150,6 +151,7 @@ function Street({ years, list, cat, setCat }: {
               id={`y${year}`}
               width="auto"
               className="bay-auto el-bay"
+              mat="plaster"
               sheet={`A-${String(yi + 1).padStart(3, '0')}`}
               label={`${year} · ${String(items.length).padStart(2, '0')} ${items.length === 1 ? 'BUILDING' : 'BUILDINGS'}`}
               mm={`${String(items.reduce((n, p) => n + WIDTH[p.category], 0) * 100).padStart(2, '0').replace(/(\d)(?=(\d{3})$)/, '$1 ')}`}
@@ -177,16 +179,16 @@ function Street({ years, list, cat, setCat }: {
                       key={p.slug}
                       href={`/work/${p.slug}`}
                       onClick={go(`/work/${p.slug}`)}
-                      className={`el-bld${p.featured ? ' featured' : ''}`}
+                      className={`el-bld ${catClass(p.category)}${p.featured ? ' featured' : ''}`}
                       style={{ ['--w' as string]: `${WIDTH[p.category]}vw`, ['--n' as string]: n }}
                     >
                       <span className="el-ht" data-reveal="up" data-delay="0.2">
                         <i /><b>{fmt(LEVEL_MM * n)}</b>
                       </span>
 
-                      <div className="el-mass plate" data-reveal="clip">
+                      <div className="el-mass plate plate-mono" data-reveal="clip" data-photo={p.cover}>
                         <div className="el-mass-in" data-parallax="0.06">
-                          <Image src={p.cover} alt={p.name} fill unoptimized sizes="30vw" style={{ objectFit: 'cover' }} />
+                          <Photo src={p.cover} alt={p.name} sizes="(max-width: 899px) 70vw, 32vw" />
                         </div>
                         <span className="el-floors" aria-hidden>
                           {Array.from({ length: n - 1 }, (_, i) => <i key={i} style={{ bottom: `calc(${i + 1} * var(--lvl))` }} />)}
@@ -225,7 +227,7 @@ function Street({ years, list, cat, setCat }: {
           ))}
 
           {/* ── Next lot ── */}
-          <Panel id="end" width="96vw" sheet={`A-${String(years.length + 1).padStart(3, '0')}`} label="NEXT LOT" mm="00 000">
+          <Panel id="end" width="96vw" sheet={`A-${String(years.length + 1).padStart(3, '0')}`} label="NEXT LOT" mm="00 000" mat="clay" depth={1}>
             <div className="el-end">
               <div className="el-levels" aria-hidden>
                 {Array.from({ length: MAX_LEVELS }, (_, i) => <div key={i} className="el-lvl" style={{ ['--n' as string]: i + 1 }} />)}
