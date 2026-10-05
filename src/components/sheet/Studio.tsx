@@ -9,7 +9,7 @@ const METRICS = [
 
 export default function Studio() {
   return (
-    <Panel id="studio" width="125vw" sheet="01" label="THE STUDIO" mm="15 000" mat="stone" depth={1}>
+    <Panel id="studio" width="125vw" sheet="01" label="THE STUDIO" mm="15 000" mat="paper" depth={1}>
       <div className="st">
         <div className="st-idx" data-parallax="0.35">01</div>
 

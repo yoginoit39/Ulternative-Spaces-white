@@ -24,7 +24,7 @@ export default function Cover({ ready }: { ready: boolean }) {
   ));
 
   return (
-    <Panel id="cover" width="110vw" sheet="00" label="COVER" mm="00 000" mat="clay" depth={1}>
+    <Panel id="cover" width="110vw" sheet="00" label="COVER" mm="00 000" mat="black" depth={1}>
       <div ref={ref} className="cv">
         <div className="cv-meta cv-tl">DESIGN-BUILD STUDIO<br />EST. KAMPALA</div>
         <div className="cv-meta cv-tr" data-drift="-0.05">0°19′N 32°35′E<br />4°51′N 31°36′E</div>

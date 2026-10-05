@@ -37,9 +37,9 @@ export default function ContactClient() {
   return (
     <SmoothScroll>
       <Nav />
-      <main className="mat mat-stone contact-main" data-mat="stone" style={{ position: 'relative', minHeight: '100vh' }}>
-        {/* the left half of the page is a slate wall behind the studio details */}
-        <div className="mat mat-slate contact-wall" aria-hidden />
+      <main className="mat mat-paper contact-main" data-mat="paper" style={{ position: 'relative', minHeight: '100vh' }}>
+        {/* the left half of the page is a black wall behind the studio details */}
+        <div className="mat mat-black contact-wall" aria-hidden />
         <div
           style={{
             maxWidth: 1100,
@@ -54,7 +54,7 @@ export default function ContactClient() {
           className="contact-grid"
         >
           {/* Left — info */}
-          <div className="contact-info mat mat-slate" data-mat="slate" style={{ position: 'sticky', top: 120 }}>
+          <div className="contact-info mat mat-black" data-mat="black" style={{ position: 'sticky', top: 120 }}>
             <p style={{
               fontFamily: 'var(--font-mono)',
               fontSize: 9,
@@ -110,7 +110,7 @@ export default function ContactClient() {
           </div>
 
           {/* Right — form */}
-          <div data-mat="stone">
+          <div data-mat="paper">
             {state === 'success' ? (
               <SuccessMessage />
             ) : (

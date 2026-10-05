@@ -9,7 +9,7 @@ const STEPS = [
 
 export default function ProcessLine() {
   return (
-    <Panel id="process" width="140vw" sheet="03" label="PROCESS" mm="14 000" mat="forest" depth={1}>
+    <Panel id="process" width="140vw" sheet="03" label="PROCESS" mm="14 000" mat="black" depth={1}>
       <div className="pr">
         <div className="pr-idx" data-parallax="0.35">03</div>
         <header className="pr-head paper">

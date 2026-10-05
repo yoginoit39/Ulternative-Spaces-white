@@ -29,7 +29,7 @@ export default function WorkStrip() {
     return () => row.removeEventListener('scroll', onScroll);
   }, []);
   return (
-    <Panel id="work" width="auto" sheet="02" label="SELECTED WORK" mm="62 600" className="bay-auto" mat="plaster" depth={1}>
+    <Panel id="work" width="auto" sheet="02" label="SELECTED WORK" mm="62 600" className="bay-auto" mat="white" depth={1}>
       <div className="wk">
         <header className="wk-head paper">
           <p className="eyebrow" data-reveal="up">02 / Selected work</p>

@@ -146,8 +146,8 @@ export default function PageTransition() {
         preserveAspectRatio="none"
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
       >
-        {/* a clay wall rises between pages */}
-        <path ref={pathRef} d={HIDDEN} fill="rgb(172,70,42)" />
+        {/* a gold wall rises between pages */}
+        <path ref={pathRef} d={HIDDEN} fill="rgb(200,146,42)" />
       </svg>
 
       {/* photograph in flight: a sharp copy fades in over the plate's own (smaller) file */}

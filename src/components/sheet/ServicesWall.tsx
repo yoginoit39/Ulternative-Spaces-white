@@ -24,7 +24,7 @@ export default function ServicesWall() {
     return () => io.disconnect();
   }, []);
   return (
-    <Panel id="services" width="100vw" sheet="04" label="SERVICES" mm="12 000" mat="ochre" depth={1}>
+    <Panel id="services" width="100vw" sheet="04" label="SERVICES" mm="12 000" mat="gold" depth={1}>
       <div className="sv">
         <div className="sv-idx" data-parallax="0.35">04</div>
         <header className="sv-head paper">

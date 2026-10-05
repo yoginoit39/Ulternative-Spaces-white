@@ -71,8 +71,8 @@ function HeroSection() {
 
   return (
     <section
-      className="mat mat-stone"
-      data-mat="stone"
+      className="mat mat-paper"
+      data-mat="paper"
       style={{
         minHeight: '100vh',
         display: 'flex',
@@ -248,8 +248,8 @@ function MarkSection() {
         alignItems: 'center',
         position: 'relative',
       }}
-      className="mark-section-grid mat mat-plaster"
-      data-mat="plaster"
+      className="mark-section-grid mat mat-white"
+      data-mat="white"
     >
       {/* Gold decorative rule top */}
       <div
@@ -422,7 +422,7 @@ function DualitySection() {
         position: 'relative',
       }}
       className="duality-grid"
-      data-mat="sand"
+      data-mat="paper"
     >
       {/* Center divider line */}
       <div style={{
@@ -449,7 +449,7 @@ function DualitySection() {
       {/* LEFT — Design */}
       <div
         ref={leftRef}
-        className="mat mat-sand"
+        className="mat mat-paper"
         style={panelStyle(leftVisible, 'left')}
       >
         {/* Circle ornament */}
@@ -519,7 +519,7 @@ function DualitySection() {
       {/* RIGHT — Build */}
       <div
         ref={rightRef}
-        className="mat mat-clay"
+        className="mat mat-black"
         style={panelStyle(rightVisible, 'right')}
       >
         {/* Circle ornament */}
@@ -628,8 +628,8 @@ function PrinciplesSection() {
 
   return (
     <section
-      className="mat mat-plaster"
-      data-mat="plaster"
+      className="mat mat-white"
+      data-mat="white"
       style={{
         padding: '140px 5vw',
         position: 'relative',
@@ -783,8 +783,8 @@ function ProcessSection() {
 
   return (
     <section
-      className="mat mat-forest"
-      data-mat="forest"
+      className="mat mat-gold"
+      data-mat="gold"
       style={{
         padding: '140px 5vw',
         position: 'relative',
@@ -982,8 +982,8 @@ function ManifestoSection() {
 
   return (
     <section
-      className="mat mat-slate"
-      data-mat="slate"
+      className="mat mat-black"
+      data-mat="black"
       style={{
         padding: '160px 5vw',
         display: 'flex',

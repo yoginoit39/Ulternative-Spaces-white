@@ -96,7 +96,7 @@ export default function ProjectSheet({
           </Panel>
 
           {/* ── A-01 Brief ── */}
-          <Panel id="brief" width="120vw" sheet="A-01" label="BRIEF" mm="12 000" mat="stone" depth={1}>
+          <Panel id="brief" width="120vw" sheet="A-01" label="BRIEF" mm="12 000" mat="paper" depth={1}>
             <div className="pj-brief">
               <div className="pj-idx pj-idx-r" data-parallax="0.3">§</div>
               <header className="pj-brief-head paper">
@@ -132,7 +132,7 @@ export default function ProjectSheet({
             const r = RHYTHM[i % RHYTHM.length];
             const pl = String(i + 1).padStart(2, '0');
             return (
-              <Panel key={src + i} id={`plate-${i + 1}`} width={`${r.w}vw`} sheet={`A-${String(i + 2).padStart(2, '0')}`} label={`PLATE ${pl}`} mm={DIMS[i % DIMS.length]} mat="plaster" depth={1}>
+              <Panel key={src + i} id={`plate-${i + 1}`} width={`${r.w}vw`} sheet={`A-${String(i + 2).padStart(2, '0')}`} label={`PLATE ${pl}`} mm={DIMS[i % DIMS.length]} mat="white" depth={1}>
                 <div className={`pj-plate pj-plate-${r.pos}`}>
                   <span className="pj-plate-num" data-parallax="0.22">{pl}</span>
                   <figure data-reveal="clip">

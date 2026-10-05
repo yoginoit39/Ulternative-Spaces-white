@@ -3,19 +3,19 @@
 /* ── Design tokens ─────────────────────────────── */
 /* Colour is three rgb triplets per scope (surface, ink, accent); every named
    token is derived from them in materials.css so a scope can be re-skinned
-   by overriding the triplets alone. The default surface is lime plaster. */
+   by overriding the triplets alone. The palette is the logo's: black, gold, white. */
 :root {
-  --fg-rgb:   27,25,22;           /* text/line colour as rgb triplet for rgba() */
-  --bg-rgb:   247,244,238;        /* page colour as rgb triplet for rgba() */
-  --accent-rgb: 178,72,42;        /* terracotta: fired Kampala clay */
+  --fg-rgb:   26,24,22;           /* the mark's black, as rgb triplet for rgba() */
+  --bg-rgb:   255,255,255;        /* page colour as rgb triplet for rgba() */
+  --accent-rgb: 200,146,42;       /* the mark's gold */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --fg-rgb:   240,234,222;
+  --fg-rgb:   250,247,242;
   --bg-rgb:   17,16,15;
-  --accent-rgb: 222,112,78;
+  --accent-rgb: 200,146,42;
   color-scheme: dark;
 }
 

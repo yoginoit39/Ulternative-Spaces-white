@@ -1,7 +1,7 @@
 import type { ReactNode, CSSProperties } from 'react';
 
 /** Surfaces a sheet can be printed on — see app/materials.css. */
-export type Mat = 'plaster' | 'stone' | 'sand' | 'ochre' | 'clay' | 'forest' | 'slate' | 'bark';
+export type Mat = 'white' | 'paper' | 'black' | 'gold';
 
 /**
  * One "bay" of the drawing sheet. On desktop it is a fixed-height, custom-width

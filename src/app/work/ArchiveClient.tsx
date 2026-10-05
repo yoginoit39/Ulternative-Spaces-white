@@ -93,7 +93,7 @@ function Street({ years, list, cat, setCat }: {
         <div ref={trackRef} className="sheet-track el-track">
 
           {/* ── A-000 · Title sheet ── */}
-          <Panel id="title" width="118vw" sheet="A-000" label="STREET ELEVATION" mm="00 000" mat="stone" depth={1}>
+          <Panel id="title" width="118vw" sheet="A-000" label="STREET ELEVATION" mm="00 000" mat="paper" depth={1}>
             <div className="el-title">
               <div className="el-title-text paper">
                 <p className="eyebrow" data-reveal="up">A-000 · Street elevation · {span}</p>
@@ -151,7 +151,7 @@ function Street({ years, list, cat, setCat }: {
               id={`y${year}`}
               width="auto"
               className="bay-auto el-bay"
-              mat="plaster"
+              mat="white"
               sheet={`A-${String(yi + 1).padStart(3, '0')}`}
               label={`${year} · ${String(items.length).padStart(2, '0')} ${items.length === 1 ? 'BUILDING' : 'BUILDINGS'}`}
               mm={`${String(items.reduce((n, p) => n + WIDTH[p.category], 0) * 100).padStart(2, '0').replace(/(\d)(?=(\d{3})$)/, '$1 ')}`}
@@ -227,7 +227,7 @@ function Street({ years, list, cat, setCat }: {
           ))}
 
           {/* ── Next lot ── */}
-          <Panel id="end" width="96vw" sheet={`A-${String(years.length + 1).padStart(3, '0')}`} label="NEXT LOT" mm="00 000" mat="clay" depth={1}>
+          <Panel id="end" width="96vw" sheet={`A-${String(years.length + 1).padStart(3, '0')}`} label="NEXT LOT" mm="00 000" mat="gold" depth={1}>
             <div className="el-end">
               <div className="el-levels" aria-hidden>
                 {Array.from({ length: MAX_LEVELS }, (_, i) => <div key={i} className="el-lvl" style={{ ['--n' as string]: i + 1 }} />)}
