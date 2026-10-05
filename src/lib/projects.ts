@@ -338,7 +338,7 @@ export function storeysOf(p: Project): number {
 export const YEARS = Array.from(new Set(PROJECTS.map((p) => p.year))).sort((a, b) => Number(b) - Number(a));
 /** The material each building type is keyed to (see app/materials.css). */
 export const MAT_BY_CATEGORY = {
-  Residential: 'black', Commercial: 'gold', Interiors: 'black', 'Mixed-Use': 'gold', Architecture: 'black',
+  Residential: 'black', Commercial: 'orange', Interiors: 'black', 'Mixed-Use': 'orange', Architecture: 'black',
 } as const;
 export const matOf = (category: string) => MAT_BY_CATEGORY[category as keyof typeof MAT_BY_CATEGORY] ?? 'paper';
 /** CSS class carrying a building type's key colour. */

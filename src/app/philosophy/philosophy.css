@@ -1,0 +1,58 @@
+/* ═══════════════ PHILOSOPHY (horizontal sheet) ═══════════════ */
+
+/* P-00 cover */
+.ph-cover { position: relative; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.ph-logo { border-radius: 50%; margin-bottom: clamp(18px, 3vh, 32px); width: clamp(72px, 12vh, 120px); height: auto; }
+.ph-h1 { font-family: var(--font-syne); font-weight: 700; letter-spacing: -0.04em; line-height: .88; font-size: clamp(52px, min(8.6vw, 14vh), 150px); color: var(--parch); margin: 0 0 clamp(16px, 3vh, 32px); text-transform: uppercase; }
+.ph-h1 em { font-style: normal; font-weight: 300; color: var(--accent); }
+.ph-hint { display: flex; align-items: center; gap: 14px; color: var(--parch); }
+.ph-hint .cv-arrow { width: 80px; }
+
+/* P-01 the mark */
+.ph-mark { height: 100%; display: grid; grid-template-columns: 52fr 48fr; column-gap: 6vw; align-items: center; }
+.ph-mark-svg { width: 100%; max-width: 640px; overflow: visible; justify-self: center; }
+.ph-mark-text .lede { max-width: 30em; }
+
+/* P-02 design | build */
+.ph-half { height: 100%; display: flex; flex-direction: column; justify-content: center; max-width: 34em; }
+.ph-ring { display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; border: 1.5px solid rgba(var(--fg-rgb),.35); margin-bottom: clamp(16px, 3vh, 32px); }
+.ph-ring i { width: 42px; height: 42px; border-radius: 50%; background: var(--accent); }
+.ph-big { font-family: var(--font-syne); font-weight: 700; letter-spacing: -0.04em; line-height: .88; font-size: clamp(52px, min(7vw, 12vh), 120px); color: var(--parch); margin: 0 0 clamp(14px, 2.4vh, 28px); text-transform: uppercase; }
+
+/* P-03 principles */
+.ph-principles { height: 100%; display: grid; grid-template-columns: 26vw 1fr; column-gap: 5vw; align-items: center; }
+.ph-head { align-self: center; }
+.ph-plist { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 3vw; align-items: center; }
+.ph-plist li { border-top: 1px solid rgba(var(--fg-rgb),.25); padding-top: 18px; }
+.ph-num { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: .2em; color: var(--accent); margin-bottom: 12px; }
+.ph-plist h3, .ph-steps h3 { font-family: var(--font-syne); font-weight: 600; font-size: clamp(18px, 1.5vw, 26px); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 10px; color: var(--parch); }
+.ph-plist p, .ph-steps p { font-family: var(--font-cormorant); font-size: clamp(15px, 1.05vw, 18px); line-height: 1.55; color: rgba(var(--fg-rgb),.82); margin: 0; }
+
+/* P-04 the cycle */
+.ph-cycle { height: 100%; display: grid; grid-template-columns: 26vw 1fr; column-gap: 5vw; align-items: center; }
+.ph-steps { position: relative; list-style: none; margin: 0; padding: 36px 0 0; display: grid; grid-template-columns: repeat(6, 1fr); column-gap: 2vw; align-items: start; }
+.ph-steps-line { position: absolute; left: 0; right: 0; top: 0; width: 100%; height: 10px; }
+.ph-dot { position: absolute; top: -40px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--ink); border: 1.5px solid var(--accent); }
+.ph-steps li { position: relative; }
+
+/* P-05 manifesto */
+.ph-manifesto { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: center; padding-bottom: 56px; }
+.ph-quote { font-family: var(--font-cormorant); font-weight: 300; font-size: clamp(28px, min(3.8vw, 6vh), 64px); line-height: 1.15; color: var(--parch); margin: 0 0 clamp(14px, 2.4vh, 28px); max-width: 22em; }
+.ph-quote em { font-style: normal; font-weight: 600; }
+.ph-manifesto .cv-meta { margin-bottom: clamp(18px, 3.6vh, 44px); }
+
+/* ── mobile: one vertical sheet ── */
+@media (max-width: 899px) {
+  .ph-cover { min-height: calc(100svh - 92px - 72px); }
+  .ph-h1 { font-size: clamp(44px, 13vw, 72px); }
+  .ph-mark, .ph-principles, .ph-cycle { display: block; }
+  .ph-mark-svg { max-width: 420px; margin: 0 auto 28px; display: block; }
+  .ph-half { max-width: none; }
+  .ph-big { font-size: clamp(44px, 14vw, 72px); }
+  .ph-plist { grid-template-columns: 1fr; row-gap: 26px; margin-top: 26px; }
+  .ph-steps { grid-template-columns: 1fr 1fr; row-gap: 26px; column-gap: 16px; margin-top: 22px; padding-top: 0; }
+  .ph-steps-line, .ph-dot { display: none; }
+  .ph-manifesto { padding-bottom: 0; }
+  .ph-quote { font-size: clamp(26px, 7.5vw, 40px); }
+  .ph-manifesto .ct-foot { position: static; margin-top: 40px; flex-direction: column; gap: 8px; }
+}

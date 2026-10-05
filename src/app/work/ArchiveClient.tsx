@@ -227,7 +227,7 @@ function Street({ years, list, cat, setCat }: {
           ))}
 
           {/* ── Next lot ── */}
-          <Panel id="end" width="96vw" sheet={`A-${String(years.length + 1).padStart(3, '0')}`} label="NEXT LOT" mm="00 000" mat="gold" depth={1}>
+          <Panel id="end" width="96vw" sheet={`A-${String(years.length + 1).padStart(3, '0')}`} label="NEXT LOT" mm="00 000" mat="orange" depth={1}>
             <div className="el-end">
               <div className="el-levels" aria-hidden>
                 {Array.from({ length: MAX_LEVELS }, (_, i) => <div key={i} className="el-lvl" style={{ ['--n' as string]: i + 1 }} />)}

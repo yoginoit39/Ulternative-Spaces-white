@@ -3,11 +3,11 @@
 /* ── Design tokens ─────────────────────────────── */
 /* Colour is three rgb triplets per scope (surface, ink, accent); every named
    token is derived from them in materials.css so a scope can be re-skinned
-   by overriding the triplets alone. The palette is the logo's: black, gold, white. */
+   by overriding the triplets alone. The palette is the logo's: black, orange, white. */
 :root {
   --fg-rgb:   26,24,22;           /* the mark's black, as rgb triplet for rgba() */
   --bg-rgb:   255,255,255;        /* page colour as rgb triplet for rgba() */
-  --accent-rgb: 200,146,42;       /* the mark's gold */
+  --accent-rgb: 232,120,42;       /* the mark's orange */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   color-scheme: light;
 }
@@ -15,7 +15,7 @@
 :root[data-theme="dark"] {
   --fg-rgb:   250,247,242;
   --bg-rgb:   17,16,15;
-  --accent-rgb: 200,146,42;
+  --accent-rgb: 232,120,42;
   color-scheme: dark;
 }
 

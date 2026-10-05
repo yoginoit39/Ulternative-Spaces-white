@@ -71,7 +71,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
         height={94}
         style={{ overflow: 'visible' }}
       >
-        {/* Two gold filled circles */}
+        {/* Two filled circles */}
         <circle
           cx={168}
           cy={120}
