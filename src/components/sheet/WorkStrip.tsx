@@ -37,7 +37,7 @@ export default function WorkStrip() {
           <p className="lede" data-reveal="up" data-delay="0.1">Walk the elevation. Each bay is a built project — click to enter.</p>
           <div data-reveal="up" data-delay="0.15">
             <TransitionLink href="/work" className="wk-all">
-              Open the full register <span>↗</span>
+              View all projects <span>↗</span>
             </TransitionLink>
           </div>
         </header>
