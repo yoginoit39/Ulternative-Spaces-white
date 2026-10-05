@@ -7,12 +7,11 @@ import TransitionLink from '@/components/TransitionLink';
 import { gotoPanel } from '@/components/sheet/useSheetScroll';
 
 const NAV_LINKS = [
-  { href: '/#studio', label: 'Studio' },
-  { href: '/#work', label: 'Work' },
-  { href: '/work', label: 'Archive' },
-  { href: '/#process', label: 'Process' },
-  { href: '/#services', label: 'Services' },
+  { href: '/', label: 'Home' },
+  { href: '/#studio', label: 'About us' },
+  { href: '/work', label: 'Work' },
   { href: '/philosophy', label: 'Philosophy' },
+  { href: '/team', label: 'Team' },
   { href: '/contact', label: 'Contact' },
 ];
 
