@@ -39,7 +39,7 @@ export default function Studio() {
         </div>
 
         <figure className="st-fig" data-reveal="clip">
-          <div className="st-img plate" data-parallax="0.12">
+          <div className="st-img plate" data-parallax="0.12" data-lightbox="studio" data-src="/images/site-visit-1.jpg" data-caption="Site inspection, Kampala · apartments under construction">
             <div className="plate-in" data-parallax="0.08">
               <Photo src="/images/site-visit-1.jpg" alt="The Ulternative Spaces team on site in Kampala" sizes="(max-width: 899px) 100vw, 55vw" />
             </div>

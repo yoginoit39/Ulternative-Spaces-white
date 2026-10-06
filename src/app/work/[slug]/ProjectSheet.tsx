@@ -136,7 +136,7 @@ export default function ProjectSheet({
                 <div className={`pj-plate pj-plate-${r.pos}`}>
                   <span className="pj-plate-num" data-parallax="0.22">{pl}</span>
                   <figure data-reveal="clip">
-                    <div className="plate pj-plate-img" data-parallax="0.06">
+                    <div className="plate pj-plate-img" data-parallax="0.06" data-lightbox={project.slug} data-src={src} data-caption={`Plate ${pl} / ${String(plates.length).padStart(2, '0')} · ${project.name} · ${project.location}`}>
                       <div className="plate-in" data-parallax="0.08">
                         <Photo src={src} alt={`${project.name} — plate ${pl}`} sizes="(max-width: 899px) 100vw, 80vw" />
                       </div>

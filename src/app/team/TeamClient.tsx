@@ -58,7 +58,7 @@ export default function TeamClient() {
               </table>
             </div>
             <figure className="pj-cover tm-cover" data-reveal="clip">
-              <div className="plate pj-cover-plate" data-photo="/images/site-visit-3.jpg">
+              <div className="plate pj-cover-plate" data-lightbox="team" data-src="/images/site-visit-3.jpg" data-caption="The team on site · Kampala">
                 <div className="plate-in" data-parallax="0.08">
                   <Photo src="/images/site-visit-3.jpg" alt="The team on site" sizes="(max-width: 899px) 100vw, 56vw" priority />
                 </div>
@@ -73,7 +73,7 @@ export default function TeamClient() {
             <div className="tm-row">
               {TEAM.map((m, i) => (
                 <article key={i} className={`tm-card${i % 2 ? ' low' : ''}`} data-lift={i % 2 ? -3 : 3}>
-                  <div className="plate tm-plate" data-reveal="clip">
+                  <div className="plate tm-plate" data-reveal="clip" data-lightbox={m.photo ? 'team' : undefined} data-src={m.photo} data-caption={`${m.name} · ${m.role}`}>
                     <div className="plate-in" data-parallax="0.06">
                       {m.photo
                         ? <Photo src={m.photo} alt={m.name} sizes="(max-width: 899px) 85vw, 24vw" />

@@ -4,6 +4,7 @@ import './globals.css';
 import './materials.css';
 import { TransitionProvider } from '@/context/transition';
 import PageTransition from '@/components/PageTransition';
+import Lightbox from '@/components/Lightbox';
 
 export const metadata: Metadata = {
   title: 'Ulternative Spaces — Design-Build · Kampala · Juba',
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body style={{ fontFamily: 'var(--font-cormorant), sans-serif' }} suppressHydrationWarning>
         <TransitionProvider>
           <PageTransition />
+          <Lightbox />
           {children}
         </TransitionProvider>
       </body>

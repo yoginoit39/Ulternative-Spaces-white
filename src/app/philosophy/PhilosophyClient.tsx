@@ -127,7 +127,7 @@ export default function PhilosophyClient() {
               </p>
             </div>
             <figure className="pj-cover ph-build-fig" data-reveal="clip">
-              <div className="plate pj-cover-plate">
+              <div className="plate pj-cover-plate" data-lightbox="philosophy" data-src="/images/site-visit-2.jpg" data-caption="On site · Kampala">
                 <div className="plate-in" data-parallax="0.08">
                   <Photo src="/images/site-visit-2.jpg" alt="Inspecting a build in progress" sizes="(max-width: 899px) 100vw, 40vw" />
                 </div>
