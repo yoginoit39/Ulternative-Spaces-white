@@ -129,6 +129,8 @@
   .el-ground { bottom: calc(72px + var(--ground)); }
   .el-datum { right: 20px; }
   .el-end { padding: 0 20px; }
+  /* no plot on a phone, so no level lines or ground drawn across the copy either */
+  .el-end > .el-levels, .el-end > .el-ground { display: none; }
   .el-end-links { margin-top: 6px; }
   .el-plot { display: none; }
 }
