@@ -100,3 +100,10 @@ html.lb-open, html.lb-open body { overflow: hidden; }
   .lb-arrow { display: none; }  /* swipe instead */
 }
 @media (prefers-reduced-motion: reduce) { .lb-back { transition: none; } }
+
+/* ── Page transition: the sheet being opened, stamped on the wall ── */
+.pt-stamp { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 22px; color: #1a1816; font-family: var(--font-mono); }
+.pt-mark { width: clamp(140px, 22vw, 260px); height: auto; overflow: visible; }
+.pt-stamp p { display: flex; align-items: center; gap: 14px; margin: 0; font-size: 10px; letter-spacing: .28em; text-transform: uppercase; white-space: nowrap; }
+.pt-stamp b { font-weight: 500; }
+.pt-stamp i { display: block; width: 36px; height: 1px; background: currentColor; }

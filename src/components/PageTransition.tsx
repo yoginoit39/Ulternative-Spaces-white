@@ -3,6 +3,7 @@ import { useEffect, useRef, useContext, useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { TransitionContext } from '@/context/transition';
 import imageLoader from '@/lib/imageLoader';
+import { PROJECTS } from '@/lib/projects';
 
 const HIDDEN = 'M 0 100 V 100 Q 50 100 100 100 V 100 z';
 const ARCH   = 'M 0 100 V 50 Q 50 0 100 50 V 100 z';
@@ -10,8 +11,23 @@ const FULL   = 'M 0 100 V 0 Q 50 0 100 0 V 100 z';
 
 const loadGsap = async () => { const m = await import('gsap'); return m.default || m.gsap; };
 
+// The sheet we are going to, as it would be stamped on a title block.
+const sheetOf = (href: string): [string, string] => {
+  const path = (href.split('?')[0].split('#')[0] || '/').replace(/\/$/, '') || '/';
+  if (path === '/') return ['00', 'Cover'];
+  if (path === '/work') return ['A-000', 'Street elevation'];
+  if (path.startsWith('/work/')) { const p = PROJECTS.find((x) => x.slug === path.slice(6)); return p ? [`A-${p.num}`, p.name] : ['A-00', 'Drawing set']; }
+  if (path === '/philosophy') return ['P-00', 'Design & philosophy'];
+  if (path === '/team') return ['T-00', 'The team'];
+  if (path === '/contact') return ['C-00', 'Start a project'];
+  return ['—', path.slice(1)];
+};
+
 export default function PageTransition() {
-  const pathRef  = useRef<SVGPathElement>(null);
+  const pathRef  = useRef<SVGPathElement>(null);   // the orange wall
+  const inkRef   = useRef<SVGPathElement>(null);   // the black edge that leads it
+  const markRef  = useRef<SVGPathElement>(null);   // the lemniscate drawn on the wall
+  const stampRef = useRef<HTMLDivElement>(null);   // sheet number + name
   const photoRef = useRef<HTMLDivElement>(null);   // the photograph in flight between pages
   const router   = useRouter();
   const pathname = usePathname();
@@ -22,13 +38,17 @@ export default function PageTransition() {
 
   // Shared exit animation — called both on pathname change AND same-page reclick
   const playExit = useCallback(async () => {
-    const path = pathRef.current;
-    if (!path) { busy.current = false; return; }
+    const path = pathRef.current, ink = inkRef.current, stamp = stampRef.current;
+    if (!path || !ink) { busy.current = false; return; }
     const gsap = await loadGsap();
     gsap.timeline({ onComplete: () => { busy.current = false; } })
-      .set(path, { attr: { d: FULL } })
-      .to(path, { attr: { d: ARCH   }, duration: 0.35, ease: 'power2.in' })
-      .to(path, { attr: { d: HIDDEN }, duration: 0.45, ease: 'power2.out' });
+      .set([path, ink], { attr: { d: FULL } })
+      .to(stamp, { opacity: 0, y: -10, duration: 0.25, ease: 'power2.in' }, 0)
+      // the orange drops away first, the black beneath it a beat later
+      .to(path, { attr: { d: ARCH   }, duration: 0.35, ease: 'power2.in' }, 0.05)
+      .to(path, { attr: { d: HIDDEN }, duration: 0.45, ease: 'power2.out' })
+      .to(ink,  { attr: { d: ARCH   }, duration: 0.35, ease: 'power2.in' }, 0.17)
+      .to(ink,  { attr: { d: HIDDEN }, duration: 0.45, ease: 'power2.out' }, '>');
   }, []);
 
   // Photo transition, leaving: the plate's photograph lifts off the page and
@@ -113,18 +133,26 @@ export default function PageTransition() {
       const targetPath = href.split('?')[0].split('#')[0] || '/';
       const isSamePage = targetPath === window.location.pathname;
 
+      const ink = inkRef.current!, mark = markRef.current!, stamp = stampRef.current!;
+      const [num, name] = sheetOf(href);
+      stamp.querySelector('b')!.textContent = num;
+      stamp.querySelector('span')!.textContent = name;
+      const len = mark.getTotalLength();
       gsap.timeline()
-        .set(path, { attr: { d: HIDDEN } })
-        .to(path, { attr: { d: ARCH }, duration: 0.45, ease: 'power2.in' })
-        .to(path, {
-          attr: { d: FULL },
-          duration: 0.35,
-          ease: 'power2.out',
-          onComplete: () => {
-            router.push(href);
-            if (isSamePage) playExit();
-          },
-        });
+        .set([path, ink], { attr: { d: HIDDEN } })
+        .set(mark, { strokeDasharray: len, strokeDashoffset: len })
+        .set(stamp, { opacity: 0, y: 10 })
+        .to(ink,  { attr: { d: ARCH }, duration: 0.45, ease: 'power2.in' }, 0)
+        .to(ink,  { attr: { d: FULL }, duration: 0.35, ease: 'power2.out' })
+        .to(path, { attr: { d: ARCH }, duration: 0.45, ease: 'power2.in' }, 0.12)
+        .to(path, { attr: { d: FULL }, duration: 0.35, ease: 'power2.out' })
+        // on the wall: the mark draws itself and the destination is stamped
+        .to(mark, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.inOut' }, 0.55)
+        .to(stamp, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 0.8)
+        .add(() => {
+          router.push(href);
+          if (isSamePage) playExit();
+        }, 1.35);
     };
   }, [router, navigateRef, playExit, carryPhoto]);
 
@@ -146,9 +174,24 @@ export default function PageTransition() {
         preserveAspectRatio="none"
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
       >
-        {/* an orange wall rises between pages */}
+        {/* an orange wall rises between pages. A black layer beneath it leads
+            the way in (a band ahead of the orange) and lingers on the way out
+            (a band behind it). */}
+        <path ref={inkRef} d={HIDDEN} fill="#1a1816" />
         <path ref={pathRef} d={HIDDEN} fill="rgb(242,174,74)" />
       </svg>
+
+      {/* drawn on the wall while it is up */}
+      <div ref={stampRef} className="pt-stamp" style={{ opacity: 0 }}>
+        <svg viewBox="0 0 560 240" className="pt-mark" aria-hidden>
+          <path
+            ref={markRef}
+            d="M 280,120 C 280,56 222,12 168,12 C 100,12 58,58 58,120 C 58,182 100,228 168,228 C 222,228 280,184 280,120 C 280,56 338,12 392,12 C 460,12 502,58 502,120 C 502,182 460,228 392,228 C 338,228 280,184 280,120"
+            fill="none" stroke="#1a1816" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round"
+          />
+        </svg>
+        <p><b>00</b><i /><span>Cover</span></p>
+      </div>
 
       {/* photograph in flight: a sharp copy fades in over the plate's own (smaller) file */}
       <div ref={photoRef} style={{ position: 'fixed', display: 'none', overflow: 'hidden', background: '#111' }}>
