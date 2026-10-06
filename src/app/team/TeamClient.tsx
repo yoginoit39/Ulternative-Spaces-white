@@ -45,13 +45,14 @@ export default function TeamClient() {
               <p className="eyebrow" data-reveal="up">T-000 · The team · Kampala — Juba</p>
               <h1 className="tm-h1" data-reveal="up" data-delay="0.05" data-drift="0.06">One studio,<br /><em>{TEAM.length} people.</em></h1>
               <p className="lede" data-reveal="up" data-delay="0.1">
-                Architects, designers and builders under one roof, so the person who draws a wall
-                is answerable for the wall. <strong>{kampala} in Kampala, {juba} in Juba.</strong>
+                Design and construction under one roof, so the person who draws a wall
+                is answerable for the wall.
+                {juba > 0 && <strong> {kampala} in Kampala, {juba} in Juba.</strong>}
               </p>
               <table className="pj-block tm-block" data-reveal="up" data-delay="0.18">
                 <tbody>
                   <tr><th>Studio</th><td>Design-Build</td><th>Est.</th><td>Kampala</td></tr>
-                  <tr><th>People</th><td>{String(TEAM.length).padStart(2, '0')}</td><th>Offices</th><td>02</td></tr>
+                  <tr><th>People</th><td>{String(TEAM.length).padStart(2, '0')}</td><th>Offices</th><td>Kampala · Juba</td></tr>
                 </tbody>
               </table>
             </div>
