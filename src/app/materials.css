@@ -22,32 +22,32 @@
 .mat { background-color: var(--ink); color: var(--parch); }
 
 /* ── light surfaces: black ink, orange line ── */
-:root[data-mat="white"], .mat-white { --bg-rgb: 255,255,255; --fg-rgb: 26,24,22; --accent-rgb: 232,120,42; }
-:root[data-mat="paper"], .mat-paper { --bg-rgb: 246,243,238; --fg-rgb: 26,24,22; --accent-rgb: 222,108,32; }
+:root[data-mat="white"], .mat-white { --bg-rgb: 255,255,255; --fg-rgb: 26,24,22; --accent-rgb: 226,150,46; }
+:root[data-mat="paper"], .mat-paper { --bg-rgb: 246,243,238; --fg-rgb: 26,24,22; --accent-rgb: 226,150,46; }
 
 /* ── the mark's black: white ink, orange line ── */
-:root[data-mat="black"], .mat-black { --bg-rgb: 26,24,22; --fg-rgb: 250,247,242; --accent-rgb: 232,120,42; }
+:root[data-mat="black"], .mat-black { --bg-rgb: 26,24,22; --fg-rgb: 250,247,242; --accent-rgb: 242,174,74; }
 
 /* ── the mark's orange: black ink ── */
-:root[data-mat="orange"], .mat-orange { --bg-rgb: 232,120,42; --fg-rgb: 26,24,22; --accent-rgb: 26,24,22; }
+:root[data-mat="orange"], .mat-orange { --bg-rgb: 242,174,74; --fg-rgb: 26,24,22; --accent-rgb: 26,24,22; }
 
 /* ── dark theme: the same palette, low light ── */
-:root[data-theme="dark"][data-mat="white"], :root[data-theme="dark"] .mat-white { --bg-rgb: 17,16,15; --fg-rgb: 250,247,242; --accent-rgb: 232,120,42; }
-:root[data-theme="dark"][data-mat="paper"], :root[data-theme="dark"] .mat-paper { --bg-rgb: 26,24,22; --fg-rgb: 250,247,242; --accent-rgb: 232,120,42; }
+:root[data-theme="dark"][data-mat="white"], :root[data-theme="dark"] .mat-white { --bg-rgb: 17,16,15; --fg-rgb: 250,247,242; --accent-rgb: 242,174,74; }
+:root[data-theme="dark"][data-mat="paper"], :root[data-theme="dark"] .mat-paper { --bg-rgb: 26,24,22; --fg-rgb: 250,247,242; --accent-rgb: 242,174,74; }
 :root[data-theme="dark"][data-mat="black"], :root[data-theme="dark"] .mat-black { --bg-rgb: 10,9,8; }
-:root[data-theme="dark"][data-mat="orange"], :root[data-theme="dark"] .mat-orange { --bg-rgb: 168,78,20; --fg-rgb: 255,246,236; --accent-rgb: 255,246,236; }
+:root[data-theme="dark"][data-mat="orange"], :root[data-theme="dark"] .mat-orange { --bg-rgb: 176,118,36; --fg-rgb: 255,248,236; --accent-rgb: 255,248,236; }
 
 /* ── Building types: tones of the mark, shown only as small key swatches ── */
 :root {
-  --c-residential: 232,120,42;   /* orange */
+  --c-residential: 242,174,74;   /* the logo's orange */
   --c-commercial: 26,24,22;      /* black */
-  --c-interiors: 244,178,120;    /* pale orange */
-  --c-mixed-use: 150,66,18;      /* deep orange */
+  --c-interiors: 250,212,150;    /* pale orange */
+  --c-mixed-use: 176,110,30;     /* deep orange */
   --c-architecture: 128,122,112; /* stone grey */
 }
 :root[data-theme="dark"] {
-  --c-residential: 232,120,42; --c-commercial: 250,247,242; --c-interiors: 244,178,120;
-  --c-mixed-use: 190,90,30; --c-architecture: 150,144,134;
+  --c-residential: 242,174,74; --c-commercial: 250,247,242; --c-interiors: 250,212,150;
+  --c-mixed-use: 200,136,50; --c-architecture: 150,144,134;
 }
 .cat-residential  { --cat-rgb: var(--c-residential); }
 .cat-commercial   { --cat-rgb: var(--c-commercial); }

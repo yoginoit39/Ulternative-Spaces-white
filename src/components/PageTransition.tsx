@@ -147,7 +147,7 @@ export default function PageTransition() {
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
       >
         {/* an orange wall rises between pages */}
-        <path ref={pathRef} d={HIDDEN} fill="rgb(232,120,42)" />
+        <path ref={pathRef} d={HIDDEN} fill="rgb(242,174,74)" />
       </svg>
 
       {/* photograph in flight: a sharp copy fades in over the plate's own (smaller) file */}

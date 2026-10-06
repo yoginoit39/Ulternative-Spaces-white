@@ -7,7 +7,7 @@
 :root {
   --fg-rgb:   26,24,22;           /* the mark's black, as rgb triplet for rgba() */
   --bg-rgb:   255,255,255;        /* page colour as rgb triplet for rgba() */
-  --accent-rgb: 232,120,42;       /* the mark's orange */
+  --accent-rgb: 226,150,46;       /* the mark's orange (#F2AE4A), cut a little deeper for small text on white */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   color-scheme: light;
 }
@@ -15,7 +15,7 @@
 :root[data-theme="dark"] {
   --fg-rgb:   250,247,242;
   --bg-rgb:   17,16,15;
-  --accent-rgb: 232,120,42;
+  --accent-rgb: 242,174,74;
   color-scheme: dark;
 }
 

@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
   <!-- Dark circle background -->
-  <circle cx="100" cy="100" r="98" fill="#1a1816"/>
+  <circle cx="100" cy="100" r="98" fill="#262626"/>
 
   <!-- Left filled circle -->
-  <circle cx="68" cy="100" r="28" fill="#c8922a"/>
+  <circle cx="68" cy="100" r="28" fill="#F2AE4A"/>
   <!-- Right filled circle -->
-  <circle cx="132" cy="100" r="28" fill="#c8922a"/>
+  <circle cx="132" cy="100" r="28" fill="#F2AE4A"/>
 
   <!-- Infinity / lemniscate outline (open path for stroke animation) -->
   <path
@@ -19,7 +19,7 @@
        C 170,132 154,156 132,156
        C 118,156 100,134 100,100"
     fill="none"
-    stroke="#c8922a"
+    stroke="#F2AE4A"
     stroke-width="5"
     stroke-linecap="round"
     stroke-linejoin="round"
