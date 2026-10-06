@@ -142,19 +142,20 @@ export const PROJECTS: Project[] = [
   },
   /* ───────────── Archive (sample rows — replace with real projects) ───────────── */
   {
-    slug: 'hillside-residence',
-    placeholder: true,
+    // Real site photographs. Name and description to be confirmed by the studio.
+    slug: 'pool-villa',
+    featured: true,
     num: '07',
-    name: 'Hillside Residence',
+    name: 'Pool Villa',
     category: 'Residential',
     year: '2025',
     location: 'Kampala, Uganda',
     status: 'On site',
     storeys: 2,
     description:
-      'A two-storey family home stepping down a Kampala hillside. Split levels follow the slope so every room opens onto its own terrace, while a deep concrete roof keeps the afternoon sun off the glazing.',
-    cover: '/images/Image from Facebook (30).jpg',
-    gallery: ['/images/Image from Facebook (30).jpg', '/images/Image from Facebook (18).jpg', '/images/Image from Facebook (2).jpg', '/images/Image from Facebook (13).jpg'],
+      'A two-storey family villa under construction outside Kampala, with a terraced pool and sunken lounge cast in place beside it. Photographed on site as the shell is completed.',
+    cover: '/images/site-pool-villa-4.jpg',
+    gallery: ['/images/site-pool-villa-4.jpg', '/images/site-pool-villa-2.jpg', '/images/site-pool-villa-1.jpg', '/images/site-pool-villa-3.jpg'],
   },
   {
     slug: 'office-fit-out',

@@ -1,10 +1,11 @@
 /* ═══════════════ TEAM (horizontal sheet) ═══════════════ */
 
 /* T-00 title */
-.tm-title { height: 100%; display: flex; flex-direction: column; justify-content: center; }
+.tm-title { position: relative; height: 100%; display: grid; grid-template-columns: 50fr 60fr; column-gap: 6vw; align-items: stretch; }
+.tm-title-text { align-self: center; }
 .tm-h1 { font-family: var(--font-syne); font-weight: 700; letter-spacing: -0.04em; line-height: .88; font-size: clamp(52px, min(8.6vw, 14vh), 150px); color: var(--parch); margin: 0 0 clamp(16px, 3vh, 32px); }
 .tm-h1 em { font-style: normal; font-weight: 300; letter-spacing: -0.02em; color: var(--accent); }
-.tm-title .lede { max-width: 36em; }
+.tm-title .lede { max-width: 30em; }
 .tm-block { margin-top: clamp(12px, 2vh, 24px); max-width: 480px; }
 
 /* T-01 people: a strip of portrait cards, alternating high and low like the work strip */
@@ -27,7 +28,9 @@
 
 /* ── mobile: title, then a swipe strip of people, then join ── */
 @media (max-width: 899px) {
-  .tm-title { min-height: calc(100svh - 92px - 72px); }
+  .tm-title { display: block; min-height: 0; }
+  .tm-cover { margin-top: 32px; }
+  .tm-cover .pj-cover-plate { aspect-ratio: 4 / 3; flex: none; }
   .tm-h1 { font-size: clamp(44px, 13vw, 72px); }
   .tm-row { width: auto; height: auto; gap: 14px; margin: 0 -20px; padding: 0 20px 6px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 20px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .tm-row::-webkit-scrollbar { display: none; }

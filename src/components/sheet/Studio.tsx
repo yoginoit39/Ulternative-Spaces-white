@@ -41,10 +41,10 @@ export default function Studio() {
         <figure className="st-fig" data-reveal="clip">
           <div className="st-img plate" data-parallax="0.12">
             <div className="plate-in" data-parallax="0.08">
-              <Photo src="/images/Image from Facebook (18).jpg" alt="Ulternative Spaces — built work" sizes="(max-width: 899px) 100vw, 55vw" />
+              <Photo src="/images/site-visit-1.jpg" alt="The Ulternative Spaces team on site in Kampala" sizes="(max-width: 899px) 100vw, 55vw" />
             </div>
           </div>
-          <figcaption>PLATE 01 — PRIVATE RESIDENCE, KAMPALA · STREET ELEVATION</figcaption>
+          <figcaption>PLATE 01 — SITE INSPECTION, KAMPALA · APARTMENTS UNDER CONSTRUCTION</figcaption>
           <blockquote className="st-quote" data-reveal="up">
             “We don’t just design buildings — we design the quality of your life.”
           </blockquote>

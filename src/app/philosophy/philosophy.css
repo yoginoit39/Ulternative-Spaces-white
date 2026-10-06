@@ -17,6 +17,9 @@
 .ph-half { height: 100%; display: flex; flex-direction: column; justify-content: center; max-width: 34em; }
 .ph-ring { display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; border: 1.5px solid rgba(var(--fg-rgb),.35); margin-bottom: clamp(16px, 3vh, 32px); }
 .ph-ring i { width: 42px; height: 42px; border-radius: 50%; background: var(--accent); }
+.ph-build { height: 100%; display: grid; grid-template-columns: 1fr 36vw; column-gap: 6vw; align-items: stretch; }
+.ph-build .ph-half { max-width: none; }
+.ph-build-fig { height: 100%; }
 .ph-big { font-family: var(--font-syne); font-weight: 700; letter-spacing: -0.04em; line-height: .88; font-size: clamp(52px, min(7vw, 12vh), 120px); color: var(--parch); margin: 0 0 clamp(14px, 2.4vh, 28px); text-transform: uppercase; }
 
 /* P-03 principles */
@@ -48,6 +51,9 @@
   .ph-mark, .ph-principles, .ph-cycle { display: block; }
   .ph-mark-svg { max-width: 420px; margin: 0 auto 28px; display: block; }
   .ph-half { max-width: none; }
+  .ph-build { display: block; }
+  .ph-build-fig { height: auto; margin-top: 32px; }
+  .ph-build-fig .pj-cover-plate { aspect-ratio: 4 / 3; flex: none; }
   .ph-big { font-size: clamp(44px, 14vw, 72px); }
   .ph-plist { grid-template-columns: 1fr; row-gap: 26px; margin-top: 26px; }
   .ph-steps { grid-template-columns: 1fr 1fr; row-gap: 26px; column-gap: 16px; margin-top: 22px; padding-top: 0; }

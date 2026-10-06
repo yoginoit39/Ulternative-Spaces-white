@@ -40,8 +40,9 @@ export default function TeamClient() {
         <div ref={trackRef} className="sheet-track">
 
           {/* ── T-00 title sheet ── */}
-          <Panel id="title" width="110vw" sheet="T-00" label="THE TEAM" mm="00 000" mat="black" depth={1}>
-            <div className="tm-title paper">
+          <Panel id="title" width="128vw" sheet="T-00" label="THE TEAM" mm="00 000" mat="black" depth={1}>
+            <div className="tm-title">
+            <div className="tm-title-text paper">
               <p className="eyebrow" data-reveal="up">T-000 · The team · Kampala — Juba</p>
               <h1 className="tm-h1" data-reveal="up" data-delay="0.05" data-drift="0.06">One studio,<br /><em>{TEAM.length} people.</em></h1>
               <p className="lede" data-reveal="up" data-delay="0.1">
@@ -55,6 +56,15 @@ export default function TeamClient() {
                   <tr><th>People</th><td>{String(TEAM.length).padStart(2, '0')}</td><th>Offices</th><td>Kampala · Juba</td></tr>
                 </tbody>
               </table>
+            </div>
+            <figure className="pj-cover tm-cover" data-reveal="clip">
+              <div className="plate pj-cover-plate" data-photo="/images/site-visit-3.jpg">
+                <div className="plate-in" data-parallax="0.08">
+                  <Photo src="/images/site-visit-3.jpg" alt="The team on site" sizes="(max-width: 899px) 100vw, 56vw" priority />
+                </div>
+              </div>
+              <figcaption><span>PLATE 00</span><span>SITE INSPECTION · KAMPALA</span></figcaption>
+            </figure>
             </div>
           </Panel>
 

@@ -1,6 +1,7 @@
 'use client';
 import { useMemo, useRef } from 'react';
 import Image from 'next/image';
+import Photo from '@/components/Photo';
 import Nav from '@/components/Nav';
 import SmoothScroll from '@/components/SmoothScroll';
 import Panel from '@/components/sheet/Panel';
@@ -110,7 +111,8 @@ export default function PhilosophyClient() {
               </p>
             </div>
           </Panel>
-          <Panel id="build" width="62vw" sheet="P-02" label="CIRCLE TWO" mm="6 000" mat="black" depth={1}>
+          <Panel id="build" width="110vw" sheet="P-02" label="CIRCLE TWO" mm="6 000" mat="black" depth={1}>
+            <div className="ph-build">
             <div className="ph-half paper">
               <span className="ph-ring" data-reveal="scale"><i /></span>
               <p className="eyebrow" data-reveal="up">Circle two</p>
@@ -123,6 +125,15 @@ export default function PhilosophyClient() {
                 We control this process entirely. The greatest failure in architecture is a good design poorly
                 built. The second circle closes only when the last detail is right.
               </p>
+            </div>
+            <figure className="pj-cover ph-build-fig" data-reveal="clip">
+              <div className="plate pj-cover-plate">
+                <div className="plate-in" data-parallax="0.08">
+                  <Photo src="/images/site-visit-2.jpg" alt="Inspecting a build in progress" sizes="(max-width: 899px) 100vw, 40vw" />
+                </div>
+              </div>
+              <figcaption><span>PLATE 02</span><span>ON SITE · KAMPALA</span></figcaption>
+            </figure>
             </div>
           </Panel>
 
