@@ -1,3 +1,5 @@
+import Credit from '@/components/Credit';
+
 export default function Footer() {
   return (
     <footer
@@ -56,25 +58,13 @@ export default function Footer() {
             margin: 0,
           }}
         >
-          Built by{' '}
-          <a
-            href="https://pearl-umber.vercel.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="footer-credit"
-            style={{
-              color: 'var(--parch)',
-              textDecoration: 'none',
-              borderBottom: '1px solid currentColor',
-              transition: 'color 0.2s ease',
-            }}
-          >
-            Pearl Web Studio
-          </a>
+          <Credit label="Designed & built by" className="footer-credit" />
         </p>
       </div>
       <style>{`
-        .footer-credit:hover { color: var(--ember) !important; }
+        .footer-credit { color: var(--parch); text-decoration: none; }
+        .footer-credit b { font-weight: 500; border-bottom: 1px solid currentColor; }
+        .footer-credit:hover { color: var(--ember); }
       `}</style>
     </footer>
   );

@@ -3,6 +3,7 @@ import { useMemo, useRef } from 'react';
 import Nav from '@/components/Nav';
 import SmoothScroll from '@/components/SmoothScroll';
 import Photo from '@/components/Photo';
+import Credit from '@/components/Credit';
 import Panel from '@/components/sheet/Panel';
 import SheetChrome, { type Station } from '@/components/sheet/SheetChrome';
 import { useSheetScroll } from '@/components/sheet/useSheetScroll';
@@ -108,6 +109,7 @@ export default function TeamClient() {
               <footer className="ct-foot" data-reveal="up" data-delay="0.2">
                 <span><b>U.S</b> Shaping spaces across East Africa</span>
                 <span>© 2026 Ulternative Spaces · End of set T</span>
+                <Credit label="Designed & built by" />
               </footer>
             </div>
           </Panel>

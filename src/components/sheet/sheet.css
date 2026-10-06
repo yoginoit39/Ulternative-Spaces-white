@@ -412,3 +412,8 @@ a:hover .plate img, .plate:hover img { filter: grayscale(0) contrast(1.02); }
   }
 }
 @keyframes strip-pan { from { translate: 7% 0; } to { translate: -7% 0; } }
+
+/* studio credit in the end-of-set footers */
+.ct-foot .credit { color: var(--parch); text-decoration: none; }
+.ct-foot .credit b { font-weight: 500; color: var(--accent); }
+.ct-foot .credit:hover b { text-decoration: underline; }

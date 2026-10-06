@@ -5,6 +5,7 @@ import ThemeToggle from '@/components/ThemeToggle';
 import { usePathname } from 'next/navigation';
 import TransitionLink from '@/components/TransitionLink';
 import { gotoPanel } from '@/components/sheet/useSheetScroll';
+import Credit from '@/components/Credit';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
@@ -271,10 +272,13 @@ export default function Nav() {
               Juba · SS
             </a>
           </div>
+          <Credit className="nav-credit" label="Site by" />
         </div>
       </div>
 
       <style>{`
+        .nav-credit { display: inline-block; margin-top: 28px; font-family: var(--font-mono); font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--steel); text-decoration: none; }
+        .nav-credit b { color: var(--parch); font-weight: 500; }
         .nav-hamburger { display: none !important; }
         .nav-overlay { display: none !important; }
 

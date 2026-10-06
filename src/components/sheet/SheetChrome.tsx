@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import Credit from '@/components/Credit';
 import { subscribeSheet, gotoPanel, SHEET_BREAKPOINT, type SheetState } from './useSheetScroll';
 
 export interface Station { id: string; label: string; sheet: string }
@@ -137,7 +138,10 @@ export default function SheetChrome({ stations, trackRef }: {
             </li>
           ))}
         </ol>
-        <div className="sheet-mindex-foot">ULTERNATIVE SPACES · DRAWING SET · KAMPALA — JUBA</div>
+        <div className="sheet-mindex-foot">
+          <span>ULTERNATIVE SPACES · DRAWING SET · KAMPALA — JUBA</span>
+          <Credit label="Site by" />
+        </div>
       </div>
     </div>
 
@@ -182,6 +186,7 @@ export default function SheetChrome({ stations, trackRef }: {
         <div><em>DRAWING</em><strong>{active?.label}</strong></div>
         <div><em>SCALE</em><strong>1 : 100</strong></div>
         <div><em>REV</em><strong>A</strong></div>
+        <div className="sheet-title-credit"><em>DRAWN BY</em><strong><Credit label="" /></strong></div>
       </div>
 
       <style>{`
@@ -213,7 +218,11 @@ export default function SheetChrome({ stations, trackRef }: {
         .sheet-title { position: absolute; right: 0; bottom: 68px; display: flex; border: 1px solid rgba(var(--fg-rgb),.2); border-right: 0; border-bottom: 0; background: rgba(var(--bg-rgb),.92); }
         .sheet-title > div { padding: 8px 14px; border-right: 1px solid rgba(var(--fg-rgb),.2); display: flex; flex-direction: column; gap: 3px; }
         .sheet-title > div:last-child { border-right: 0; }
-        .sheet-title > div:last-child strong { color: var(--accent); }
+        .sheet-title > div:nth-last-child(2) strong { color: var(--accent); }
+        .sheet-title-credit { pointer-events: auto; }
+        .sheet-title-credit .credit { color: var(--parch); text-decoration: none; }
+        .sheet-title-credit .credit b { font-weight: 500; }
+        .sheet-title-credit .credit:hover { color: var(--accent); }
         .sheet-title em { font-style: normal; font-size: 8px; letter-spacing: .25em; color: rgba(var(--fg-rgb),.6); }
         .sheet-title strong { font-weight: 400; font-size: 10px; letter-spacing: .15em; color: var(--parch); white-space: nowrap; }
         @media (max-width: 899px) { .sheet-chrome { display: none; } }
@@ -240,7 +249,9 @@ export default function SheetChrome({ stations, trackRef }: {
           .sheet-mindex-sheet li i { flex: 1; height: 1px; background: rgba(var(--fg-rgb),.2); }
           .sheet-mindex-sheet li.on b, .sheet-mindex-sheet li.on span { color: var(--accent); }
           .sheet-mindex-sheet li.on i { background: var(--accent); }
-          .sheet-mindex-foot { font-size: 8px; letter-spacing: .3em; color: rgba(var(--fg-rgb),.45); padding-top: 16px; }
+          .sheet-mindex-foot { display: flex; flex-direction: column; gap: 10px; font-size: 8px; letter-spacing: .3em; color: rgba(var(--fg-rgb),.45); padding-top: 16px; }
+          .sheet-mindex-foot .credit { color: var(--parch); text-decoration: none; letter-spacing: .2em; }
+          .sheet-mindex-foot .credit b { color: var(--accent); font-weight: 500; }
         }
       `}</style>
     </div>
